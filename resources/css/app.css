@@ -2,3 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
+.login-btn{
+    @apply bg-white rounded py-3 mb-3 w-1/2 mx-auto text-center text-green-700 cursor-pointer;
+}
