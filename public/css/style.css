@@ -1,4 +1,10 @@
+@font-face {
+    font-family: "Poppins";
+    src: url("../fonts/Poppins/Poppins-Regular.ttf");
+}
+
 body{
+    font-family: "Poppins";
     background-image: url('../images/bg_1.png');
     background-repeat: no-repeat;
     background-size: cover;
@@ -7,5 +13,4 @@ body{
 #container{
     width: 100%;
     height: 100vh;
-    background: rgba(0, 147, 0, 0.5);
 }
