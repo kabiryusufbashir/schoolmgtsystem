@@ -8,8 +8,8 @@
         @vite('resources/css/app.css')
     </head>
     <body>
-        <div class="">
-            
+        <div id="container">
+            Yes!
         </div>
     </body>
 </html>
