@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+
+use App\Http\Middleware\GlobalData;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoginController;
 

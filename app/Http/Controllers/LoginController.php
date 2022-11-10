@@ -19,13 +19,17 @@ class LoginController extends Controller
         try{
             if(Auth::attempt(['user_id' => $request->user_id, 'password' => $request->password])){
                 try{
-                    $user_status = User::where('user_id', $request->user_id)->where('status', 1)->count();
-                    
-                        if($user_status == 1){
-                            $request->session()->regenerate();
-                            return redirect()->route('dashboard');
+                    $user_status =  User::where('user_id', $request->user_id)->first();
+                        if($user_status->status == 1){
+                            $user_category =  User::where('user_id', $request->user_id)->first();
+                            
+                            if($user_status->status == 1){
+                                $request->session()->regenerate();
+                                return redirect()->route('dashboard');    
+                            }
+                            
                         }else{
-                            return back()->with('error', 'Inactive Account');
+                            return back()->with('error', 'Account not Active');
                         }
                 }catch(Exception $e){
                     return redirect('/')->with('error', $e->getMessage());            
