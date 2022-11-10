@@ -12,7 +12,7 @@
         <div id="container">
             <div class="p-4 mx-auto w-1/2">
                 @include('includes.logo')
-                
+                <div class="text-center text-2xl text-white">@include('includes.messages')</div>
                 <div id="loginBtnSection">
                     <h1 class="text-white text-xl text-center">Choose how you want to <br> Login </h1>
                     <!-- Button  -->
@@ -25,14 +25,15 @@
                 <!-- Staff Login Section  -->
                 <div id="staffLoginSection" class="login-div hidden">
                     <h1 class="text-xl text-center font-medium">Staff Login</h1>
-                    <form action="">
+                    <form action="{{ route('login') }}" method="POST">
+                        @csrf
                         <div class="my-3">
                             <label for="staff_id" class="font-medium">Staff ID</label><br>
-                            <input class="input-field" type="text" name="staff_id" id="staff_id" placeholder="Enter Staff ID">
+                            <input class="input-field" type="text" name="user_id" id="staff_id" placeholder="Enter Staff ID">
                         </div>
                         <div class="my-3">
                             <label for="password" class="font-medium">Password</label><br>
-                            <input class="input-field" type="text" name="password" id="password" placeholder="Enter Password">
+                            <input class="input-field" type="password" name="password" id="password" placeholder="Enter Password">
                         </div>
                         <div class="text-right text-green-600">
                             <span>Forgot Password</span>
@@ -46,14 +47,15 @@
                 <!-- Student Login Section  -->
                 <div id="studentLoginSection" class="login-div hidden">
                     <h1 class="text-xl text-center font-medium">Student Login</h1>
-                    <form action="">
+                    <form action="{{ route('login') }}" method="POST">
+                        @csrf
                         <div class="my-3">
                             <label for="student_id" class="font-medium">Student ID</label><br>
-                            <input class="input-field" type="text" name="student_id" id="student_id" placeholder="Enter Student ID">
+                            <input class="input-field" type="text" name="user_id" id="student_id" placeholder="Enter Student ID">
                         </div>
                         <div class="my-3">
                             <label for="password" class="font-medium">Password</label><br>
-                            <input class="input-field" type="text" name="password" id="password" placeholder="Enter Password">
+                            <input class="input-field" type="password" name="password" id="password" placeholder="Enter Password">
                         </div>
                         <div class="text-right text-green-600">
                             <span>Forgot Password</span>
