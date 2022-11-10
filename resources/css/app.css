@@ -5,3 +5,15 @@
 .login-btn{
     @apply bg-white rounded py-3 mb-3 w-1/2 mx-auto text-center text-green-700 cursor-pointer;
 }
+
+.input-field{
+    @apply w-full py-2 border border-green-400 rounded px-4;
+}
+
+.login-div{
+    @apply bg-white rounded py-6 px-9 text-gray-700 w-2/3 mx-auto;
+}
+
+.submit-btn{
+    @apply bg-green-600 w-full py-3 text-white text-sm rounded cursor-pointer;
+}
