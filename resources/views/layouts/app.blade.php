@@ -8,7 +8,7 @@
         <link rel="shortcut icon" href="{{ asset('images/favicon.ico') }}" type="image/x-icon">
         @vite('resources/css/app.css')
     </head>
-    <body>
+    <body class="bg-gray-200">
         @yield('contents')
     </body>
 </html>
