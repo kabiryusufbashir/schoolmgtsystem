@@ -15,7 +15,7 @@
                 </div>
             </div>
             <!-- links  -->
-            <div class="my-4">
+            <div class="my-4 overflow-auto yus-container-scrollbar py-3">
                 <!-- Dashboard  -->
                 <div class="bg-green-600 text-white rounded flex items-center px-4 py-2 mx-7 mb-4 cursor-pointer">
                     <span>
@@ -155,6 +155,11 @@
                         Logout
                     </span>
                 </div>
+            </div>
+            <!-- Version  -->
+            <div class="my-10 text-center">
+                <div>Version 1.0</div>
+                <div class="text-xs">A Product Bitcags IT</div>
             </div>
         </div>
         <!-- Statistics -->
