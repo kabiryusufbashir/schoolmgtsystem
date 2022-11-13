@@ -32,7 +32,7 @@
             </span>
         </div>
         <!-- Reset Password  -->
-        <div class="settings-menu-div">
+        <div id="systemPasswordLink" class="settings-menu-div">
             <span class="bg-gray-300 p-2 rounded-full">
                 @include('icons.password')
             </span>

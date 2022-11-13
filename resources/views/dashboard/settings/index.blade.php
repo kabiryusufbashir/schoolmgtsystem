@@ -26,5 +26,7 @@
         @include('dashboard.settings.system_email')
         <!-- System Photo  -->
         @include('dashboard.settings.system_photo')
+        <!-- System Password  -->
+        @include('dashboard.settings.system_password')
     </div>
 @endsection

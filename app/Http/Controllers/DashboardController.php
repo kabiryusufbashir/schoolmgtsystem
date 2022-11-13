@@ -37,7 +37,7 @@ class DashboardController extends Controller
             ]);
             return redirect()->route('root-settings')->with('success', 'Name Updated');
         }catch(Exception $e){
-            return back()->route('root-settings')->with('error', 'Please try again... '.$e);
+            return redirect()->route('root-settings')->with('error', 'Please try again... '.$e);
         }
     }
 
@@ -56,7 +56,7 @@ class DashboardController extends Controller
 
             return redirect()->route('root-settings')->with('success', 'Email Updated');
         }catch(Exception $e){
-            return back()->route('root-settings')->with('error', 'Please try again... '.$e);
+            return redirect()->route('root-settings')->with('error', 'Please try again... '.$e);
         }
     }
 
@@ -78,7 +78,31 @@ class DashboardController extends Controller
 
             return redirect()->route('root-settings')->with('success', 'Photo Updated');
         }catch(Exception $e){
-            return back()->route('root-settings')->with('error', 'Please try again... '.$e);
+            return redirect()->route('root-settings')->with('error', 'Please try again... '.$e);
+        }
+    }
+
+    public function settingsPassword(Request $request){
+        $data = $request->validate([
+            'old_password' => ['required'],
+            'new_password' => 'required|confirmed',
+        ]);
+
+        $system_id = Auth::user()->id;
+        $password = Hash::make($request->password);
+        
+        try{
+
+            if(!Hash::check($request->old_password, auth()->user()->password)){
+                return redirect()->route('root-settings')->with('error', 'Old Password Doesn\'t Match!');
+            }else{
+                $password = User::where('id', $system_id)->update([
+                    'password'=> $password
+                ]);
+                return redirect()->route('root-settings')->with('success', 'Password Changed Successfully');
+            }
+        }catch(Exception $e){
+            return redirect()->route('root-settings')->with('error', 'Please try again... '.$e);
         }
     }
 }
