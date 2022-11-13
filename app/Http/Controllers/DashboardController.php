@@ -2,7 +2,12 @@
 
 namespace App\Http\Controllers;
 
+
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+
+use App\Models\User;
 
 class DashboardController extends Controller
 {
@@ -16,5 +21,23 @@ class DashboardController extends Controller
 
     public function settings(){
         return view('dashboard.settings.index');
+    }
+
+    public function settingsName(Request $request){
+        $data = $request->validate([
+            'name' => ['required'],
+        ]);
+
+        $system_id = Auth::user()->id;
+        $system_name = $request->name;
+
+        try{
+            $dept = User::where('id', $system_id)->update([
+                'name' => $data['name'],
+            ]);
+            return redirect()->route('root-settings')->with('success', 'Name Updated');
+        }catch(Exception $e){
+            return back()->route('root-settings')->with('error', 'Please try again... '.$e);
+        }
     }
 }

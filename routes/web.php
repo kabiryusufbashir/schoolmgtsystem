@@ -30,6 +30,7 @@ Route::middleware([GlobalData::class])->group(function(){
     
     // Settings
     Route::get('/settings', [DashboardController::class, 'settings'])->name('root-settings')->middleware('auth:web');
+    Route::post('/settings-name', [DashboardController::class, 'settingsName'])->name('settings-name')->middleware('auth:web');
 
 });
 

@@ -43,5 +43,26 @@ body{
     display: none;
 }
 
+#systemName{
+    background-color: rgba(0, 0, 0, 0.5);
+    position: fixed;
+    z-index: 300;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+}
 
+#system-name-header{
+    height: 65px;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+}
 
+#system-name-content{
+    margin: 2% auto;
+    width: 600px;
+    background-color: #fff;
+}

@@ -5,6 +5,6 @@
     </div>
     <!-- School Title  -->
     <div>
-        <h1 class="text-center font-semibold">AMINU KANO <br>COLLEGE OF ISLAMIC<br>AND LEGAL STUDIES</h1>
+        <h1 class="text-center font-semibold px-10">{{ Auth::user()->name }}</h1>
     </div>
 </div>
