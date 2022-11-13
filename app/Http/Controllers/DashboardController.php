@@ -40,4 +40,22 @@ class DashboardController extends Controller
             return back()->route('root-settings')->with('error', 'Please try again... '.$e);
         }
     }
+
+    public function settingsEmail(Request $request){
+        $data = $request->validate([
+            'email' => ['required', 'email']
+        ]);
+
+        $system_id = Auth::user()->id;
+        $system_email = $request->email;
+
+        try{
+            $dept = User::where('id', $system_id)->update([
+                'email' => $data['email'],
+            ]);
+            return redirect()->route('root-settings')->with('success', 'Email Updated');
+        }catch(Exception $e){
+            return back()->route('root-settings')->with('error', 'Please try again... '.$e);
+        }
+    }
 }

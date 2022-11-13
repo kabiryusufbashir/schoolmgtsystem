@@ -12,7 +12,7 @@
             </span>
         </div>
         <!-- System Email  -->
-        <div class="settings-menu-div">
+        <div id="systemEmailLink" class="settings-menu-div">
             <span class="bg-blue-300 p-2 rounded-full">
                 @include('icons.settings')
             </span>

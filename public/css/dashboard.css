@@ -43,7 +43,7 @@ body{
     display: none;
 }
 
-#systemName{
+#modal{
     background-color: rgba(0, 0, 0, 0.5);
     position: fixed;
     z-index: 300;
@@ -54,14 +54,14 @@ body{
     overflow: auto;
 }
 
-#system-name-header{
+#modal-header{
     height: 65px;
     font-style: normal;
     font-weight: 500;
     font-size: 20px;
 }
 
-#system-name-content{
+#modal-content{
     margin: 2% auto;
     width: 600px;
     background-color: #fff;

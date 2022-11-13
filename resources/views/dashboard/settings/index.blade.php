@@ -21,5 +21,6 @@
             @include('includes.root_settings_index')
         </div>
         @include('dashboard.settings.system_name')
+        @include('dashboard.settings.system_email')
     </div>
 @endsection
