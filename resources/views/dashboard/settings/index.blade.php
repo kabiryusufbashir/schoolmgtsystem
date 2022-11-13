@@ -20,7 +20,11 @@
             <!-- Settings Menu  -->
             @include('includes.root_settings_index')
         </div>
+        <!-- System Name  -->
         @include('dashboard.settings.system_name')
+        <!-- System Email  -->
         @include('dashboard.settings.system_email')
+        <!-- System Photo  -->
+        @include('dashboard.settings.system_photo')
     </div>
 @endsection

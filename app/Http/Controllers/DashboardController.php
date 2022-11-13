@@ -32,7 +32,7 @@ class DashboardController extends Controller
         $system_name = $request->name;
 
         try{
-            $dept = User::where('id', $system_id)->update([
+            $name = User::where('id', $system_id)->update([
                 'name' => $data['name'],
             ]);
             return redirect()->route('root-settings')->with('success', 'Name Updated');
@@ -50,10 +50,33 @@ class DashboardController extends Controller
         $system_email = $request->email;
 
         try{
-            $dept = User::where('id', $system_id)->update([
+            $email = User::where('id', $system_id)->update([
                 'email' => $data['email'],
             ]);
+
             return redirect()->route('root-settings')->with('success', 'Email Updated');
+        }catch(Exception $e){
+            return back()->route('root-settings')->with('error', 'Please try again... '.$e);
+        }
+    }
+
+    public function settingsPhoto(Request $request){
+        $data = $request->validate([
+            'photo' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
+        ]);
+
+        $system_id = Auth::user()->id;
+        $system_photo = $request->photo;
+        $imageName = '/images/staff/'.time().'.'.$request->photo->extension();  
+
+        try{
+            $photo = User::where('id', $system_id)->update([
+                'photo'=> $imageName
+            ]);
+                
+            $request->photo->move('images/staff', $imageName);
+
+            return redirect()->route('root-settings')->with('success', 'Photo Updated');
         }catch(Exception $e){
             return back()->route('root-settings')->with('error', 'Please try again... '.$e);
         }

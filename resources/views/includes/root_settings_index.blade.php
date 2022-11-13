@@ -22,7 +22,7 @@
             </span>
         </div>
         <!-- Profile Photo  -->
-        <div class="settings-menu-div">
+        <div id="systemPhotoLink" class="settings-menu-div">
             <span class="bg-yellow-300 p-2 rounded-full">
                 @include('icons.photo')
             </span>
