@@ -1,43 +1,75 @@
 <div class="flex overflow-x-scroll hide-scroll-bar ml-4 mr-8 mb-4">
     <div class="flex flex-nowrap">
-        <div class="inline w-72 max-w-xs bg-white py-3 px-6 ml-4 mr-8 text-gray-600 my-5 rounded">
+        <!-- Department -->
+        <div class="inline w-96 max-w-xs bg-white py-7 px-6 mr-4 text-gray-600 my-5 rounded">
             <a href="#">
-                <div class="lg:cate-yus rounded-none">
-                
+                <div class="flex py-2 items-center">
+                    <span class="mr-4">
+                        <div class="bg-yellow-300 p-2 rounded-full">
+                            @include('icons.department')
+                        </div>
+                    </span>
+                    <span class="text-sm">
+                        <div class="font-semibold mb-1">Departments</div>
+                        <div>
+                            View overview of your <br>department here
+                        </div>
+                    </span>
                 </div>
-                <span>Students</span>
             </a>
         </div>
-        <div class="inline w-72 max-w-xs bg-white py-3 px-6 ml-4 mr-8 text-gray-600 my-5 rounded">
+        <!-- Staff  -->
+        <div class="inline w-96 max-w-xs bg-white py-7 px-6 mr-4 text-gray-600 my-5 rounded">
             <a href="#">
-                <div class="lg:cate-yus rounded-none">
-                
+                <div class="flex py-2 items-center">
+                    <span class="mr-4">
+                        <div class="bg-orange-200 p-2 rounded-full text-white">
+                            @include('icons.staff')
+                        </div>
+                    </span>
+                    <span class="text-sm">
+                        <div class="font-semibold mb-1">Staff</div>
+                        <div>
+                            View overview of your <br>Staff here
+                        </div>
+                    </span>
                 </div>
-                <span>Students</span>
             </a>
         </div>
-        <div class="inline w-72 max-w-xs bg-white py-3 px-6 ml-4 mr-8 text-gray-600 my-5 rounded">
+        <!-- Students  -->
+        <div class="inline w-96 max-w-xs bg-white py-7 px-6 mr-4 text-gray-600 my-5 rounded">
             <a href="#">
-                <div class="lg:cate-yus rounded-none">
-                
+                <div class="flex py-2 items-center">
+                    <span class="mr-4">
+                        <div class="bg-blue-200 p-2 rounded-full text-white">
+                            @include('icons.student')
+                        </div>
+                    </span>
+                    <span class="text-sm">
+                        <div class="font-semibold mb-1">Student</div>
+                        <div>
+                            View overview of your <br>Student here
+                        </div>
+                    </span>
                 </div>
-                <span>Students</span>
             </a>
         </div>
-        <div class="inline w-72 max-w-xs bg-white py-3 px-6 ml-4 mr-8 text-gray-600 my-5 rounded">
+        <!-- Courses  -->
+        <div class="inline w-96 max-w-xs bg-white py-7 px-6 mr-4 text-gray-600 my-5 rounded">
             <a href="#">
-                <div class="lg:cate-yus rounded-none">
-                
+                <div class="flex py-2 items-center">
+                    <span class="mr-4">
+                        <div class="bg-green-200 p-2 rounded-full text-white">
+                            @include('icons.course')
+                        </div>
+                    </span>
+                    <span class="text-sm">
+                        <div class="font-semibold mb-1">Courses</div>
+                        <div>
+                            View overview of your <br>Courses here
+                        </div>
+                    </span>
                 </div>
-                <span>Students</span>
-            </a>
-        </div>
-        <div class="inline w-72 max-w-xs bg-white py-3 px-6 ml-4 mr-8 text-gray-600 my-5 rounded">
-            <a href="#">
-                <div class="lg:cate-yus rounded-none">
-                
-                </div>
-                <span>Students</span>
             </a>
         </div>
     </div>

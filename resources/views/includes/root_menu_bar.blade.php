@@ -1,14 +1,16 @@
 <div class="my-4 overflow-auto yus-container-scrollbar py-3">
     <!-- Dashboard  -->
-    <div class="bg-green-600 text-white rounded flex items-center px-4 py-2 mx-7 mb-4 cursor-pointer">
-        <span>
-            @include('icons.dashboard')
-        </span>
-        &nbsp;&nbsp;
-        <span class="text-sm">
-            Dashboard
-        </span>
-    </div>
+    <a href="{{ route('dashboard') }}">
+        <div class="bg-green-600 text-white rounded flex items-center px-4 py-2 mx-7 mb-4 cursor-pointer">
+            <span>
+                @include('icons.dashboard')
+            </span>
+            &nbsp;&nbsp;
+            <span class="text-sm">
+                Dashboard
+            </span>
+        </div>
+    </a>
     <!-- Department  -->
     <div class="nav-link-div">
         <span>
@@ -90,25 +92,29 @@
         </span>
     </div>
     <!-- Settings  -->
-    <div class="nav-link-div">
-        <span>
-            @include('icons.settings')
-        </span>
-        &nbsp;&nbsp;
-        <span class="text-sm">
-            Settings
-        </span>
-    </div>
+    <a href="{{ route('root-settings') }}">
+        <div class="nav-link-div">
+            <span>
+                @include('icons.settings')
+            </span>
+            &nbsp;&nbsp;
+            <span class="text-sm">
+                Settings
+            </span>
+        </div>
+    </a>
     <!-- Logout  -->
-    <div class="nav-link-div">
-        <span>
-            @include('icons.logout')
-        </span>
-        &nbsp;&nbsp;
-        <span class="text-sm">
-            Logout
-        </span>
-    </div>
+    <a href="{{ route('logout') }}">
+        <div class="nav-link-div">
+            <span>
+                @include('icons.logout')
+            </span>
+            &nbsp;&nbsp;
+            <span class="text-sm">
+                Logout
+            </span>
+        </div>
+    </a>
 </div>
 <!-- Version  -->
 <div class="my-10 text-center">

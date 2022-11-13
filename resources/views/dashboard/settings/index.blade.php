@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('page-title')
-    Dashboard - AKCILS
+    Settings - AKCILS
 @endsection
 
 @section('contents')
@@ -16,10 +16,7 @@
         <div class="col-span-5 mt-2">
             <!-- User Info  -->
             @include('includes.root_user_info')
-            <!-- System Statistics -->
-            @include('includes.root_system_stat')
-            <!-- Calendar  -->
-            @include('includes.root_system_calendar')
+        
         </div>
     </div>
 @endsection
