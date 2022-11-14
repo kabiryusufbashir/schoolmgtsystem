@@ -39,8 +39,19 @@
                                         {{ ($deptartment->exam_officer != null) ? $deptartment->exam_officer : 'Empty' }}
                                     </td>
                                     <td class="px-6 py-4 text-sm text-gray-500">
-                                        <span class="edit-btn">Edit</span>
-                                        <span class="del-btn">Delete</span>
+                                        <span class="flex">
+                                            <form action="#" method="POST">
+                                                @csrf 
+                                                @method('DELETE')
+                                                <input type="submit" value="EDIT" class="edit-btn">
+                                            </form>
+                                            &nbsp;&nbsp;
+                                            <form action="#" method="POST">
+                                                @csrf 
+                                                @method('DELETE')
+                                                <input type="submit" value="DELETE" class="del-btn">
+                                            </form>
+                                        </span>
                                     </td>
                                 </tr>
                             @endforeach

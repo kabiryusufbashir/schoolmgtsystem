@@ -133,7 +133,7 @@ class DashboardController extends Controller
     }
 
     public function allDepartment(){
-        $departments = Department::orderby('created_at', 'desc')->paginate(1);
+        $departments = Department::orderby('created_at', 'desc')->paginate(20);
         return view('dashboard.department.department', compact('departments'));
     }
 }
