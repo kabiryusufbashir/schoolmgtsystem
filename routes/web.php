@@ -31,6 +31,7 @@ Route::middleware([GlobalData::class])->group(function(){
     // Department 
     Route::get('/department', [DashboardController::class, 'department'])->name('root-department')->middleware('auth:web');
     Route::post('/dept-create', [DashboardController::class, 'createDepartment'])->name('dept-create')->middleware('auth:web');
+    Route::get('/alldepartment', [DashboardController::class, 'allDepartment'])->name('all-department')->middleware('auth:web');
 
     // Settings
     Route::get('/settings', [DashboardController::class, 'settings'])->name('root-settings')->middleware('auth:web');

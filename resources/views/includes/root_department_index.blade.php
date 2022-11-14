@@ -12,24 +12,16 @@
             </span>
         </div>
         <!-- All Department -->
-        <div id="allDepartmentLink" class="settings-menu-div">
-            <span class="bg-yellow-300 p-2 rounded-full">
-                @include('icons.department')
-            </span>
-            &nbsp;&nbsp;
-            <span>
-                <h1>All Department</h1>
-            </span>
-        </div>
-        <!-- Bulk Upload -->
-        <div id="departmentBulkUploadLink" class="settings-menu-div">
-            <span class="bg-blue-300 p-2 rounded-full">
-                @include('icons.department')
-            </span>
-            &nbsp;&nbsp;
-            <span>
-                <h1>Bulk Upload</h1>
-            </span>
-        </div>
+        <a href="{{ route('all-department') }}">
+            <div class="settings-menu-div">
+                <span class="bg-yellow-300 p-2 rounded-full">
+                    @include('icons.department')
+                </span>
+                &nbsp;&nbsp;
+                <span>
+                    <h1>All Department</h1>
+                </span>
+            </div>
+        </a>
     </div>
 </div>

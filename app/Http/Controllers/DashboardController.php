@@ -126,9 +126,14 @@ class DashboardController extends Controller
             ]);
 
             return redirect()->route('root-department')->with('success', $dept_name.' created successfully');
-            
+
         }catch(Exception $e){
             return redirect()->route('root-department')->with('error', 'Please try again... '.$e);
         }
+    }
+
+    public function allDepartment(){
+        $departments = Department::orderby('created_at', 'desc')->paginate(1);
+        return view('dashboard.department.department', compact('departments'));
     }
 }

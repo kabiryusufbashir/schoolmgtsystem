@@ -29,3 +29,11 @@
 .modal-header{
     @apply bg-green-700 text-white p-4 flex justify-between rounded-tl rounded-tr;
 }
+
+.edit-btn{
+    @apply py-2 px-5 rounded bg-yellow-400 text-white;
+}
+
+.del-btn{
+    @apply py-2 px-5 rounded bg-red-600 text-white;
+}
