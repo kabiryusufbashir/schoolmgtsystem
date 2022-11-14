@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 use App\Models\User;
+use App\Models\Department;
 
 class DashboardController extends Controller
 {
@@ -19,6 +20,7 @@ class DashboardController extends Controller
         return view('dashboard.index');
     }
 
+    // Settings 
     public function settings(){
         return view('dashboard.settings.index');
     }
@@ -103,6 +105,30 @@ class DashboardController extends Controller
             }
         }catch(Exception $e){
             return redirect()->route('root-settings')->with('error', 'Please try again... '.$e);
+        }
+    }
+
+    // Department 
+    public function department(){
+        return view('dashboard.department.index');
+    }
+
+    public function createDepartment(Request $request){
+        $data = $request->validate([
+            'name' => ['required'],
+        ]);
+        
+        $dept_name = $request->name;
+
+        try{
+            $name = Department::create([
+                'name' => $data['name'],
+            ]);
+
+            return redirect()->route('root-department')->with('success', $dept_name.' created successfully');
+            
+        }catch(Exception $e){
+            return redirect()->route('root-department')->with('error', 'Please try again... '.$e);
         }
     }
 }

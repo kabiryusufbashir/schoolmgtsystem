@@ -24,3 +24,26 @@
         </div>
     </div>
 </div>
+
+<script>
+    // System Email 
+    let systemEmailLink = document.querySelector('#systemEmailLink')
+    let systemEmail = document.querySelector('#systemEmail')
+    let closeModalSystemEmail = document.querySelector('#closeModalSystemEmail')
+
+    systemEmailLink.addEventListener('click', ()=>{
+        if(systemEmail.classList.contains('hidden')){
+            systemEmail.classList.remove('hidden');
+        }else{
+            systemEmail.classList.add('hidden');
+        }
+    })
+
+    closeModalSystemEmail.addEventListener('click', ()=>{
+        if(systemEmail.classList.contains('hidden')){
+            systemEmail.classList.remove('hidden');
+        }else{
+            systemEmail.classList.add('hidden');
+        }
+    })
+</script>

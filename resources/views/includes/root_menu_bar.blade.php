@@ -12,15 +12,17 @@
         </div>
     </a>
     <!-- Department  -->
-    <div class="nav-link-div">
-        <span>
-            @include('icons.department')
-        </span>
-        &nbsp;&nbsp;
-        <span class="text-sm">
-            Department
-        </span>
-    </div>
+    <a href="{{ route('root-department') }}">
+        <div class="nav-link-div">
+            <span>
+                @include('icons.department')
+            </span>
+            &nbsp;&nbsp;
+            <span class="text-sm">
+                Department
+            </span>
+        </div>
+    </a>
     <!-- Staff  -->
     <div class="nav-link-div">
         <span>

@@ -38,3 +38,26 @@
         </div>
     </div>
 </div>
+
+<script>
+    // System Password 
+    let systemPasswordLink = document.querySelector('#systemPasswordLink')
+    let systemPassword = document.querySelector('#systemPassword')
+    let closeModalSystemPassword = document.querySelector('#closeModalSystemPassword')
+
+    systemPasswordLink.addEventListener('click', ()=>{
+        if(systemPassword.classList.contains('hidden')){
+            systemPassword.classList.remove('hidden');
+        }else{
+            systemPassword.classList.add('hidden');
+        }
+    })
+
+    closeModalSystemPassword.addEventListener('click', ()=>{
+        if(systemPassword.classList.contains('hidden')){
+            systemPassword.classList.remove('hidden');
+        }else{
+            systemPassword.classList.add('hidden');
+        }
+    })
+</script>

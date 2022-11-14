@@ -31,3 +31,26 @@
         </div>
     </div>
 </div>
+
+<script>
+    // System photo 
+    let systemPhotoLink = document.querySelector('#systemPhotoLink')
+    let systemPhoto = document.querySelector('#systemPhoto')
+    let closeModalSystemPhoto = document.querySelector('#closeModalSystemPhoto')
+
+    systemPhotoLink.addEventListener('click', ()=>{
+        if(systemPhoto.classList.contains('hidden')){
+            systemPhoto.classList.remove('hidden');
+        }else{
+            systemPhoto.classList.add('hidden');
+        }
+    })
+
+    closeModalSystemPhoto.addEventListener('click', ()=>{
+        if(systemPhoto.classList.contains('hidden')){
+            systemPhoto.classList.remove('hidden');
+        }else{
+            systemPhoto.classList.add('hidden');
+        }
+    })
+</script>

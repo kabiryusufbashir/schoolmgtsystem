@@ -28,6 +28,10 @@ Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::middleware([GlobalData::class])->group(function(){
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard')->middleware('auth:web');
     
+    // Department 
+    Route::get('/department', [DashboardController::class, 'department'])->name('root-department')->middleware('auth:web');
+    Route::post('/dept-create', [DashboardController::class, 'createDepartment'])->name('dept-create')->middleware('auth:web');
+
     // Settings
     Route::get('/settings', [DashboardController::class, 'settings'])->name('root-settings')->middleware('auth:web');
     Route::post('/settings-name', [DashboardController::class, 'settingsName'])->name('settings-name')->middleware('auth:web');
