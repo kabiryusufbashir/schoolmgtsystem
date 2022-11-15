@@ -24,29 +24,28 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($departments as $deptartment)
+                            @foreach($departments as $department)
                                 <tr class="divide-y divide-gray-300 border-b-2">
                                     <td class="px-6 py-4 text-sm text-gray-500">
-                                        {{ $deptartment->name }}
+                                        {{ $department->name }}
                                     </td>
                                     <td class="px-6 py-4 text-sm text-gray-500">
-                                        {{ ($deptartment->hod != null) ? $deptartment->hod : 'Empty' }}
+                                        {{ ($department->hod != null) ? $department->hod : 'Empty' }}
                                     </td>
                                     <td class="px-6 py-4 text-sm text-gray-500">
-                                        {{ ($deptartment->level_coordinator != null) ? $deptartment->level_coordinator : 'Empty' }}
+                                        {{ ($department->level_coordinator != null) ? $department->level_coordinator : 'Empty' }}
                                     </td>
                                     <td class="px-6 py-4 text-sm text-gray-500">
-                                        {{ ($deptartment->exam_officer != null) ? $deptartment->exam_officer : 'Empty' }}
+                                        {{ ($department->exam_officer != null) ? $department->exam_officer : 'Empty' }}
                                     </td>
                                     <td class="px-6 py-4 text-sm text-gray-500">
                                         <span class="flex">
-                                            <form action="#" method="POST">
+                                            <form action="{{ route('dept-edit', $department->id) }}" method="GET">
                                                 @csrf 
-                                                @method('DELETE')
                                                 <input type="submit" value="EDIT" class="edit-btn">
                                             </form>
                                             &nbsp;&nbsp;
-                                            <form action="#" method="POST">
+                                            <form action="{{ route('dept-delete', $department->id) }}" method="POST">
                                                 @csrf 
                                                 @method('DELETE')
                                                 <input type="submit" value="DELETE" class="del-btn">

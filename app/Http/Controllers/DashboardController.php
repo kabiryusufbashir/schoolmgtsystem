@@ -125,15 +125,45 @@ class DashboardController extends Controller
                 'name' => $data['name'],
             ]);
 
-            return redirect()->route('root-department')->with('success', $dept_name.' created successfully');
+            return redirect()->route('all-department')->with('success', $dept_name.' Department Added');
 
         }catch(Exception $e){
-            return redirect()->route('root-department')->with('error', 'Please try again... '.$e);
+            return redirect()->route('all-department')->with('error', 'Please try again... '.$e);
         }
     }
 
     public function allDepartment(){
-        $departments = Department::orderby('created_at', 'desc')->paginate(20);
+        $departments = Department::orderby('name', 'asc')->paginate(20);
         return view('dashboard.department.department', compact('departments'));
+    }
+
+    public function editDepartment($id){
+        $dept = Department::findOrFail($id);
+        return view('dashboard.department.edit', compact('dept'));
+    }
+
+    public function updateDepartment(Request $request, $id){
+        $data = $request->validate([
+            'name' => ['required']
+        ]);
+
+        try{
+            $dept = Department::where('id', $id)->update([
+                'name' => $data['name'],
+            ]);
+            return redirect()->route('all-department')->with('success', 'Department Updated');
+        }catch(Exception $e){
+            return back()->with('error', 'Please try again... '.$e);
+        }
+    }
+
+    public function deleteDepartment($id){
+        $dept = Department::findOrFail($id);
+        try{
+            $dept->delete();
+            return redirect()->route('all-department')->with('success', 'Department Deleted');
+        }catch(Exception $e){
+            return redirect()->route('all-department')->with('error', 'Please try again... '.$e);
+        }
     }
 }

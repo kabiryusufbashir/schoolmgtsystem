@@ -31,9 +31,9 @@
 }
 
 .edit-btn{
-    @apply py-2 px-5 rounded bg-yellow-400 text-white;
+    @apply py-2 px-5 rounded bg-yellow-400 text-white cursor-pointer;
 }
 
 .del-btn{
-    @apply py-2 px-5 rounded bg-red-600 text-white;
+    @apply py-2 px-5 rounded bg-red-600 text-white cursor-pointer;
 }
