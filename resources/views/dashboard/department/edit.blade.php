@@ -26,7 +26,7 @@
                     @csrf
                     @method('PATCH')
                     <div>
-                        <label for="name" class="text-lg font-medium">Department Name</label><br>
+                        <label for="name" class="input-title">Department Name</label><br>
                         <input type="text" value="{{ $dept->name }}" name="name" placeholder="Department Name" class="input-field">
                         @error('name')
                             {{$message}}

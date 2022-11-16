@@ -10,7 +10,7 @@
                 <form action="{{ route('dept-create') }}" method="POST" class="px-6 lg:px-8 py-8">
                     @csrf
                     <div>
-                        <label for="name" class="text-lg font-medium">Department Name</label><br>
+                        <label for="name" class="input-title">Department Name</label><br>
                         <input type="text" name="name" placeholder="Department Name" class="input-field">
                         @error('name')
                             {{$message}}

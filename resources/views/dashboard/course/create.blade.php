@@ -10,14 +10,14 @@
                 <form action="{{ route('course-create') }}" method="POST" class="px-6 lg:px-8 py-8">
                     @csrf
                     <div>
-                        <label for="name" class="text-lg font-medium">Course Name</label><br>
+                        <label for="name" class="input-title">Course Name</label><br>
                         <input type="text" name="name" placeholder="Course Name" class="input-field">
                         @error('name')
                             {{$message}}
                         @enderror
                     </div>
                     <div class="my-4">
-                        <label for="course_type" class="text-lg font-medium">Course Type</label><br>
+                        <label for="course_type" class="input-title">Course Type</label><br>
                         <select name="course_type" placeholder="Course Type" class="input-field">
                             <option value=""></option>
                             <option value="Elective">Elective</option>
@@ -28,21 +28,21 @@
                         @enderror
                     </div>
                     <div class="my-4">
-                        <label for="course_code" class="text-lg font-medium">Course Code</label><br>
+                        <label for="course_code" class="input-title">Course Code</label><br>
                         <input type="text" name="course_code" placeholder="Course Code" class="input-field">
                         @error('course_code')
                             {{$message}}
                         @enderror
                     </div>
                     <div class="my-4">
-                        <label for="course_unit" class="text-lg font-medium">Course Unit</label><br>
+                        <label for="course_unit" class="input-title">Course Unit</label><br>
                         <input type="text" name="course_unit" placeholder="Course Unit" class="input-field">
                         @error('course_unit')
                             {{$message}}
                         @enderror
                     </div>
                     <div class="my-5">
-                        <label for="department" class="text-lg font-medium">Department Name</label><br>
+                        <label for="department" class="input-title">Department Name</label><br>
                         <select name="department" class="input-field">
                             <option value=""></option>
                             @foreach($departments as $department)

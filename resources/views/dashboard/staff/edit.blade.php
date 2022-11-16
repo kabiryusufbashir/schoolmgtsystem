@@ -27,14 +27,14 @@
                     @method('PATCH')
                     <div class="grid grid-cols-2 gap-4">
                         <div>
-                            <label for="name" class="input-title">Course Name</label><br>
+                            <label for="name" class="text-lg font-medium">Course Name</label><br>
                             <input type="text" value="{{ $course->name }}" name="name" placeholder="Course Name" class="input-field">
                             @error('name')
                                 {{$message}}
                             @enderror
                         </div>
                         <div>
-                            <label for="course_type" class="input-title">Course Type</label><br>
+                            <label for="course_type" class="text-lg font-medium">Course Type</label><br>
                             <select name="course_type" placeholder="Course Type" class="input-field">
                                 <option value="{{ $course->course_type }}">{{ $course->course_type }}</option>
                                 @if($course->course_type == 'Core')
@@ -53,14 +53,14 @@
                     </div>
                     <div class="grid grid-cols-2 gap-4 my-3">
                         <div>
-                            <label for="course_code" class="input-title">Course Code</label><br>
+                            <label for="course_code" class="text-lg font-medium">Course Code</label><br>
                             <input type="text" value="{{ $course->code }}" name="course_code" placeholder="Course Code" class="input-field">
                             @error('course_code')
                                 {{$message}}
                             @enderror
                         </div>
                         <div>
-                            <label for="course_unit" class="input-title">Course Unit</label><br>
+                            <label for="course_unit" class="text-lg font-medium">Course Unit</label><br>
                             <input type="text" value="{{ $course->unit }}" name="course_unit" placeholder="Course Unit" class="input-field">
                             @error('course_unit')
                                 {{$message}}
@@ -68,7 +68,7 @@
                         </div>
                     </div>
                     <div class="my-3">
-                        <label for="name" class="input-title">Department Name</label><br>
+                        <label for="name" class="text-lg font-medium">Department Name</label><br>
                         <select name="department" class="input-field">
                             <option value="{{ $course->department}}">{{ $course->department($course->department) }}</option>
                             @foreach($departments as $department)

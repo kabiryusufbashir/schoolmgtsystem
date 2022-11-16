@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Models\Department;
 use App\Models\Course;
+use App\Models\Staff;
 
 class DashboardController extends Controller
 {
@@ -247,6 +248,140 @@ class DashboardController extends Controller
             return redirect()->route('all-course')->with('success', 'Course Deleted');
         }catch(Exception $e){
             return redirect()->route('all-course')->with('error', 'Please try again... '.$e);
+        }
+    }
+
+    // Staff 
+    public function staff(){
+        $staff = User::orderby('name', 'asc')->get();
+        return view('dashboard.staff.index', compact('staff'));
+    }
+
+    public function createStaff(){
+        $step = 1;
+        return view('dashboard.staff.create', compact('step'));
+    }
+
+    public function addStaff(Request $request){
+        $data = $request->validate([
+            'title' => ['required'],
+            'first_name' => ['required'],
+            'email' => 'required|email',
+            'last_name' => ['required'],
+            'dob' => ['required'],
+            'gender' => ['required'],
+            'marital_status' => ['required'],
+        ]);
+
+        $name = $data['first_name'].' '.$request->last_name.' '.$request->other_name;
+        $user_id = $request->first_name.Date('my');
+        $password = Hash::make('1234567890');
+        $type = 2;
+
+        try{
+            $name = User::create([
+                'name' => $name,
+                'email' => $data['email'],
+                'user_id' => $user_id,
+                'password' => $password,
+                'status' => 1,
+                'category' => $type,
+                'photo' => '',
+            ]);
+
+            $user = User::latest('id')->first();
+            $lastid = $user->id;
+
+            $staff = Staff::create([
+                'user_id' => $lastid,
+                'title' => $request->title,
+                'first_name' => $request->first_name,
+                'last_name' => $request->last_name,
+                'other_name' => $request->other_name,
+                'gender' => $request->gender,
+                'dob' => $request->dob,
+                'marital_status' => $request->marital_status,
+                'email' => $request->email,
+            ]);
+
+            return redirect()->route('create-staff-step-2');
+
+        }catch(Exception $e){
+            return redirect()->route('all-staff')->with('error', 'Please try again... '.$e);
+        }
+    }
+
+    public function createStaffStep2(){
+        $user = User::latest('id')->first();
+        $lastid = $user->id;
+        $staff = Staff::where('user_id', $lastid)->first();
+        $step = 2;
+        return view('dashboard.staff.create', compact('step', 'staff'));
+    }
+
+    public function updateStaffStep2(Request $request, $id){
+        
+        try{
+            $staff = Staff::where('id', $id)->update([
+                'phone' => $request->phone,
+                'address' => $request->address,
+                'city' => $request->city,
+                'state' => $request->state,
+                'country' => $request->country,
+            ]);
+
+            return redirect()->route('create-staff-step-3');
+        
+        }catch(Exception $e){
+            return back()->with('error', 'Please try again... '.$e);
+        }
+    }
+
+    public function createStaffStep3(){
+        $user = User::latest('id')->first();
+        $lastid = $user->id;
+        $staff = Staff::where('user_id', $lastid)->first();
+        $step = 3;
+        return view('dashboard.staff.create', compact('step', 'staff'));
+    }
+
+    public function updateStaffStep3(Request $request, $id){
+        
+        try{
+            $staff = Staff::where('user_id', $id)->update([
+                'phone' => $data['phone'],
+                'address' => $data['address'],
+                'city' => $data['city'],
+                'state' => $data['state'],
+                'country' => $data['country'],
+            ]);
+            
+            return redirect()->route('all-staff')->with('success', 'Staff Deleted');
+        
+        }catch(Exception $e){
+            return back()->with('error', 'Please try again... '.$e);
+        }
+    }
+
+    public function allStaff(){
+        $staff = User::orderby('name', 'asc')->paginate(20);
+        return view('dashboard.staff.staff', compact('staff'));
+    }
+
+    public function editStaff($id){
+        $staff = User::findOrFail($id);
+        $departments = Department::orderby('name', 'asc')->get();
+        
+        return view('dashboard.staff.edit', compact('staff','departments'));
+    }
+
+    public function deleteStaff($id){
+        $staff = User::findOrFail($id);
+        try{
+            $staff->delete();
+            return redirect()->route('all-staff')->with('success', 'Staff Deleted');
+        }catch(Exception $e){
+            return redirect()->route('all-staff')->with('error', 'Please try again... '.$e);
         }
     }
 }

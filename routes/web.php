@@ -40,9 +40,21 @@ Route::middleware([GlobalData::class])->group(function(){
     Route::get('/course', [DashboardController::class, 'course'])->name('root-course')->middleware('auth:web');
     Route::post('/course-create', [DashboardController::class, 'createCourse'])->name('course-create')->middleware('auth:web');
     Route::get('/allcourse', [DashboardController::class, 'allCourse'])->name('all-course')->middleware('auth:web');
-    Route::get('/course/{dept}/edit', [DashboardController::class, 'editCourse'])->name('course-edit')->middleware('auth:web');
+    Route::get('/course/{course}/edit', [DashboardController::class, 'editCourse'])->name('course-edit')->middleware('auth:web');
     Route::patch('/course/{course}/update', [DashboardController::class, 'updateCourse'])->name('course-update')->middleware('auth:web');
     Route::delete('/course/{course}', [DashboardController::class, 'deleteCourse'])->name('course-delete')->middleware('auth:web');
+    
+    // Staff
+    Route::get('/staff', [DashboardController::class, 'staff'])->name('root-staff')->middleware('auth:web');
+    Route::get('/allstaff', [DashboardController::class, 'allStaff'])->name('all-staff')->middleware('auth:web');
+    Route::get('/staff-create', [DashboardController::class, 'createStaff'])->name('create-staff')->middleware('auth:web');
+    Route::post('/add-create', [DashboardController::class, 'addStaff'])->name('add-staff')->middleware('auth:web');
+    Route::get('/staff/edit/step_2', [DashboardController::class, 'createStaffStep2'])->name('create-staff-step-2')->middleware('auth:web');
+    Route::patch('/staff/{staff}/update/step_2', [DashboardController::class, 'updateStaffStep2'])->name('staff-update-step-2')->middleware('auth:web');
+    Route::get('/staff/edit/step_3', [DashboardController::class, 'createStaffStep3'])->name('create-staff-step-3')->middleware('auth:web');
+    Route::patch('/staff/{staff}/update/step_3', [DashboardController::class, 'updateStaffStep3'])->name('staff-update-step-3')->middleware('auth:web');
+    Route::get('/staff/{staff}/edit', [DashboardController::class, 'editStaff'])->name('staff-edit')->middleware('auth:web');
+    Route::delete('/staff/{staff}', [DashboardController::class, 'deleteStaff'])->name('staff-delete')->middleware('auth:web');
 
     // Settings
     Route::get('/settings', [DashboardController::class, 'settings'])->name('root-settings')->middleware('auth:web');

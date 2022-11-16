@@ -36,15 +36,17 @@
         </div>
     </a>
     <!-- Staff  -->
-    <div class="nav-link-div">
-        <span>
-            @include('icons.staff')
-        </span>
-        &nbsp;&nbsp;
-        <span class="text-sm">
-            Staff
-        </span>
-    </div>
+    <a href="{{ route('root-staff') }}">
+        <div class="nav-link-div">
+            <span>
+                @include('icons.staff')
+            </span>
+            &nbsp;&nbsp;
+            <span class="text-sm">
+                Staff
+            </span>
+        </div>
+    </a>
     <!-- Student  -->
     <div class="nav-link-div">
         <span>
@@ -53,6 +55,16 @@
         &nbsp;&nbsp;
         <span class="text-sm">
             Students
+        </span>
+    </div>
+    <!-- Calendar  -->
+    <div class="nav-link-div">
+        <span>
+            @include('icons.timetable')
+        </span>
+        &nbsp;&nbsp;
+        <span class="text-sm">
+            Calendar
         </span>
     </div>
     <!-- Registration  -->
