@@ -23,6 +23,18 @@
             </span>
         </div>
     </a>
+    <!-- Courses  -->
+    <a href="{{ route('root-course') }}">
+        <div class="nav-link-div">
+            <span>
+                @include('icons.course')
+            </span>
+            &nbsp;&nbsp;
+            <span class="text-sm">
+                Courses
+            </span>
+        </div>
+    </a>
     <!-- Staff  -->
     <div class="nav-link-div">
         <span>
@@ -41,16 +53,6 @@
         &nbsp;&nbsp;
         <span class="text-sm">
             Students
-        </span>
-    </div>
-    <!-- Courses  -->
-    <div class="nav-link-div">
-        <span>
-            @include('icons.course')
-        </span>
-        &nbsp;&nbsp;
-        <span class="text-sm">
-            Courses
         </span>
     </div>
     <!-- Registration  -->

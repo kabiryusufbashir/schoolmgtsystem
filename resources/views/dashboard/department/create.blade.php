@@ -2,7 +2,7 @@
     <div id="modal">
         <div id="modal-content" class="rounded">
             <div id="modal-header" class="modal-header">
-                <span>Department Name</span>
+                <span>Add Department</span>
                 <span id="closeModalAddDepartment" class="cursor-pointer">X</span>
             </div>
             <div class="p-4">

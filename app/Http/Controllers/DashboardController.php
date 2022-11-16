@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Hash;
 
 use App\Models\User;
 use App\Models\Department;
+use App\Models\Course;
 
 class DashboardController extends Controller
 {
@@ -164,6 +165,88 @@ class DashboardController extends Controller
             return redirect()->route('all-department')->with('success', 'Department Deleted');
         }catch(Exception $e){
             return redirect()->route('all-department')->with('error', 'Please try again... '.$e);
+        }
+    }
+
+    // Course 
+    public function course(){
+        $departments = Department::orderby('name', 'asc')->get();
+        return view('dashboard.course.index', compact('departments'));
+    }
+
+    public function createCourse(Request $request){
+        $data = $request->validate([
+            'name' => ['required'],
+            'course_code' => ['required'],
+            'course_type' => ['required'],
+            'course_unit' => ['required'],
+            'department' => ['required'],
+        ]);
+        
+        $course_name = $request->name;
+        $course_code = $request->course_code;
+        $course_type = $request->course_type;
+        $course_unit = $request->course_unit;
+        $dept_name = $request->department;
+
+        try{
+            $name = Course::create([
+                'name' => $data['name'],
+                'course_code' => $data['course_code'],
+                'course_type' => $data['course_type'],
+                'course_unit' => $data['course_unit'],
+                'department' => $data['department'],
+            ]);
+
+            return redirect()->route('all-course')->with('success', $course_name.' Course Added');
+
+        }catch(Exception $e){
+            return redirect()->route('all-course')->with('error', 'Please try again... '.$e);
+        }
+    }
+
+    public function allCourse(){
+        $courses = Course::orderby('name', 'asc')->paginate(20);
+        return view('dashboard.course.course', compact('courses'));
+    }
+
+    public function editCourse($id){
+        $course = Course::findOrFail($id);
+        $departments = Department::orderby('name', 'asc')->get();
+        
+        return view('dashboard.course.edit', compact('course','departments'));
+    }
+
+    public function updateCourse(Request $request, $id){
+        $data = $request->validate([
+            'name' => ['required'],
+            'course_code' => ['required'],
+            'course_type' => ['required'],
+            'course_unit' => ['required'],
+            'department' => ['required'],
+        ]);
+
+        try{
+            $course = Course::where('id', $id)->update([
+                'name' => $data['name'],
+                'course_code' => $data['course_code'],
+                'course_type' => $data['course_type'],
+                'course_unit' => $data['course_unit'],
+                'department' => $data['department'],
+            ]);
+            return redirect()->route('all-course')->with('success', 'Course Updated');
+        }catch(Exception $e){
+            return back()->with('error', 'Please try again... '.$e);
+        }
+    }
+
+    public function deleteCourse($id){
+        $course = Course::findOrFail($id);
+        try{
+            $course->delete();
+            return redirect()->route('all-course')->with('success', 'Course Deleted');
+        }catch(Exception $e){
+            return redirect()->route('all-course')->with('error', 'Please try again... '.$e);
         }
     }
 }

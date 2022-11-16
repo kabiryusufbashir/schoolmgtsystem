@@ -1,6 +1,6 @@
 <div class="bg-white py-3 px-6 ml-4 mr-8 text-gray-600 my-5 rounded">
-    <h1 class="text-lg font-semibold py-4 w-full">All Department</h1>
-    @if(count($departments) > 0)
+    <h1 class="text-lg font-semibold py-4 w-full">All Courses</h1>
+    @if(count($courses) > 0)
     <div class="flex flex-col">
         <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
             <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
@@ -12,41 +12,47 @@
                                     NAME
                                 </th>
                                 <th scope="col" class="px-6 py-2  text-gray-500">
-                                    HOD
+                                    CODE
                                 </th>
                                 <th scope="col" class="px-6 py-2  text-gray-500">
-                                    LEVEL COORDINATOR
+                                    TYPE
                                 </th>
                                 <th scope="col" class="px-6 py-2  text-gray-500">
-                                    EXAM OFFICER
+                                    UNIT
+                                </th>
+                                <th scope="col" class="px-6 py-2  text-gray-500">
+                                    DEPARTMENT
                                 </th>
                                 <th scope="col" class="px-6 py-2  text-gray-500">
                                 </th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($departments as $department)
+                            @foreach($courses as $course)
                                 <tr class="divide-y divide-gray-300 border-b-2">
                                     <td class="px-6 py-4 text-sm text-gray-500">
-                                        {{ $department->name }}
+                                        {{ $course->name }}
                                     </td>
                                     <td class="px-6 py-4 text-sm text-gray-500">
-                                        {{ ($department->hod != null) ? $department->hod(department->hod) : 'Empty' }}
+                                        {{ $course->course_code }}
                                     </td>
                                     <td class="px-6 py-4 text-sm text-gray-500">
-                                        {{ ($department->level_coordinator != null) ? $department->levelCoordinator(department->level_coordinator) : 'Empty' }}
+                                        {{ $course->course_type }}
                                     </td>
                                     <td class="px-6 py-4 text-sm text-gray-500">
-                                        {{ ($department->exam_officer != null) ? $department->examOfficer(department->exam_officer) : 'Empty' }}
+                                        {{ $course->course_unit }}
+                                    </td>
+                                    <td class="px-6 py-4 text-sm text-gray-500">
+                                        {{ ($course->department != null) ? $course->department($course->department) : 'Empty' }}
                                     </td>
                                     <td class="px-6 py-4 text-sm text-gray-500">
                                         <span class="flex">
-                                            <form action="{{ route('dept-edit', $department->id) }}" method="GET">
+                                            <form action="{{ route('course-edit', $course->id) }}" method="GET">
                                                 @csrf 
                                                 <input type="submit" value="EDIT" class="edit-btn">
                                             </form>
                                             &nbsp;&nbsp;
-                                            <form action="{{ route('dept-delete', $department->id) }}" method="POST">
+                                            <form action="{{ route('course-delete', $course->id) }}" method="POST">
                                                 @csrf 
                                                 @method('DELETE')
                                                 <input type="submit" value="DELETE" class="del-btn">
@@ -58,13 +64,13 @@
                         </tbody>
                     </table>
                     <div class="row d-flex justify-content-center mt-4">
-                        {{$departments->links()}}
+                        {{$courses->links()}}
                     </div>
                 </div>
             </div>
         </div>
     </div>
     @else
-        <h1 class="text-lg font-semibold py-4 w-full">No Department Found</h1>
+        <h1 class="text-lg font-semibold py-4 w-full">No Course Found</h1>
     @endif
 </div>
