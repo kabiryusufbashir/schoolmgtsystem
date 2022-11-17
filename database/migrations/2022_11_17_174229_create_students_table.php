@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('students', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
+            $table->string('matric_no')->nullable();
             $table->string('title')->nullable();
             $table->string('first_name');
             $table->string('last_name')->nullable();
@@ -33,6 +34,8 @@ return new class extends Migration
             $table->string('phone')->nullable();
             $table->string('department')->nullable();
             $table->string('photo')->nullable();
+            $table->string('year_admitted')->nullable();
+            $table->string('current_year')->nullable();
             $table->timestamps();
 
             $table->index('user_id');

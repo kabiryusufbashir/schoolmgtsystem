@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('page-title')
-    Staff - AKCILS
+    Student - AKCILS
 @endsection
 
 @section('contents')
@@ -17,17 +17,17 @@
             <!-- User Info  -->
             @include('includes.root_user_info')
             <div class="text-center text-xl text-gray-600 mt-2 ml-4 mr-7 rounded py-3">@include('includes.messages')</div>
-                <!-- Edit Staff  -->
+                <!-- Edit Student  -->
                 <div class="bg-white py-3 px-6 ml-4 mr-8 text-gray-600 mb-5 rounded">
-                    <h1 class="text-lg font-semibold py-4 w-full">Edit Staff</h1>
+                    <h1 class="text-lg font-semibold py-4 w-full">Edit Student</h1>
                     @if($step == 1)
-                        @include('dashboard.staff.edit.step_1')
+                        @include('dashboard.student.edit.step_1')
                     @elseif($step == 2)
-                        @include('dashboard.staff.edit.step_2')
+                        @include('dashboard.student.edit.step_2')
                     @elseif($step == 3)
-                        @include('dashboard.staff.edit.step_3')
+                        @include('dashboard.student.edit.step_3')
                     @elseif($step == 4)
-                        @include('dashboard.staff.edit.step_4')
+                        @include('dashboard.student.edit.step_4')
                     @endif        
                 </div>
             </div>

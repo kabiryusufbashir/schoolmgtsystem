@@ -13,6 +13,7 @@ use App\Models\Department;
 use App\Models\Course;
 use App\Models\Staff;
 use App\Models\Qualification;
+use App\Models\Student;
 
 class DashboardController extends Controller
 {
@@ -507,6 +508,7 @@ class DashboardController extends Controller
                     for($x=0; $x<count($qualification); $x++){
                         $qualification_add = new Qualification;
                         $qualification_add['user_id'] = $id;
+                        $qualification_add['category'] = 2;
                         $qualification_add['school_name'] = $data['school_name'][$x];
                         $qualification_add['year_graduated'] = $data['year_graduated'][$x];
                         $qualification_add['qualification_name'] = $data['qualification_name'][$x];
@@ -519,6 +521,7 @@ class DashboardController extends Controller
                     for($x=0; $x<count($qualification); $x++){
                         $qualification_add = new Qualification;
                         $qualification_add['user_id'] = $id;
+                        $qualification_add['category'] = 2;
                         $qualification_add['school_name'] = $data['school_name'][$x];
                         $qualification_add['year_graduated'] = $data['year_graduated'][$x];
                         $qualification_add['qualification_name'] = $data['qualification_name'][$x];
@@ -719,7 +722,7 @@ class DashboardController extends Controller
         $name = $data['first_name'].' '.$request->last_name.' '.$request->other_name;
         $user_id = $request->first_name.Date('my');
         $password = Hash::make('1234567890');
-        $type = 2;
+        $type = 3;
 
         try{
             $name = User::create([
@@ -738,6 +741,7 @@ class DashboardController extends Controller
             $student = Student::create([
                 'user_id' => $lastid,
                 'title' => $request->title,
+                'matric_no' => $request->matric_no,
                 'first_name' => $request->first_name,
                 'last_name' => $request->last_name,
                 'other_name' => $request->other_name,
@@ -765,6 +769,7 @@ class DashboardController extends Controller
         try{
             $student = Student::where('user_id', $id)->update([
                 'title' => $request->title,
+                'matric_no' => $request->matric_no,
                 'first_name' => $request->first_name,
                 'last_name' => $request->last_name,
                 'other_name' => $request->other_name,
@@ -823,6 +828,11 @@ class DashboardController extends Controller
 
         try{
 
+            $student = Student::where('user_id', $id)->update([
+                'year_admitted' => $request->year_admitted,
+                'current_year' => $request->current_year,
+            ]);
+
             $check_record = Qualification::where('user_id', $id)->count();
             
             if($check_record == 0){
@@ -830,6 +840,7 @@ class DashboardController extends Controller
                     for($x=0; $x<count($qualification); $x++){
                         $qualification_add = new Qualification;
                         $qualification_add['user_id'] = $id;
+                        $qualification_add['category'] = 3;
                         $qualification_add['school_name'] = $data['school_name'][$x];
                         $qualification_add['year_graduated'] = $data['year_graduated'][$x];
                         $qualification_add['qualification_name'] = $data['qualification_name'][$x];
@@ -842,6 +853,7 @@ class DashboardController extends Controller
                     for($x=0; $x<count($qualification); $x++){
                         $qualification_add = new Qualification;
                         $qualification_add['user_id'] = $id;
+                        $qualification_add['category'] = 3;
                         $qualification_add['school_name'] = $data['school_name'][$x];
                         $qualification_add['year_graduated'] = $data['year_graduated'][$x];
                         $qualification_add['qualification_name'] = $data['qualification_name'][$x];
@@ -905,7 +917,7 @@ class DashboardController extends Controller
     }
 
     public function allStudent(){
-        $student = User::where('category', 2)->where('status', 1)->orderby('name', 'asc')->paginate(20);
+        $student = User::where('category', 3)->where('status', 1)->orderby('name', 'asc')->paginate(20);
         return view('dashboard.student.student', compact('student'));
     }
 

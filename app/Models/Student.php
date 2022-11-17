@@ -11,6 +11,7 @@ class Student extends Model
 
     protected $fillable = [
         'user_id',
+        'matric_no',
         'title',
         'first_name',
         'last_name',
@@ -30,4 +31,14 @@ class Student extends Model
         'department',
         'photo',
     ];
+
+    public function department($id)
+    {
+        if($id != 0){
+            $department = Department::where('id', $id)->first(); 
+            return $department->name;
+        }else{
+            return '';
+        }
+    }
 }

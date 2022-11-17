@@ -18,7 +18,7 @@
             @include('includes.root_user_info')
             <div class="text-center text-xl text-gray-600 mt-2 ml-4 mr-7 rounded py-3">@include('includes.messages')</div>
             <!-- All Staff  -->
-            @include('includes.root_staff_allstaff')
+            @include('includes.root_student_allstudent')
         </div>
     </div>
 @endsection

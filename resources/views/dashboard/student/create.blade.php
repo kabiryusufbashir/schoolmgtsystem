@@ -23,7 +23,7 @@
                     <div class="mb-4">
                         <span class="p-2 bg-gray-200 rounded cursor-pointer">Step 1: Personal Data /</span>
                         <span>Step 2: Contact Address /</span>
-                        <span>Step 3: Educational Qualification</span>
+                        <span>Step 3: Educational History /</span>
                         <span>Step 4: Photo & Department</span>
                     </div>
                     <div class="py-4 lg:w-1/3">
@@ -43,6 +43,14 @@
                                     <option value="Prof">Prof</option>
                                 </select>
                                 @error('title')
+                                    {{$message}}
+                                @enderror
+                            </div>
+                            <!-- Matric No  -->
+                            <div class="my-4">
+                                <label for="matric_no" class="input-title">Matric No</label><br>
+                                <input type="text" name="matric_no" placeholder="Matric No" class="input-field">
+                                @error('matric_no')
                                     {{$message}}
                                 @enderror
                             </div>

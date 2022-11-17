@@ -59,13 +59,48 @@ class User extends Authenticatable
 
     public function fullName($id)
     {
-        $staff = Staff::where('user_id', $id)->first();
-        $title = $staff->title;
-        $first_name = $staff->first_name;
-        $last_name = $staff->last_name;
-        $other_name = $staff->other_name;
-        $full_name = $title.' '.$first_name.' '.$last_name.' '.$other_name;
-        
-        return $full_name;
+        if($id != ''){
+            $staff = Staff::where('user_id', $id)->first();
+            if($staff){
+                $title = $staff->title;
+                $first_name = $staff->first_name;
+                $last_name = $staff->last_name;
+                $other_name = $staff->other_name;
+                $full_name = $title.' '.$first_name.' '.$last_name.' '.$other_name;
+                
+                return $full_name;
+            }
+        }else{
+            return '';
+        }
+    }
+
+    public function studentFullName($id)
+    {
+        if($id != ''){
+            $student = Student::where('user_id', $id)->first();
+            if($student){
+                $title = $student->title;
+                $first_name = $student->first_name;
+                $last_name = $student->last_name;
+                $other_name = $student->other_name;
+                $full_name = $title.' '.$first_name.' '.$last_name.' '.$other_name;
+                
+                return $full_name;
+            }
+        }else{
+            return '';
+        }
+    }
+
+    public function studentDepartment($student_id)
+    {
+        $student = Student::where('user_id', $student_id)->first();
+        $student_department = Department::where('id', $student->department)->first();
+        if($student->department != 0){
+            return $student_department->name;
+        }else{
+            return '';
+        }
     }
 }
