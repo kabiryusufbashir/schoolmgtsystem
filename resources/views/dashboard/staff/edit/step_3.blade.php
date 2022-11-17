@@ -48,6 +48,15 @@
         <div id="qualificationSection" class="my-4"></div>
         
         <div id="addField" class="bg-blue-800 text-white p-2 rounded float-right mb-3 text-xs cursor-pointer">Add Field + </div>
+        <br><br>
+        <div>
+            <a href="{{ route('staff-edit-step-2', $staff->user_id) }}">
+                <div id="addField" class="bg-blue-800 text-white p-2 rounded float-left mb-3 text-xs cursor-pointer">Previous</div>
+            </a>
+            <a href="{{ route('staff-edit-step-4', $staff->user_id) }}">    
+                <div id="addField" class="bg-blue-800 text-white p-2 rounded float-right mb-3 text-xs cursor-pointer">Next</div>
+            </a>    
+        </div>
         <div class="text-center my-4">
             <button class="submit-btn">UPDATE STAFF</button>
         </div>

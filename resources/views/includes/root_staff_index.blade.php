@@ -26,7 +26,7 @@
             </div>
         </a>
         <!-- Bulk Upload Staff -->
-        <a href="{{ route('all-staff') }}">
+        <a href="#">
             <div class="settings-menu-div">
                 <span class="bg-blue-300 p-2 rounded-full">
                     @include('icons.staff')

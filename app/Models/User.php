@@ -45,4 +45,15 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function StaffDepartment($staff_id)
+    {
+        $staff = Staff::where('user_id', $staff_id)->first();
+        $staff_department = Department::where('id', $staff->department)->first();
+        if($staff->department != 0){
+            return $staff_department->name;
+        }else{
+            return '';
+        }
+    }
 }

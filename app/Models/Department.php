@@ -18,22 +18,16 @@ class Department extends Model
         'exam_officer',
     ];
 
-    public function hod($id)
+    public function staffFullName($id)
     {
-        $hod = User::where('id', $id)->first(); 
-        return $hod->name;
-    }
-
-    public function levelCoordinator($id)
-    {
-        $level_coordinator = User::where('id', $id)->first(); 
-        return $level_coordinator->name;
-    }
-
-    public function examOfficer($id)
-    {
-        $exam_officer = User::where('id', $id)->first(); 
-        return $exam_officer->name;
+        $staff = Staff::where('user_id', $id)->first();
+        $title = $staff->title;
+        $first_name = $staff->first_name;
+        $last_name = $staff->last_name;
+        $other_name = $staff->other_name;
+        $full_name = $title.' '.$first_name.' '.$last_name.' '.$other_name;
+        
+        return $full_name;
     }
     
 }

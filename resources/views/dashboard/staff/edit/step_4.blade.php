@@ -47,6 +47,11 @@
                 {{$message}}
             @enderror
         </div>
+        <div>
+            <a href="{{ route('staff-edit-step-3', $staff->user_id) }}">
+                <div id="addField" class="bg-blue-800 text-white p-2 rounded float-left mb-3 text-xs cursor-pointer">Previous</div>
+            </a>    
+        </div>
         <div class="text-center my-4">
             <button class="submit-btn">UPDATE STAFF</button>
         </div>

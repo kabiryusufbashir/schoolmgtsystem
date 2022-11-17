@@ -142,7 +142,8 @@ class DashboardController extends Controller
 
     public function editDepartment($id){
         $dept = Department::findOrFail($id);
-        return view('dashboard.department.edit', compact('dept'));
+        $staff = Staff::where('department', $id)->get();
+        return view('dashboard.department.edit', compact('dept', 'staff'));
     }
 
     public function updateDepartment(Request $request, $id){
@@ -153,6 +154,9 @@ class DashboardController extends Controller
         try{
             $dept = Department::where('id', $id)->update([
                 'name' => $data['name'],
+                'hod' => $request->hod,
+                'level_coordinator' => $request->level_coordinator,
+                'exam_officer' => $request->exam_officer,
             ]);
             return redirect()->route('all-department')->with('success', 'Department Updated');
         }catch(Exception $e){
@@ -424,26 +428,36 @@ class DashboardController extends Controller
 
     public function updateStaffStep4(Request $request, $id){
         
-        $data = $request->validate([
-            'photo' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
-            'department' => 'required',
-        ]);
+        if(!empty($request->photo)){
+            $data = $request->validate([
+                'photo' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
+                'department' => 'required',
+            ]);
+            
+            $imageName = '/images/staff/'.time().'.'.$request->photo->extension();
+            $request->photo->move('images/staff', $imageName);  
+        }
 
         $user_photo = $request->photo;
         $user_department = $request->department;
-        $imageName = '/images/staff/'.time().'.'.$request->photo->extension();  
 
         try{
-            $photo = User::where('id', $id)->update([
-                'photo'=> $imageName
-            ]);
+            if(!empty($request->photo)){
+                $photo = User::where('id', $id)->update([
+                    'photo'=> $imageName
+                ]);
+            }
 
-            $department = Staff::where('user_id', $id)->update([
-                'department'=> $user_department,
-                'photo'=> $imageName
-            ]);
-                
-            $request->photo->move('images/staff', $imageName);
+            if(!empty($request->photo)){
+                $department = Staff::where('user_id', $id)->update([
+                    'department'=> $user_department,
+                    'photo'=> $imageName
+                ]);
+            }else{
+                $department = Staff::where('user_id', $id)->update([
+                    'department'=> $user_department,
+                ]);
+            }
 
             return redirect()->route('all-staff')->with('success', 'Staff Added');
         
@@ -453,7 +467,7 @@ class DashboardController extends Controller
     }
 
     public function allStaff(){
-        $staff = User::where('status', 1)->orderby('name', 'asc')->paginate(20);
+        $staff = User::where('category', 2)->where('status', 1)->orderby('name', 'asc')->paginate(20);
         return view('dashboard.staff.staff', compact('staff'));
     }
 

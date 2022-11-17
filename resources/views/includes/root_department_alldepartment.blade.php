@@ -31,13 +31,13 @@
                                         {{ $department->name }}
                                     </td>
                                     <td class="px-6 py-4 text-sm text-gray-500">
-                                        {{ ($department->hod != null) ? $department->hod(department->hod) : 'Empty' }}
+                                        {{ ($department->hod != null) ? $department->staffFullName($department->hod) : 'Empty' }}
                                     </td>
                                     <td class="px-6 py-4 text-sm text-gray-500">
-                                        {{ ($department->level_coordinator != null) ? $department->levelCoordinator(department->level_coordinator) : 'Empty' }}
+                                        {{ ($department->level_coordinator != null) ? $department->staffFullName($department->level_coordinator) : 'Empty' }}
                                     </td>
                                     <td class="px-6 py-4 text-sm text-gray-500">
-                                        {{ ($department->exam_officer != null) ? $department->examOfficer(department->exam_officer) : 'Empty' }}
+                                        {{ ($department->exam_officer != null) ? $department->staffFullName($department->exam_officer) : 'Empty' }}
                                     </td>
                                     <td class="px-6 py-4 text-sm text-gray-500">
                                         <span class="flex">
