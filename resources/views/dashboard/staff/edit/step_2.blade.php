@@ -1,10 +1,15 @@
 <div class="mb-4">
-    <span>Step 1: Bio Data /</span>
+    <a href="{{ route('staff-edit-step-1', $staff->user_id) }}">
+        <span>Step 1: Personal Data /</span>
+    </a>
     <a href="{{ route('staff-edit-step-2', $staff->user_id) }}">
         <span class="p-2 bg-gray-200 rounded cursor-pointer">Step 2: Contact Address /</span>
     </a>
     <a href="{{ route('staff-edit-step-3', $staff->user_id) }}">
-        <span>Step 3: Educational Qualification</span>
+        <span>Step 3: Educational Qualification /</span>
+    </a>
+    <a href="{{ route('staff-edit-step-4', $staff->user_id) }}">
+        <span>Step 4: Photo & Department</span>
     </a>
 </div>
 <div class="py-4 lg:w-1/3">
@@ -53,7 +58,7 @@
             @enderror
         </div>
         <div class="text-center my-4">
-            <button class="submit-btn">EDIT STAFF</button>
+            <button class="submit-btn">UPDATE STAFF</button>
         </div>
     </form>
 </div>

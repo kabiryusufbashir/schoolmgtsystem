@@ -327,6 +327,7 @@ class DashboardController extends Controller
                 'last_name' => $request->last_name,
                 'other_name' => $request->other_name,
                 'gender' => $request->gender,
+                'email' => $request->email,
                 'dob' => $request->dob,
                 'marital_status' => $request->marital_status,
             ]);
@@ -407,6 +408,43 @@ class DashboardController extends Controller
                 }
             }
 
+            return redirect()->route('staff-edit-step-4', $id);
+        
+        }catch(Exception $e){
+            return back()->with('error', 'Please try again... '.$e);
+        }
+    }
+
+    public function editStaffStep4($id){
+        $staff = Staff::where('user_id', $id)->first();
+        $departments = Department::orderby('name', 'asc')->get();
+        $step = 4;
+        return view('dashboard.staff.edit.index', compact('step', 'staff', 'departments'));
+    }
+
+    public function updateStaffStep4(Request $request, $id){
+        
+        $data = $request->validate([
+            'photo' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
+            'department' => 'required',
+        ]);
+
+        $user_photo = $request->photo;
+        $user_department = $request->department;
+        $imageName = '/images/staff/'.time().'.'.$request->photo->extension();  
+
+        try{
+            $photo = User::where('id', $id)->update([
+                'photo'=> $imageName
+            ]);
+
+            $department = Staff::where('user_id', $id)->update([
+                'department'=> $user_department,
+                'photo'=> $imageName
+            ]);
+                
+            $request->photo->move('images/staff', $imageName);
+
             return redirect()->route('all-staff')->with('success', 'Staff Added');
         
         }catch(Exception $e){
@@ -415,21 +453,15 @@ class DashboardController extends Controller
     }
 
     public function allStaff(){
-        $staff = User::orderby('name', 'asc')->paginate(20);
+        $staff = User::where('status', 1)->orderby('name', 'asc')->paginate(20);
         return view('dashboard.staff.staff', compact('staff'));
     }
 
-    public function editStaff($id){
-        $staff = User::findOrFail($id);
-        $departments = Department::orderby('name', 'asc')->get();
-        
-        return view('dashboard.staff.edit', compact('staff','departments'));
-    }
-
     public function deleteStaff($id){
-        $staff = User::findOrFail($id);
         try{
-            $staff->delete();
+            $staff = User::where('id', $id)->update([
+                'status' => 0,
+            ]);
             return redirect()->route('all-staff')->with('success', 'Staff Deleted');
         }catch(Exception $e){
             return redirect()->route('all-staff')->with('error', 'Please try again... '.$e);

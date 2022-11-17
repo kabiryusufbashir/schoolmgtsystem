@@ -55,7 +55,8 @@ Route::middleware([GlobalData::class])->group(function(){
     Route::patch('/staff/{staff}/update/step_2', [DashboardController::class, 'updateStaffStep2'])->name('staff-update-step-2')->middleware('auth:web');
     Route::get('/staff/{staff}/edit/step_3', [DashboardController::class, 'editStaffStep3'])->name('staff-edit-step-3')->middleware('auth:web');
     Route::patch('/staff/{staff}/update/step_3', [DashboardController::class, 'updateStaffStep3'])->name('staff-update-step-3')->middleware('auth:web');
-    Route::get('/staff/{staff}/edit', [DashboardController::class, 'editStaff'])->name('staff-edit')->middleware('auth:web');
+    Route::get('/staff/{staff}/edit/step_4', [DashboardController::class, 'editStaffStep4'])->name('staff-edit-step-4')->middleware('auth:web');
+    Route::patch('/staff/{staff}/update/step_4', [DashboardController::class, 'updateStaffStep4'])->name('staff-update-step-4')->middleware('auth:web');
     Route::delete('/staff/{staff}', [DashboardController::class, 'deleteStaff'])->name('staff-delete')->middleware('auth:web');
 
     // Settings

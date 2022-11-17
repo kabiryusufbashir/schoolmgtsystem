@@ -21,9 +21,10 @@
                 <div class="bg-white py-3 px-6 ml-4 mr-8 text-gray-600 mb-5 rounded">
                     <h1 class="text-lg font-semibold py-4 w-full">Add Staff</h1>
                     <div class="mb-4">
-                        <span class="p-2 bg-gray-200 rounded cursor-pointer">Step 1: Bio Data /</span>
+                        <span class="p-2 bg-gray-200 rounded cursor-pointer">Step 1: Personal Data /</span>
                         <span>Step 2: Contact Address /</span>
                         <span>Step 3: Educational Qualification</span>
+                        <span>Step 4: Photo & Department</span>
                     </div>
                     <div class="py-4 lg:w-1/3">
                         <!-- Staff Add  -->

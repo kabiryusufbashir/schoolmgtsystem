@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+use App\Models\Department;
+
 class Staff extends Model
 {
     use HasFactory;
@@ -28,4 +30,14 @@ class Staff extends Model
         'email',
         'phone',
     ];
+
+    public function department($id)
+    {
+        if($id != 0){
+            $department = Department::where('id', $id)->first(); 
+            return $department->name;
+        }else{
+            return '';
+        }
+    }
 }

@@ -26,6 +26,8 @@
                         @include('dashboard.staff.edit.step_2')
                     @elseif($step == 3)
                         @include('dashboard.staff.edit.step_3')
+                    @elseif($step == 4)
+                        @include('dashboard.staff.edit.step_4')
                     @endif        
                 </div>
             </div>
