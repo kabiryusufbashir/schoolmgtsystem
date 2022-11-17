@@ -1,15 +1,15 @@
 <div class="mb-4">
     <span>Step 1: Bio Data /</span>
-    <a href="{{ route('create-staff-step-2') }}">
+    <a href="{{ route('staff-edit-step-2', $staff->user_id) }}">
         <span class="p-2 bg-gray-200 rounded cursor-pointer">Step 2: Contact Address /</span>
     </a>
-    <a href="{{ route('create-staff-step-3') }}">
+    <a href="{{ route('staff-edit-step-3', $staff->user_id) }}">
         <span>Step 3: Educational Qualification</span>
     </a>
 </div>
 <div class="py-4 lg:w-1/3">
-    <!-- Staff Add  -->
-    <form action="{{ route('staff-update-step-2', $staff->id) }}" method="POST">
+    <!-- Staff Edit  -->
+    <form action="{{ route('staff-update-step-2', $staff->user_id) }}" method="POST">
         @csrf
         @method('PATCH')
         <!-- Phone  -->

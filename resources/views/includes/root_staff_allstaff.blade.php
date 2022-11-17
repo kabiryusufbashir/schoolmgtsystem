@@ -29,7 +29,7 @@
                                     </td>
                                     <td class="px-6 py-4 text-sm text-gray-500">
                                         <span class="flex">
-                                            <form action="{{ route('staff-edit', $worker->id) }}" method="GET">
+                                            <form action="{{ route('staff-edit-step-1', $worker->id) }}" method="GET">
                                                 @csrf 
                                                 <input type="submit" value="EDIT" class="edit-btn">
                                             </form>

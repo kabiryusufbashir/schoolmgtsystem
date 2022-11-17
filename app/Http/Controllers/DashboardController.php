@@ -305,25 +305,49 @@ class DashboardController extends Controller
                 'email' => $request->email,
             ]);
 
-            return redirect()->route('create-staff-step-2');
+            return redirect()->route('staff-edit-step-2', $lastid);
 
         }catch(Exception $e){
             return redirect()->route('all-staff')->with('error', 'Please try again... '.$e);
         }
     }
 
-    public function createStaffStep2(){
-        $user = User::latest('id')->first();
-        $lastid = $user->id;
-        $staff = Staff::where('user_id', $lastid)->first();
+    public function editStaffStep1($id){
+        $staff = Staff::where('user_id', $id)->first();
+        $step = 1;
+        return view('dashboard.staff.edit.index', compact('step', 'staff'));
+    }
+
+    public function updateStaffStep1(Request $request, $id){
+            
+        try{
+            $staff = Staff::where('user_id', $id)->update([
+                'title' => $request->title,
+                'first_name' => $request->first_name,
+                'last_name' => $request->last_name,
+                'other_name' => $request->other_name,
+                'gender' => $request->gender,
+                'dob' => $request->dob,
+                'marital_status' => $request->marital_status,
+            ]);
+        
+            return redirect()->route('staff-edit-step-2', $id);
+        
+        }catch(Exception $e){
+            return back()->with('error', 'Please try again... '.$e);
+        }
+    }
+
+    public function editStaffStep2($id){
+        $staff = Staff::where('user_id', $id)->first();
         $step = 2;
-        return view('dashboard.staff.create', compact('step', 'staff'));
+        return view('dashboard.staff.edit.index', compact('step', 'staff'));
     }
 
     public function updateStaffStep2(Request $request, $id){
         
         try{
-            $staff = Staff::where('id', $id)->update([
+            $staff = Staff::where('user_id', $id)->update([
                 'phone' => $request->phone,
                 'address' => $request->address,
                 'city' => $request->city,
@@ -331,19 +355,18 @@ class DashboardController extends Controller
                 'country' => $request->country,
             ]);
 
-            return redirect()->route('create-staff-step-3');
+            return redirect()->route('staff-edit-step-3', $id);
         
         }catch(Exception $e){
             return back()->with('error', 'Please try again... '.$e);
         }
     }
 
-    public function createStaffStep3(){
-        $user = User::latest('id')->first();
-        $lastid = $user->id;
-        $staff = Staff::where('user_id', $lastid)->first();
+    public function editStaffStep3($id){
+        $staff = Staff::where('user_id', $id)->first();
+        $qualification = Qualification::where('user_id', $id)->get();
         $step = 3;
-        return view('dashboard.staff.create', compact('step', 'staff'));
+        return view('dashboard.staff.edit.index', compact('step', 'staff', 'qualification'));
     }
 
     public function updateStaffStep3(Request $request, $id){

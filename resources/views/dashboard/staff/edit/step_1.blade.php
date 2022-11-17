@@ -5,13 +5,14 @@
 </div>
 <div class="py-4 lg:w-1/3">
     <!-- Staff Add  -->
-    <form action="{{ route('add-staff') }}" method="POST">
+    <form action="{{ route('staff-update-step-1', $staff->user_id) }}" method="POST">
         @csrf
+        @method('PATCH')
         <!-- title  -->
         <div class="my-4">
             <label for="title" class="input-title">Title</label><br>
             <select name="title" class="input-field">
-                <option value=""></option>
+                <option value="{{ $staff->title }}">{{ $staff->title }}</option>
                 <option value="Mal">Mal</option>
                 <option value="Malama">Malama</option>
                 <option value="Alhaji">Alhaji</option>
@@ -19,14 +20,14 @@
                 <option value="Dr">Dr</option>
                 <option value="Prof">Prof</option>
             </select>
-            @error('name')
+            @error('title')
                 {{$message}}
             @enderror
         </div>
         <!-- First Name  -->
         <div class="my-4">
             <label for="first_name" class="input-title">First Name</label><br>
-            <input type="text" name="first_name" placeholder="First Name" class="input-field">
+            <input type="text" value="{{ $staff->first_name }}" name="first_name" placeholder="First Name" class="input-field">
             @error('first_name')
                 {{$message}}
             @enderror
@@ -34,7 +35,7 @@
         <!-- Last Name  -->
         <div class="my-4">
             <label for="last_name" class="input-title">Last Name</label><br>
-            <input type="text" name="last_name" placeholder="Last Name" class="input-field">
+            <input type="text" value="{{ $staff->last_name }}" name="last_name" placeholder="Last Name" class="input-field">
             @error('last_name')
                 {{$message}}
             @enderror
@@ -42,7 +43,7 @@
         <!-- Other Name  -->
         <div class="my-4">
             <label for="other_name" class="input-title">Other Name</label><br>
-            <input type="text" name="other_name" placeholder="Other Name" class="input-field">
+            <input type="text" value="{{ $staff->other_name }}" name="other_name" placeholder="Other Name" class="input-field">
             @error('other_name')
                 {{$message}}
             @enderror
@@ -50,7 +51,7 @@
         <!-- Email Address  -->
         <div class="my-4">
             <label for="email" class="input-title">Email Address</label><br>
-            <input type="email" name="email" placeholder="Email Address" class="input-field">
+            <input type="email" value="{{ $staff->email }}" name="email" placeholder="Email Address" class="input-field">
             @error('email')
                 {{$message}}
             @enderror
@@ -59,7 +60,7 @@
         <div class="my-4">
             <label for="gender" class="input-title">Gender</label><br>
             <select name="gender" class="input-field">
-                <option value=""></option>
+                <option value="{{ $staff->gender }}">{{ $staff->gender }}</option>
                 <option value="Male">Male</option>
                 <option value="Female">Female</option>
             </select>
@@ -70,7 +71,7 @@
         <!-- DOB  -->
         <div class="my-4">
             <label for="dob" class="input-title">Date of Birth</label><br>
-            <input type="date" name="dob" placeholder="Date of Birth" class="input-field">
+            <input type="date" value="{{ $staff->dob }}" name="dob" placeholder="Date of Birth" class="input-field">
             @error('dob')
                 {{$message}}
             @enderror
@@ -79,7 +80,7 @@
         <div class="my-4">
             <label for="marital_status" class="input-title">Marital Status</label><br>
             <select name="marital_status" class="input-field">
-                <option value=""></option>
+                <option  value="{{ $staff->marital_status }}">{{ $staff->marital_status }}</option>
                 <option value="Male">Single</option>
                 <option value="Female">Married</option>
                 <option value="Female">Divorced</option>
@@ -89,7 +90,7 @@
             @enderror
         </div>
         <div class="text-center my-4">
-            <button class="submit-btn">ADD STAFF</button>
+            <button class="submit-btn">EDIT STAFF</button>
         </div>
     </form>
 </div>

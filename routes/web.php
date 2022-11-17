@@ -49,9 +49,11 @@ Route::middleware([GlobalData::class])->group(function(){
     Route::get('/allstaff', [DashboardController::class, 'allStaff'])->name('all-staff')->middleware('auth:web');
     Route::get('/staff-create', [DashboardController::class, 'createStaff'])->name('create-staff')->middleware('auth:web');
     Route::post('/add-create', [DashboardController::class, 'addStaff'])->name('add-staff')->middleware('auth:web');
-    Route::get('/staff/edit/step_2', [DashboardController::class, 'createStaffStep2'])->name('create-staff-step-2')->middleware('auth:web');
+    Route::get('/staff/{staff}/edit/step_1', [DashboardController::class, 'editStaffStep1'])->name('staff-edit-step-1')->middleware('auth:web');
+    Route::patch('/staff/{staff}/update/step_1', [DashboardController::class, 'updateStaffStep1'])->name('staff-update-step-1')->middleware('auth:web');
+    Route::get('/staff/{staff}/edit/step_2', [DashboardController::class, 'editStaffStep2'])->name('staff-edit-step-2')->middleware('auth:web');
     Route::patch('/staff/{staff}/update/step_2', [DashboardController::class, 'updateStaffStep2'])->name('staff-update-step-2')->middleware('auth:web');
-    Route::get('/staff/edit/step_3', [DashboardController::class, 'createStaffStep3'])->name('create-staff-step-3')->middleware('auth:web');
+    Route::get('/staff/{staff}/edit/step_3', [DashboardController::class, 'editStaffStep3'])->name('staff-edit-step-3')->middleware('auth:web');
     Route::patch('/staff/{staff}/update/step_3', [DashboardController::class, 'updateStaffStep3'])->name('staff-update-step-3')->middleware('auth:web');
     Route::get('/staff/{staff}/edit', [DashboardController::class, 'editStaff'])->name('staff-edit')->middleware('auth:web');
     Route::delete('/staff/{staff}', [DashboardController::class, 'deleteStaff'])->name('staff-delete')->middleware('auth:web');
