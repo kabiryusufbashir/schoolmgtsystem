@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\Response;
 
 use App\Models\User;
 use App\Models\Department;
@@ -267,6 +268,118 @@ class DashboardController extends Controller
     public function createStaff(){
         $step = 1;
         return view('dashboard.staff.create', compact('step'));
+    }
+
+    public function staffBulkUpload(){
+        return view('dashboard.staff.bulk.index');
+    }
+
+    public function staffBulkUploadStore(Request $request)
+    {
+        $file = $request->file('bulk_upload');
+
+        if($file){
+            $filename = $file->getClientOriginalName();
+            $extension = $file->getClientOriginalExtension(); //Get extension of uploaded file
+            $tempPath = $file->getRealPath();
+            $fileSize = $file->getSize(); //Get size of uploaded file in bytes
+        
+            //Check for file extension and size
+            $this->checkUploadedFileProperties($extension, $fileSize);
+        
+            //Where uploaded file will be stored on the server 
+            $location = 'uploads'; //Created an "uploads" folder for that
+        
+            // Upload file
+            $file->move($location, $filename);
+        
+            // In case the uploaded file path is to be stored in the database 
+            $filepath = public_path($location . "/" . $filename);
+            
+            // Reading file
+            $file = fopen($filepath, "r");
+            $importData_arr = array(); // Read through the file and store the contents as an array
+            $i = 0;
+        
+            //Read the contents of the uploaded file 
+            while (($filedata = fgetcsv($file, 1000, ",")) !== FALSE) 
+            {
+                $num = count($filedata);
+                
+                // Skip first row (Remove below comment if you want to skip the first row)
+                if($i == 0) {
+                    $i++;
+                    continue;
+                }
+                for($c = 0; $c < $num; $c++) {
+                    $importData_arr[$i][] = $filedata[$c];
+                }
+                $i++;
+            }
+            
+            fclose($file); //Close after reading
+            
+            $j = 0;
+            // dd($importData_arr);
+            foreach($importData_arr as $importData) {
+                $j++;
+                try{
+                    DB::beginTransaction();
+                        User::create([
+                            'name' => $importData[0].' '.$importData[1].' '.$importData[2],
+                            'email' => $importData[3],
+                            'user_id' => $importData[0].Date('my'),
+                            'password' => Hash::make('1234567890'),
+                            'status' => 1,
+                            'category' => 2,
+                            'photo' => '',
+                            'created_at' => time()
+                        ]);
+                        $user = User::latest('id')->first();
+                        $user_id = $user->id;
+                        
+                        Staff::create([
+                            'user_id' => $user_id,
+                            'title' => $importData[5],
+                            'first_name' => $importData[0],
+                            'last_name' => $importData[1],
+                            'other_name' => $importData[2],
+                            'gender' => $importData[6],
+                            'dob' => $importData[7],
+                            'marital_status' => $importData[8],
+                            'email' => $importData[3],
+                            'phone' => $importData[4],
+                            'address' => $importData[9],
+                            'city' => $importData[10],
+                            'state' => $importData[11],
+                            'country' => $importData[12],
+                        ]);         
+                    DB::commit();
+                }catch(\Exception $e) {
+                    //throw $th;
+                    DB::rollBack();
+                }
+            }
+            return redirect()->route('all-staff');
+        }else{
+            //no file was uploaded
+            throw new \Exception('No file was uploaded', Response::HTTP_BAD_REQUEST);
+        }
+    }
+
+    public function checkUploadedFileProperties($extension, $fileSize)
+    {
+        $valid_extension = array("csv", "xlsx"); //Only want csv and excel files
+        $maxFileSize = 2097152; // Uploaded file size limit is 2mb
+    
+        if(in_array(strtolower($extension), $valid_extension)) {
+            if($fileSize <= $maxFileSize) {
+            }else{
+                throw new \Exception('No file was uploaded', Response::HTTP_REQUEST_ENTITY_TOO_LARGE); //413 error
+            }
+        }else{
+            throw new \Exception('Invalid file extension', Response::HTTP_UNSUPPORTED_MEDIA_TYPE); //415 error
+        }
     }
 
     public function addStaff(Request $request){

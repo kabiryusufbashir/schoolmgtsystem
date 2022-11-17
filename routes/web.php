@@ -48,6 +48,8 @@ Route::middleware([GlobalData::class])->group(function(){
     Route::get('/staff', [DashboardController::class, 'staff'])->name('root-staff')->middleware('auth:web');
     Route::get('/allstaff', [DashboardController::class, 'allStaff'])->name('all-staff')->middleware('auth:web');
     Route::get('/staff-create', [DashboardController::class, 'createStaff'])->name('create-staff')->middleware('auth:web');
+    Route::get('/staff-bulk-upload', [DashboardController::class, 'staffBulkUpload'])->name('staff-bulk-upload')->middleware('auth:web');
+    Route::post('/upload-staff-bulk', [DashboardController::class, 'staffBulkUploadStore'])->name('staff-bulk-upload-store')->middleware('auth:web');
     Route::post('/add-create', [DashboardController::class, 'addStaff'])->name('add-staff')->middleware('auth:web');
     Route::get('/staff/{staff}/edit/step_1', [DashboardController::class, 'editStaffStep1'])->name('staff-edit-step-1')->middleware('auth:web');
     Route::patch('/staff/{staff}/update/step_1', [DashboardController::class, 'updateStaffStep1'])->name('staff-update-step-1')->middleware('auth:web');
