@@ -56,4 +56,16 @@ class User extends Authenticatable
             return '';
         }
     }
+
+    public function fullName($id)
+    {
+        $staff = Staff::where('user_id', $id)->first();
+        $title = $staff->title;
+        $first_name = $staff->first_name;
+        $last_name = $staff->last_name;
+        $other_name = $staff->other_name;
+        $full_name = $title.' '.$first_name.' '.$last_name.' '.$other_name;
+        
+        return $full_name;
+    }
 }

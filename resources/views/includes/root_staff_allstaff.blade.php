@@ -25,7 +25,7 @@
                             @foreach($staff as $worker)
                                 <tr class="divide-y divide-gray-300 border-b-2">
                                     <td class="px-6 py-4 text-sm text-gray-500">
-                                        {{ $worker->name }}
+                                        {{ $worker->fullName($worker->id) }}
                                     </td>
                                     <td class="px-6 py-4 text-sm text-gray-500">
                                         {{ ($worker->StaffDepartment($worker->id) != null) ? $worker->StaffDepartment($worker->id) : 'Empty' }}
