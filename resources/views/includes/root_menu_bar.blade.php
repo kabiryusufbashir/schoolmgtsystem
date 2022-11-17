@@ -48,15 +48,17 @@
         </div>
     </a>
     <!-- Student  -->
-    <div class="nav-link-div">
-        <span>
-            @include('icons.student')
-        </span>
-        &nbsp;&nbsp;
-        <span class="text-sm">
-            Students
-        </span>
-    </div>
+    <a href="{{ route('root-student') }}">
+        <div class="nav-link-div">
+            <span>
+                @include('icons.student')
+            </span>
+            &nbsp;&nbsp;
+            <span class="text-sm">
+                Students
+            </span>
+        </div>
+    </a>
     <!-- Calendar  -->
     <div class="nav-link-div">
         <span>

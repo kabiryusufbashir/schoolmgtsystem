@@ -60,6 +60,23 @@ Route::middleware([GlobalData::class])->group(function(){
     Route::get('/staff/{staff}/edit/step_4', [DashboardController::class, 'editStaffStep4'])->name('staff-edit-step-4')->middleware('auth:web');
     Route::patch('/staff/{staff}/update/step_4', [DashboardController::class, 'updateStaffStep4'])->name('staff-update-step-4')->middleware('auth:web');
     Route::delete('/staff/{staff}', [DashboardController::class, 'deleteStaff'])->name('staff-delete')->middleware('auth:web');
+    
+    // Student
+    Route::get('/student', [DashboardController::class, 'student'])->name('root-student')->middleware('auth:web');
+    Route::get('/allstudent', [DashboardController::class, 'allStudent'])->name('all-student')->middleware('auth:web');
+    Route::get('/student-create', [DashboardController::class, 'createStudent'])->name('create-student')->middleware('auth:web');
+    Route::get('/student-bulk-upload', [DashboardController::class, 'studentBulkUpload'])->name('student-bulk-upload')->middleware('auth:web');
+    Route::post('/upload-student-bulk', [DashboardController::class, 'studentBulkUploadStore'])->name('student-bulk-upload-store')->middleware('auth:web');
+    Route::post('/add-create', [DashboardController::class, 'addStudent'])->name('add-student')->middleware('auth:web');
+    Route::get('/student/{student}/edit/step_1', [DashboardController::class, 'editStudentStep1'])->name('student-edit-step-1')->middleware('auth:web');
+    Route::patch('/student/{student}/update/step_1', [DashboardController::class, 'updateStudentStep1'])->name('student-update-step-1')->middleware('auth:web');
+    Route::get('/student/{student}/edit/step_2', [DashboardController::class, 'editStudentStep2'])->name('student-edit-step-2')->middleware('auth:web');
+    Route::patch('/student/{student}/update/step_2', [DashboardController::class, 'updateStudentStep2'])->name('student-update-step-2')->middleware('auth:web');
+    Route::get('/student/{student}/edit/step_3', [DashboardController::class, 'editStudentStep3'])->name('student-edit-step-3')->middleware('auth:web');
+    Route::patch('/student/{student}/update/step_3', [DashboardController::class, 'updateStudentStep3'])->name('student-update-step-3')->middleware('auth:web');
+    Route::get('/student/{student}/edit/step_4', [DashboardController::class, 'editStudentStep4'])->name('student-edit-step-4')->middleware('auth:web');
+    Route::patch('/student/{student}/update/step_4', [DashboardController::class, 'updateStudentStep4'])->name('student-update-step-4')->middleware('auth:web');
+    Route::delete('/student/{student}', [DashboardController::class, 'deleteStudent'])->name('student-delete')->middleware('auth:web');
 
     // Settings
     Route::get('/settings', [DashboardController::class, 'settings'])->name('root-settings')->middleware('auth:web');

@@ -596,4 +596,327 @@ class DashboardController extends Controller
             return redirect()->route('all-staff')->with('error', 'Please try again... '.$e);
         }
     }
+
+    // Student
+    public function student(){
+        $student = User::orderby('name', 'asc')->get();
+        return view('dashboard.student.index', compact('student'));
+    }
+
+    public function createStudent(){
+        $step = 1;
+        return view('dashboard.student.create', compact('step'));
+    }
+
+    public function studentBulkUpload(){
+        return view('dashboard.student.bulk.index');
+    }
+
+    public function studentBulkUploadStore(Request $request)
+    {
+        $file = $request->file('bulk_upload');
+
+        if($file){
+            $filename = $file->getClientOriginalName();
+            $extension = $file->getClientOriginalExtension(); //Get extension of uploaded file
+            $tempPath = $file->getRealPath();
+            $fileSize = $file->getSize(); //Get size of uploaded file in bytes
+        
+            //Check for file extension and size
+            $this->checkUploadedFileProperties($extension, $fileSize);
+        
+            //Where uploaded file will be stored on the server 
+            $location = 'uploads'; //Created an "uploads" folder for that
+        
+            // Upload file
+            $file->move($location, $filename);
+        
+            // In case the uploaded file path is to be stored in the database 
+            $filepath = public_path($location . "/" . $filename);
+            
+            // Reading file
+            $file = fopen($filepath, "r");
+            $importData_arr = array(); // Read through the file and store the contents as an array
+            $i = 0;
+        
+            //Read the contents of the uploaded file 
+            while (($filedata = fgetcsv($file, 1000, ",")) !== FALSE) 
+            {
+                $num = count($filedata);
+                
+                // Skip first row (Remove below comment if you want to skip the first row)
+                if($i == 0) {
+                    $i++;
+                    continue;
+                }
+                for($c = 0; $c < $num; $c++) {
+                    $importData_arr[$i][] = $filedata[$c];
+                }
+                $i++;
+            }
+            
+            fclose($file); //Close after reading
+            
+            $j = 0;
+            // dd($importData_arr);
+            foreach($importData_arr as $importData) {
+                $j++;
+                try{
+                    DB::beginTransaction();
+                        User::create([
+                            'name' => $importData[0].' '.$importData[1].' '.$importData[2],
+                            'email' => $importData[3],
+                            'user_id' => $importData[0].Date('my'),
+                            'password' => Hash::make('1234567890'),
+                            'status' => 1,
+                            'category' => 2,
+                            'photo' => '',
+                            'created_at' => time()
+                        ]);
+                        $user = User::latest('id')->first();
+                        $user_id = $user->id;
+                        
+                        Student::create([
+                            'user_id' => $user_id,
+                            'title' => $importData[5],
+                            'first_name' => $importData[0],
+                            'last_name' => $importData[1],
+                            'other_name' => $importData[2],
+                            'gender' => $importData[6],
+                            'dob' => $importData[7],
+                            'marital_status' => $importData[8],
+                            'email' => $importData[3],
+                            'phone' => $importData[4],
+                            'address' => $importData[9],
+                            'city' => $importData[10],
+                            'state' => $importData[11],
+                            'country' => $importData[12],
+                        ]);         
+                    DB::commit();
+                }catch(\Exception $e) {
+                    //throw $th;
+                    DB::rollBack();
+                }
+            }
+            return redirect()->route('all-student');
+        }else{
+            //no file was uploaded
+            throw new \Exception('No file was uploaded', Response::HTTP_BAD_REQUEST);
+        }
+    }
+
+    public function addStudent(Request $request){
+        $data = $request->validate([
+            'title' => ['required'],
+            'first_name' => ['required'],
+            'email' => 'required|email',
+            'last_name' => ['required'],
+            'dob' => ['required'],
+            'gender' => ['required'],
+            'marital_status' => ['required'],
+        ]);
+
+        $name = $data['first_name'].' '.$request->last_name.' '.$request->other_name;
+        $user_id = $request->first_name.Date('my');
+        $password = Hash::make('1234567890');
+        $type = 2;
+
+        try{
+            $name = User::create([
+                'name' => $name,
+                'email' => $data['email'],
+                'user_id' => $user_id,
+                'password' => $password,
+                'status' => 1,
+                'category' => $type,
+                'photo' => '',
+            ]);
+
+            $user = User::latest('id')->first();
+            $lastid = $user->id;
+
+            $student = Student::create([
+                'user_id' => $lastid,
+                'title' => $request->title,
+                'first_name' => $request->first_name,
+                'last_name' => $request->last_name,
+                'other_name' => $request->other_name,
+                'gender' => $request->gender,
+                'dob' => $request->dob,
+                'marital_status' => $request->marital_status,
+                'email' => $request->email,
+            ]);
+
+            return redirect()->route('student-edit-step-2', $lastid);
+
+        }catch(Exception $e){
+            return redirect()->route('all-student')->with('error', 'Please try again... '.$e);
+        }
+    }
+
+    public function editStudentStep1($id){
+        $student = Student::where('user_id', $id)->first();
+        $step = 1;
+        return view('dashboard.student.edit.index', compact('step', 'student'));
+    }
+
+    public function updateStudentStep1(Request $request, $id){
+            
+        try{
+            $student = Student::where('user_id', $id)->update([
+                'title' => $request->title,
+                'first_name' => $request->first_name,
+                'last_name' => $request->last_name,
+                'other_name' => $request->other_name,
+                'gender' => $request->gender,
+                'email' => $request->email,
+                'dob' => $request->dob,
+                'marital_status' => $request->marital_status,
+            ]);
+        
+            return redirect()->route('student-edit-step-2', $id);
+        
+        }catch(Exception $e){
+            return back()->with('error', 'Please try again... '.$e);
+        }
+    }
+
+    public function editStudentStep2($id){
+        $student = Student::where('user_id', $id)->first();
+        $step = 2;
+        return view('dashboard.student.edit.index', compact('step', 'student'));
+    }
+
+    public function updateStudentStep2(Request $request, $id){
+        
+        try{
+            $student = Student::where('user_id', $id)->update([
+                'phone' => $request->phone,
+                'address' => $request->address,
+                'city' => $request->city,
+                'state' => $request->state,
+                'country' => $request->country,
+            ]);
+
+            return redirect()->route('student-edit-step-3', $id);
+        
+        }catch(Exception $e){
+            return back()->with('error', 'Please try again... '.$e);
+        }
+    }
+
+    public function editStudentStep3($id){
+        $student = Student::where('user_id', $id)->first();
+        $qualification = Qualification::where('user_id', $id)->get();
+        $step = 3;
+        return view('dashboard.student.edit.index', compact('step', 'student', 'qualification'));
+    }
+
+    public function updateStudentStep3(Request $request, $id){
+        
+        // Add Qualification 
+        $data = Array(
+            'school_name' => $request->school_name,
+            'year_graduated' => $request->year_graduated,
+            'qualification_name' => $request->qualification_name,
+        );
+
+        try{
+
+            $check_record = Qualification::where('user_id', $id)->count();
+            
+            if($check_record == 0){
+                if($qualification = $data['school_name']){
+                    for($x=0; $x<count($qualification); $x++){
+                        $qualification_add = new Qualification;
+                        $qualification_add['user_id'] = $id;
+                        $qualification_add['school_name'] = $data['school_name'][$x];
+                        $qualification_add['year_graduated'] = $data['year_graduated'][$x];
+                        $qualification_add['qualification_name'] = $data['qualification_name'][$x];
+                        $qualification_add->save();
+                    }
+                }
+            }else{
+                $delete_previous_record = Qualification::where('user_id', $id)->delete();
+                if($qualification = $data['school_name']){
+                    for($x=0; $x<count($qualification); $x++){
+                        $qualification_add = new Qualification;
+                        $qualification_add['user_id'] = $id;
+                        $qualification_add['school_name'] = $data['school_name'][$x];
+                        $qualification_add['year_graduated'] = $data['year_graduated'][$x];
+                        $qualification_add['qualification_name'] = $data['qualification_name'][$x];
+                        $qualification_add->save();
+                    }
+                }
+            }
+
+            return redirect()->route('student-edit-step-4', $id);
+        
+        }catch(Exception $e){
+            return back()->with('error', 'Please try again... '.$e);
+        }
+    }
+
+    public function editStudentStep4($id){
+        $student = Student::where('user_id', $id)->first();
+        $departments = Department::orderby('name', 'asc')->get();
+        $step = 4;
+        return view('dashboard.student.edit.index', compact('step', 'student', 'departments'));
+    }
+
+    public function updateStudentStep4(Request $request, $id){
+        
+        if(!empty($request->photo)){
+            $data = $request->validate([
+                'photo' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
+                'department' => 'required',
+            ]);
+            
+            $imageName = '/images/student/'.time().'.'.$request->photo->extension();
+            $request->photo->move('images/student', $imageName);  
+        }
+
+        $user_photo = $request->photo;
+        $user_department = $request->department;
+
+        try{
+            if(!empty($request->photo)){
+                $photo = User::where('id', $id)->update([
+                    'photo'=> $imageName
+                ]);
+            }
+
+            if(!empty($request->photo)){
+                $department = Student::where('user_id', $id)->update([
+                    'department'=> $user_department,
+                    'photo'=> $imageName
+                ]);
+            }else{
+                $department = Student::where('user_id', $id)->update([
+                    'department'=> $user_department,
+                ]);
+            }
+
+            return redirect()->route('all-student')->with('success', 'Student Added');
+        
+        }catch(Exception $e){
+            return back()->with('error', 'Please try again... '.$e);
+        }
+    }
+
+    public function allStudent(){
+        $student = User::where('category', 2)->where('status', 1)->orderby('name', 'asc')->paginate(20);
+        return view('dashboard.student.student', compact('student'));
+    }
+
+    public function deleteStudent($id){
+        try{
+            $student = User::where('id', $id)->update([
+                'status' => 0,
+            ]);
+            return redirect()->route('all-student')->with('success', 'Student Deleted');
+        }catch(Exception $e){
+            return redirect()->route('all-student')->with('error', 'Please try again... '.$e);
+        }
+    }
 }
