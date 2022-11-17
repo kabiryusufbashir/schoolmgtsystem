@@ -661,7 +661,6 @@ class DashboardController extends Controller
             fclose($file); //Close after reading
             
             $j = 0;
-            // dd($importData_arr);
             foreach($importData_arr as $importData) {
                 $j++;
                 try{
@@ -672,7 +671,7 @@ class DashboardController extends Controller
                             'user_id' => $importData[0].Date('my'),
                             'password' => Hash::make('1234567890'),
                             'status' => 1,
-                            'category' => 2,
+                            'category' => 3,
                             'photo' => '',
                             'created_at' => time()
                         ]);
@@ -694,6 +693,9 @@ class DashboardController extends Controller
                             'city' => $importData[10],
                             'state' => $importData[11],
                             'country' => $importData[12],
+                            'matric_no' => $importData[13],
+                            'year_admitted' => $importData[14],
+                            'current_year' => $importData[15],
                         ]);         
                     DB::commit();
                 }catch(\Exception $e) {
