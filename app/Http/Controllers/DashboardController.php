@@ -11,6 +11,7 @@ use App\Models\User;
 use App\Models\Department;
 use App\Models\Course;
 use App\Models\Staff;
+use App\Models\Qualification;
 
 class DashboardController extends Controller
 {
@@ -347,16 +348,43 @@ class DashboardController extends Controller
 
     public function updateStaffStep3(Request $request, $id){
         
+        // Add Qualification 
+        $data = Array(
+            'school_name' => $request->school_name,
+            'year_graduated' => $request->year_graduated,
+            'qualification_name' => $request->qualification_name,
+        );
+
         try{
-            $staff = Staff::where('user_id', $id)->update([
-                'phone' => $data['phone'],
-                'address' => $data['address'],
-                'city' => $data['city'],
-                'state' => $data['state'],
-                'country' => $data['country'],
-            ]);
+
+            $check_record = Qualification::where('user_id', $id)->count();
             
-            return redirect()->route('all-staff')->with('success', 'Staff Deleted');
+            if($check_record == 0){
+                if($qualification = $data['school_name']){
+                    for($x=0; $x<count($qualification); $x++){
+                        $qualification_add = new Qualification;
+                        $qualification_add['user_id'] = $id;
+                        $qualification_add['school_name'] = $data['school_name'][$x];
+                        $qualification_add['year_graduated'] = $data['year_graduated'][$x];
+                        $qualification_add['qualification_name'] = $data['qualification_name'][$x];
+                        $qualification_add->save();
+                    }
+                }
+            }else{
+                $delete_previous_record = Qualification::where('user_id', $id)->delete();
+                if($qualification = $data['school_name']){
+                    for($x=0; $x<count($qualification); $x++){
+                        $qualification_add = new Qualification;
+                        $qualification_add['user_id'] = $id;
+                        $qualification_add['school_name'] = $data['school_name'][$x];
+                        $qualification_add['year_graduated'] = $data['year_graduated'][$x];
+                        $qualification_add['qualification_name'] = $data['qualification_name'][$x];
+                        $qualification_add->save();
+                    }
+                }
+            }
+
+            return redirect()->route('all-staff')->with('success', 'Staff Added');
         
         }catch(Exception $e){
             return back()->with('error', 'Please try again... '.$e);
