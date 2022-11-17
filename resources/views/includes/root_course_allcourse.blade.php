@@ -24,6 +24,9 @@
                                     DEPARTMENT
                                 </th>
                                 <th scope="col" class="px-6 py-2  text-gray-500">
+                                    LECTURER
+                                </th>
+                                <th scope="col" class="px-6 py-2  text-gray-500">
                                 </th>
                             </tr>
                         </thead>
@@ -44,6 +47,9 @@
                                     </td>
                                     <td class="px-6 py-4 text-sm text-gray-500">
                                         {{ ($course->department != null) ? $course->department($course->department) : 'Empty' }}
+                                    </td>
+                                    <td class="px-6 py-4 text-sm text-gray-500">
+                                        {{ ($course->lecturer != null) ? $course->lecturerName($course->lecturer) : 'Empty' }}
                                     </td>
                                     <td class="px-6 py-4 text-sm text-gray-500">
                                         <span class="flex">

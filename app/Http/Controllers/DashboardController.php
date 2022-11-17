@@ -219,8 +219,9 @@ class DashboardController extends Controller
     public function editCourse($id){
         $course = Course::findOrFail($id);
         $departments = Department::orderby('name', 'asc')->get();
-        
-        return view('dashboard.course.edit', compact('course','departments'));
+        $staff = Staff::orderby('title', 'asc')->get();
+
+        return view('dashboard.course.edit', compact('course','departments', 'staff'));
     }
 
     public function updateCourse(Request $request, $id){
@@ -239,6 +240,7 @@ class DashboardController extends Controller
                 'course_type' => $data['course_type'],
                 'course_unit' => $data['course_unit'],
                 'department' => $data['department'],
+                'lecturer' => $request->lecturer,
             ]);
             return redirect()->route('all-course')->with('success', 'Course Updated');
         }catch(Exception $e){

@@ -54,31 +54,42 @@
                     <div class="grid grid-cols-2 gap-4 my-3">
                         <div>
                             <label for="course_code" class="input-title">Course Code</label><br>
-                            <input type="text" value="{{ $course->code }}" name="course_code" placeholder="Course Code" class="input-field">
+                            <input type="text" value="{{ $course->course_code }}" name="course_code" placeholder="Course Code" class="input-field">
                             @error('course_code')
                                 {{$message}}
                             @enderror
                         </div>
                         <div>
                             <label for="course_unit" class="input-title">Course Unit</label><br>
-                            <input type="text" value="{{ $course->unit }}" name="course_unit" placeholder="Course Unit" class="input-field">
+                            <input type="text" value="{{ $course->course_unit }}" name="course_unit" placeholder="Course Unit" class="input-field">
                             @error('course_unit')
                                 {{$message}}
                             @enderror
                         </div>
                     </div>
-                    <div class="my-3">
-                        <label for="name" class="input-title">Department Name</label><br>
-                        <select name="department" class="input-field">
-                            <option value="{{ $course->department}}">{{ $course->department($course->department) }}</option>
-                            @foreach($departments as $department)
-                                <option value="{{ $department->id }}">{{ $department->name }}</option>
-                            @endforeach
-                        </select>
-                        @error('department')
-                            {{$message}}
-                        @enderror
-                    </div>     
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="my-3">
+                            <label for="name" class="input-title">Department Name</label><br>
+                            <select name="department" class="input-field">
+                                <option value="{{ $course->department}}">{{ $course->department($course->department) }}</option>
+                                @foreach($departments as $department)
+                                    <option value="{{ $department->id }}">{{ $department->name }}</option>
+                                @endforeach
+                            </select>
+                            @error('department')
+                                {{$message}}
+                            @enderror
+                        </div>
+                        <div class="my-3">
+                            <label for="lecturer" class="input-title">Lecturer</label><br>
+                            <select name="lecturer" class="input-field">
+                                <option value="{{ $course->lecturer }}">{{ $course->LecturerName($course->lecturer) }}</option>
+                                @foreach($staff as $lecturer)
+                                    <option value="{{ $lecturer->user_id }}">{{ $lecturer->fullName($lecturer->user_id) }}</option>
+                                @endforeach
+                            </select>
+                        </div>     
+                    </div>
                     <div class="text-center my-4">
                         <button class="submit-btn">EDIT COURSE</button>
                     </div>
