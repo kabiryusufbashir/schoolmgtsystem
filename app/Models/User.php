@@ -103,4 +103,24 @@ class User extends Authenticatable
             return '';
         }
     }
+
+    public function studentYearAdmitted($id)
+    {
+        if($id != 0){
+            $student = Student::where('user_id', $id)->first(); 
+            return $student->year_admitted;
+        }else{
+            return '';
+        }
+    }
+
+    public function studentCurrentYear($id)
+    {
+        if($id != 0){
+            $student = Student::where('user_id', $id)->first(); 
+            return $student->current_year;
+        }else{
+            return '';
+        }
+    }
 }

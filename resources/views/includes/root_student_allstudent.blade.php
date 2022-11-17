@@ -15,6 +15,12 @@
                                     DEPARTMENT
                                 </th>
                                 <th scope="col" class="px-6 py-2  text-gray-500">
+                                    YEAR ADMITTED
+                                </th>
+                                <th scope="col" class="px-6 py-2  text-gray-500">
+                                    CURRENT YEAR
+                                </th>
+                                <th scope="col" class="px-6 py-2  text-gray-500">
                                     PHOTO
                                 </th>
                                 <th scope="col" class="px-6 py-2  text-gray-500">
@@ -29,6 +35,12 @@
                                     </td>
                                     <td class="px-6 py-4 text-sm text-gray-500">
                                         {{ ($worker->studentDepartment($worker->id) != null) ? $worker->studentDepartment($worker->id) : 'Empty' }}
+                                    </td>
+                                    <td class="px-6 py-4 text-sm text-gray-500">
+                                        {{ $worker->studentYearAdmitted($worker->id) }}
+                                    </td>
+                                    <td class="px-6 py-4 text-sm text-gray-500">
+                                        {{ $worker->studentCurrentYear($worker->id) }}
                                     </td>
                                     <td class="px-6 py-4 text-sm text-gray-500">
                                         <img class="w-10 rounded" src="{{  ($worker->photo) != null ? asset($worker->photo) : asset('/images/logo.png') }}">
