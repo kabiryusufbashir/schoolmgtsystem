@@ -59,26 +59,30 @@
             </span>
         </div>
     </a>
-    <!-- Calendar  -->
-    <div class="nav-link-div">
-        <span>
-            @include('icons.timetable')
-        </span>
-        &nbsp;&nbsp;
-        <span class="text-sm">
-            Calendar
-        </span>
-    </div>
     <!-- Registration  -->
-    <div class="nav-link-div">
-        <span>
-            @include('icons.registration')
-        </span>
-        &nbsp;&nbsp;
-        <span class="text-sm">
-            Registration
-        </span>
-    </div>
+    <a href="{{ route('root-registration') }}">
+        <div class="nav-link-div">
+            <span>
+                @include('icons.registration')
+            </span>
+            &nbsp;&nbsp;
+            <span class="text-sm">
+                Registration
+            </span>
+        </div>
+    </a>
+    <!-- Calendar  -->
+    <a href="{{ route('root-calendar') }}">
+        <div class="nav-link-div">
+            <span>
+                @include('icons.timetable')
+            </span>
+            &nbsp;&nbsp;
+            <span class="text-sm">
+                Calendar
+            </span>
+        </div>
+    </a>
     <!-- Timetable  -->
     <div class="nav-link-div">
         <span>

@@ -78,6 +78,22 @@ Route::middleware([GlobalData::class])->group(function(){
     Route::patch('/student/{student}/update/step_4', [DashboardController::class, 'updateStudentStep4'])->name('student-update-step-4')->middleware('auth:web');
     Route::delete('/student/{student}', [DashboardController::class, 'deleteStudent'])->name('student-delete')->middleware('auth:web');
 
+    // Registration
+    Route::get('/registration', [DashboardController::class, 'registration'])->name('root-registration')->middleware('auth:web');
+    Route::post('/registration-create', [DashboardController::class, 'createRegistration'])->name('registration-create')->middleware('auth:web');
+    Route::get('/allregistration', [DashboardController::class, 'allRegistration'])->name('all-registration')->middleware('auth:web');
+    Route::get('/registration/{registration}/edit', [DashboardController::class, 'editRegistration'])->name('registration-edit')->middleware('auth:web');
+    Route::patch('/registration/{registration}/update', [DashboardController::class, 'updateRegistration'])->name('registration-update')->middleware('auth:web');
+    Route::delete('/registration/{registration}', [DashboardController::class, 'deleteRegistration'])->name('registration-delete')->middleware('auth:web');
+
+    // Calendar
+    Route::get('/calendar', [DashboardController::class, 'calendar'])->name('root-calendar')->middleware('auth:web');
+    Route::post('/calendar-create', [DashboardController::class, 'createCalendar'])->name('calendar-create')->middleware('auth:web');
+    Route::get('/allcalendar', [DashboardController::class, 'allCalendar'])->name('all-calendar')->middleware('auth:web');
+    Route::get('/calendar/{calendar}/edit', [DashboardController::class, 'editCalendar'])->name('calendar-edit')->middleware('auth:web');
+    Route::patch('/calendar/{calendar}/update', [DashboardController::class, 'updateCalendar'])->name('calendar-update')->middleware('auth:web');
+    Route::delete('/calendar/{calendar}', [DashboardController::class, 'deleteCalendar'])->name('calendar-delete')->middleware('auth:web');
+
     // Settings
     Route::get('/settings', [DashboardController::class, 'settings'])->name('root-settings')->middleware('auth:web');
     Route::post('/settings-name', [DashboardController::class, 'settingsName'])->name('settings-name')->middleware('auth:web');

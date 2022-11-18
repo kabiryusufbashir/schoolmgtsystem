@@ -14,6 +14,7 @@ use App\Models\Course;
 use App\Models\Staff;
 use App\Models\Qualification;
 use App\Models\Student;
+use App\Models\Registration;
 
 class DashboardController extends Controller
 {
@@ -931,6 +932,71 @@ class DashboardController extends Controller
             return redirect()->route('all-student')->with('success', 'Student Deleted');
         }catch(Exception $e){
             return redirect()->route('all-student')->with('error', 'Please try again... '.$e);
+        }
+    }
+
+    // Registration 
+    public function registration(){
+        return view('dashboard.registration.index');
+    }
+
+    public function createRegistration(Request $request){
+        $data = $request->validate([
+            'title' => ['required'],
+            'session' => ['required'],
+            'active' => ['required'],
+        ]);
+        
+        try{
+            $name = Registration::create([
+                'title' => $data['title'],
+                'session' => $data['session'],
+                'active' => $data['active'],
+            ]);
+
+            return redirect()->route('all-registration')->with('success', $data['title'].' Registration Added');
+
+        }catch(Exception $e){
+            return redirect()->route('all-registration')->with('error', 'Please try again... '.$e);
+        }
+    }
+
+    public function allRegistration(){
+        $registrations = Registration::orderby('title', 'asc')->paginate(20);
+        return view('dashboard.registration.registration', compact('registrations'));
+    }
+
+    public function editRegistration($id){
+        $registration = Registration::findOrFail($id);
+        return view('dashboard.registration.edit', compact('registration'));
+    }
+
+    public function updateRegistration(Request $request, $id){
+        $data = $request->validate([
+            'title' => ['required'],
+            'session' => ['required'],
+            'active' => ['required'],
+        ]);
+
+        try{
+            $registration = Registration::where('id', $id)->update([
+                'title' => $data['title'],
+                'session' => $data['session'],
+                'active' => $data['active'],
+            ]);
+            return redirect()->route('all-registration')->with('success', 'Registration Updated');
+        }catch(Exception $e){
+            return back()->with('error', 'Please try again... '.$e);
+        }
+    }
+
+    public function deleteRegistration($id){
+        $registration = Registration::findOrFail($id);
+        try{
+            $registration->delete();
+            return redirect()->route('all-registration')->with('success', 'Registration Deleted');
+        }catch(Exception $e){
+            return redirect()->route('all-registration')->with('error', 'Please try again... '.$e);
         }
     }
 }
