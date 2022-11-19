@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Response;
 
@@ -15,6 +16,7 @@ use App\Models\Staff;
 use App\Models\Qualification;
 use App\Models\Student;
 use App\Models\Registration;
+use App\Models\Calendar;
 
 class DashboardController extends Controller
 {
@@ -999,4 +1001,91 @@ class DashboardController extends Controller
             return redirect()->route('all-registration')->with('error', 'Please try again... '.$e);
         }
     }
+
+    // Calendar 
+    public function calendar(){
+        $sessions = Registration::orderby('session', 'asc')->get();
+        return view('dashboard.calendar.index', compact('sessions'));
+    }
+
+    public function createCalendar(Request $request){
+        $data = $request->validate([
+            'session' => ['required'],
+            'activity' => ['required'],
+            'start_date' => ['required'],
+            'end_date' => ['required'],
+        ]);
+
+        $start_date = strtotime($data['start_date']);
+        $end_date = strtotime($data['end_date']);
+        
+        if($start_date > $end_date){
+            return redirect()->route('all-calendar')->with('error', $data['start_date'].' is greater than '.$data['end_date']);
+        }
+
+        try{
+            $name = Calendar::create([
+                'session' => $data['session'],
+                'activity' => $data['activity'],
+                'start_date' => $data['start_date'],
+                'end_date' => $data['end_date'],
+                'posted_by' => Auth::user()->id,
+            ]);
+
+            return redirect()->route('all-calendar')->with('success', $data['activity'].' calendar Added');
+
+        }catch(Exception $e){
+            return redirect()->route('all-calendar')->with('error', 'Please try again... '.$e);
+        }
+    }
+
+    public function allCalendar(){
+        $calendars = Calendar::orderby('session', 'asc')->paginate(20);
+        return view('dashboard.calendar.calendar', compact('calendars'));
+    }
+
+    public function editCalendar($id){
+        $calendar = Calendar::findOrFail($id);
+        $sessions = Registration::orderby('session', 'asc')->get();
+        return view('dashboard.calendar.edit', compact('calendar', 'sessions'));
+    }
+
+    public function updateCalendar(Request $request, $id){
+        $data = $request->validate([
+            'session' => ['required'],
+            'activity' => ['required'],
+            'start_date' => ['required'],
+            'end_date' => ['required'],
+        ]);
+
+        $start_date = strtotime($data['start_date']);
+        $end_date = strtotime($data['end_date']);
+        
+        if($start_date > $end_date){
+            return redirect()->route('all-calendar')->with('error', $data['start_date'].' is greater than '.$data['end_date']);
+        }
+
+        try{
+            $calendar = Calendar::where('id', $id)->update([
+                'session' => $data['session'],
+                'activity' => $data['activity'],
+                'start_date' => $data['start_date'],
+                'end_date' => $data['end_date'],
+            ]);
+            return redirect()->route('all-calendar')->with('success', 'Calendar Updated');
+        }catch(Exception $e){
+            return back()->with('error', 'Please try again... '.$e);
+        }
+    }
+
+    public function deleteCalendar($id){
+        $calendar = Calendar::findOrFail($id);
+        try{
+            $calendar->delete();
+            return redirect()->route('all-calendar')->with('success', 'Calendar Deleted');
+        }catch(Exception $e){
+            return redirect()->route('all-calendar')->with('error', 'Please try again... '.$e);
+        }
+    }
+    
 }

@@ -1,60 +1,49 @@
-<div id="addCourse" class="hidden">
+<div id="addCalendar" class="hidden">
     <div id="modal">
         <div id="modal-content" class="rounded">
             <div id="modal-header" class="modal-header">
-                <span>Add Course</span>
-                <span id="closeModaladdCourse" class="cursor-pointer">X</span>
+                <span>Add Calendar</span>
+                <span id="closeModaladdCalendar" class="cursor-pointer">X</span>
             </div>
             <div class="p-4">
-                <!-- Course Create  -->
-                <form action="{{ route('course-create') }}" method="POST" class="px-6 lg:px-8 py-8">
+                <!-- Calendar Create  -->
+                <form action="{{ route('calendar-create') }}" method="POST" class="px-6 lg:px-8 py-8">
                     @csrf
                     <div>
-                        <label for="name" class="input-title">Course Name</label><br>
-                        <input type="text" name="name" placeholder="Course Name" class="input-field">
-                        @error('name')
-                            {{$message}}
-                        @enderror
-                    </div>
-                    <div class="my-4">
-                        <label for="course_type" class="input-title">Course Type</label><br>
-                        <select name="course_type" placeholder="Course Type" class="input-field">
+                        <label for="session" class="input-title">Session</label><br>
+                        <select name="session" class="input-field">
                             <option value=""></option>
-                            <option value="Elective">Elective</option>
-                            <option value="Core">Core</option>
-                        </select>
-                        @error('course_type')
-                            {{$message}}
-                        @enderror
-                    </div>
-                    <div class="my-4">
-                        <label for="course_code" class="input-title">Course Code</label><br>
-                        <input type="text" name="course_code" placeholder="Course Code" class="input-field">
-                        @error('course_code')
-                            {{$message}}
-                        @enderror
-                    </div>
-                    <div class="my-4">
-                        <label for="course_unit" class="input-title">Course Unit</label><br>
-                        <input type="text" name="course_unit" placeholder="Course Unit" class="input-field">
-                        @error('course_unit')
-                            {{$message}}
-                        @enderror
-                    </div>
-                    <div class="my-5">
-                        <label for="department" class="input-title">Department Name</label><br>
-                        <select name="department" class="input-field">
-                            <option value=""></option>
-                            @foreach($departments as $department)
-                                <option value="{{ $department->id }}">{{ $department->name }}</option>
+                            @foreach($sessions as $session)
+                                <option value="{{ $session->id }}">{{ $session->session }}</option>
                             @endforeach
                         </select>
-                        @error('department')
+                        @error('session')
+                            {{$message}}
+                        @enderror
+                    </div>
+                    <div>
+                        <label for="activity" class="input-title">Activity</label><br>
+                        <input type="text" name="activity" placeholder="Activity" class="input-field">
+                        @error('activity')
+                            {{$message}}
+                        @enderror
+                    </div>
+                    <div>
+                        <label for="start_date" class="input-title">Start Date</label><br>
+                        <input type="date" name="start_date" placeholder="Start Date" class="input-field">
+                        @error('start_date')
+                            {{$message}}
+                        @enderror
+                    </div>
+                    <div>
+                        <label for="end_date" class="input-title">End Date</label><br>
+                        <input type="date" name="end_date" placeholder="End Date" class="input-field">
+                        @error('end_date')
                             {{$message}}
                         @enderror
                     </div>     
                     <div class="text-center my-4">
-                        <button class="submit-btn">ADD COURSE</button>
+                        <button class="submit-btn">ADD CALENDAR</button>
                     </div>
                 </form>
             </div>
@@ -63,24 +52,24 @@
 </div>
 
 <script>
-    // Create Department 
-    let addCourseLink = document.querySelector('#addCourseLink')
-    let addCourse = document.querySelector('#addCourse')
-    let closeModaladdCourse = document.querySelector('#closeModaladdCourse')
+    // Create Calendar 
+    let addCalendarLink = document.querySelector('#addCalendarLink')
+    let addCalendar = document.querySelector('#addCalendar')
+    let closeModaladdCalendar = document.querySelector('#closeModaladdCalendar')
 
-    addCourseLink.addEventListener('click', ()=>{
-        if(addCourse.classList.contains('hidden')){
-            addCourse.classList.remove('hidden');
+    addCalendarLink.addEventListener('click', ()=>{
+        if(addCalendar.classList.contains('hidden')){
+            addCalendar.classList.remove('hidden');
         }else{
-            addCourse.classList.add('hidden');
+            addCalendar.classList.add('hidden');
         }
     })
 
-    closeModaladdCourse.addEventListener('click', ()=>{
-        if(addCourse.classList.contains('hidden')){
-            addCourse.classList.remove('hidden');
+    closeModaladdCalendar.addEventListener('click', ()=>{
+        if(addCalendar.classList.contains('hidden')){
+            addCalendar.classList.remove('hidden');
         }else{
-            addCourse.classList.add('hidden');
+            addCalendar.classList.add('hidden');
         }
     })
 </script>

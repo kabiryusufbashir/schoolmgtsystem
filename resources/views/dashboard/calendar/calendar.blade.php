@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('page-title')
-    Courses - AKCILS
+    Calendars - AKCILS
 @endsection
 
 @section('contents')
@@ -18,7 +18,7 @@
             @include('includes.root_user_info')
             <div class="text-center text-xl text-gray-600 mt-2 ml-4 mr-7 rounded py-3">@include('includes.messages')</div>
             <!-- All Department  -->
-            @include('includes.root_course_allcourse')
+            @include('includes.root_calendar_allcalendar')
         </div>
     </div>
 @endsection

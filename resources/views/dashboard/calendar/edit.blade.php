@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('page-title')
-    Course - AKCILS
+    Calendar - AKCILS
 @endsection
 
 @section('contents')
@@ -17,81 +17,49 @@
             <!-- User Info  -->
             @include('includes.root_user_info')
             <div class="text-center text-xl text-gray-600 mt-2 ml-4 mr-7 rounded py-3">@include('includes.messages')</div>
-            <!-- Edit Course  -->
+            <!-- Edit calendar  -->
             <div class="bg-white py-3 px-6 ml-4 mr-8 text-gray-600 my-5 rounded">
-                <h1 class="text-lg font-semibold py-4 w-full">Edit {{ $course->name }} Course</h1>
+                <h1 class="text-lg font-semibold py-4 w-full">Edit {{ $calendar->activity }}</h1>
                 <div class="p-4">
-                <!-- Course Edit  -->
-                <form action="{{ route('course-update', $course->id) }}" method="POST" class="lg:w-5/6 lg:mx-auto px-6 lg:px-8 py-8 shadow">
+                <!-- calendar Edit  -->
+                <form action="{{ route('calendar-update', $calendar->id) }}" method="POST" class="lg:w-5/6 lg:mx-auto px-6 lg:px-8 py-8 shadow">
                     @csrf
                     @method('PATCH')
-                    <div class="grid grid-cols-2 gap-4">
-                        <div>
-                            <label for="name" class="input-title">Course Name</label><br>
-                            <input type="text" value="{{ $course->name }}" name="name" placeholder="Course Name" class="input-field">
-                            @error('name')
-                                {{$message}}
-                            @enderror
-                        </div>
-                        <div>
-                            <label for="course_type" class="input-title">Course Type</label><br>
-                            <select name="course_type" placeholder="Course Type" class="input-field">
-                                <option value="{{ $course->course_type }}">{{ $course->course_type }}</option>
-                                @if($course->course_type == 'Core')
-                                    <option value="Elective">Elective</option>
-                                    @elseif($course->course_type == 'Elective')
-                                    <option value="Core">Core</option>
-                                @else
-                                    <option value="Elective">Elective</option>
-                                    <option value="Core">Core</option>
-                                @endif
-                            </select>
-                            @error('course_type')
-                                {{$message}}
-                            @enderror
-                        </div>
+                    <div>
+                        <label for="session" class="input-title">Session</label><br>
+                        <select name="session" class="input-field">
+                            <option value="{{ $calendar->session }}">{{ $calendar->session }}</option>
+                            @foreach($sessions as $session)
+                                <option value="{{ $session->id }}">{{ $session->session }}</option>
+                            @endforeach
+                        </select>
+                        @error('session')
+                            {{$message}}
+                        @enderror
                     </div>
-                    <div class="grid grid-cols-2 gap-4 my-3">
-                        <div>
-                            <label for="course_code" class="input-title">Course Code</label><br>
-                            <input type="text" value="{{ $course->course_code }}" name="course_code" placeholder="Course Code" class="input-field">
-                            @error('course_code')
-                                {{$message}}
-                            @enderror
-                        </div>
-                        <div>
-                            <label for="course_unit" class="input-title">Course Unit</label><br>
-                            <input type="text" value="{{ $course->course_unit }}" name="course_unit" placeholder="Course Unit" class="input-field">
-                            @error('course_unit')
-                                {{$message}}
-                            @enderror
-                        </div>
+                    <div>
+                        <label for="activity" class="input-title">Activity</label><br>
+                        <input type="text" value="{{ $calendar->activity }}" name="activity" placeholder="Activity" class="input-field">
+                        @error('activity')
+                            {{$message}}
+                        @enderror
                     </div>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div class="my-3">
-                            <label for="name" class="input-title">Department Name</label><br>
-                            <select name="department" class="input-field">
-                                <option value="{{ $course->department}}">{{ $course->department($course->department) }}</option>
-                                @foreach($departments as $department)
-                                    <option value="{{ $department->id }}">{{ $department->name }}</option>
-                                @endforeach
-                            </select>
-                            @error('department')
-                                {{$message}}
-                            @enderror
-                        </div>
-                        <div class="my-3">
-                            <label for="lecturer" class="input-title">Lecturer</label><br>
-                            <select name="lecturer" class="input-field">
-                                <option value="{{ $course->lecturer }}">{{ $course->LecturerName($course->lecturer) }}</option>
-                                @foreach($staff as $lecturer)
-                                    <option value="{{ $lecturer->user_id }}">{{ $lecturer->fullName($lecturer->user_id) }}</option>
-                                @endforeach
-                            </select>
-                        </div>     
+                    <div>
+                        <label for="start_date" class="input-title">Start Date</label><br>
+                        <input type="date" value="{{ $calendar->start_date }}" name="start_date" placeholder="Start Date" class="input-field">
+                        @error('start_date')
+                            {{$message}}
+                        @enderror
+                    </div>
+                    <div>
+                        <label for="end_date" class="input-title">End Date</label><br>
+                        <input type="date" value="{{ $calendar->end_date }}" name="end_date" placeholder="End Date" class="input-field">
+                        @error('end_date')
+                            {{$message}}
+                        @enderror
                     </div>
                     <div class="text-center my-4">
-                        <button class="submit-btn">EDIT COURSE</button>
+                        <button class="submit-btn">EDIT CALENDAR</button>
                     </div>
                 </form>
             </div>
