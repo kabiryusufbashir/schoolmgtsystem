@@ -39,7 +39,9 @@ class Calendar extends Model
 
     public function dateFormat($date){
         if($date){
-            $date_format = date('D d M Y', strtotime($date));
+            //l : a full textual representation of a day
+            //F : a full textual representation of a month
+            $date_format = date('l d, F Y', strtotime($date));
                 return $date_format;
         }else{
             return '';

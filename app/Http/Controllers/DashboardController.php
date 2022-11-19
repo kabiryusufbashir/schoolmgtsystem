@@ -25,7 +25,8 @@ class DashboardController extends Controller
     }
 
     public function dashboard(){
-        return view('dashboard.index');
+        $calendars = Calendar::orderby('session', 'asc')->get();
+        return view('dashboard.index', compact('calendars'));
     }
 
     // Settings 
@@ -1040,7 +1041,7 @@ class DashboardController extends Controller
     }
 
     public function allCalendar(){
-        $calendars = Calendar::orderby('session', 'asc')->paginate(20);
+        $calendars = Calendar::orderby('start_date', 'asc')->paginate(20);
         return view('dashboard.calendar.calendar', compact('calendars'));
     }
 

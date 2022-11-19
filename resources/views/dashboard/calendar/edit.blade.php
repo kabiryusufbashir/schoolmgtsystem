@@ -28,7 +28,7 @@
                     <div>
                         <label for="session" class="input-title">Session</label><br>
                         <select name="session" class="input-field">
-                            <option value="{{ $calendar->session }}">{{ $calendar->session }}</option>
+                            <option value="{{ $calendar->session }}">{{ $calendar->session($calendar->session) }}</option>
                             @foreach($sessions as $session)
                                 <option value="{{ $session->id }}">{{ $session->session }}</option>
                             @endforeach

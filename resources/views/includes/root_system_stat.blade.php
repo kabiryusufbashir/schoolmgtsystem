@@ -2,7 +2,7 @@
     <div class="flex flex-nowrap">
         <!-- Department -->
         <div class="inline w-96 max-w-xs bg-white py-7 px-6 mr-4 text-gray-600 my-5 rounded">
-            <a href="#">
+            <a href="{{ route('root-department') }}">
                 <div class="flex py-2 items-center">
                     <span class="mr-4">
                         <div class="bg-yellow-300 p-2 rounded-full">
@@ -20,7 +20,7 @@
         </div>
         <!-- Staff  -->
         <div class="inline w-96 max-w-xs bg-white py-7 px-6 mr-4 text-gray-600 my-5 rounded">
-            <a href="#">
+            <a href="{{ route('root-staff') }}">
                 <div class="flex py-2 items-center">
                     <span class="mr-4">
                         <div class="bg-orange-200 p-2 rounded-full text-white">
@@ -38,7 +38,7 @@
         </div>
         <!-- Students  -->
         <div class="inline w-96 max-w-xs bg-white py-7 px-6 mr-4 text-gray-600 my-5 rounded">
-            <a href="#">
+            <a href="{{ route('root-student') }}">
                 <div class="flex py-2 items-center">
                     <span class="mr-4">
                         <div class="bg-blue-200 p-2 rounded-full text-white">
@@ -56,7 +56,7 @@
         </div>
         <!-- Courses  -->
         <div class="inline w-96 max-w-xs bg-white py-7 px-6 mr-4 text-gray-600 my-5 rounded">
-            <a href="#">
+            <a href="{{ route('root-course') }}">
                 <div class="flex py-2 items-center">
                     <span class="mr-4">
                         <div class="bg-green-200 p-2 rounded-full text-white">
