@@ -93,6 +93,15 @@ Route::middleware([GlobalData::class])->group(function(){
     Route::get('/calendar/{calendar}/edit', [DashboardController::class, 'editCalendar'])->name('calendar-edit')->middleware('auth:web');
     Route::patch('/calendar/{calendar}/update', [DashboardController::class, 'updateCalendar'])->name('calendar-update')->middleware('auth:web');
     Route::delete('/calendar/{calendar}', [DashboardController::class, 'deleteCalendar'])->name('calendar-delete')->middleware('auth:web');
+    
+    // Timetable
+    Route::get('/timetable', [DashboardController::class, 'timetable'])->name('root-timetable')->middleware('auth:web');
+    Route::post('/timetable-create', [DashboardController::class, 'createTimetable'])->name('timetable-create')->middleware('auth:web');
+    Route::get('/alltimetable', [DashboardController::class, 'allTimetable'])->name('all-timetable')->middleware('auth:web');
+    Route::get('/timetable/{timetable}/show', [DashboardController::class, 'showTimetable'])->name('timetable-show')->middleware('auth:web');
+    Route::get('/timetable/{timetable}/edit', [DashboardController::class, 'editTimetable'])->name('timetable-edit')->middleware('auth:web');
+    Route::patch('/timetable/{timetable}/update', [DashboardController::class, 'updateTimetable'])->name('timetable-update')->middleware('auth:web');
+    Route::delete('/timetable/{timetable}', [DashboardController::class, 'deleteTimetable'])->name('timetable-delete')->middleware('auth:web');
 
     // Settings
     Route::get('/settings', [DashboardController::class, 'settings'])->name('root-settings')->middleware('auth:web');

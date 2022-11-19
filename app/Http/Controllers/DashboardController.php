@@ -17,6 +17,7 @@ use App\Models\Qualification;
 use App\Models\Student;
 use App\Models\Registration;
 use App\Models\Calendar;
+use App\Models\Timetable;
 
 class DashboardController extends Controller
 {
@@ -1086,6 +1087,108 @@ class DashboardController extends Controller
             return redirect()->route('all-calendar')->with('success', 'Calendar Deleted');
         }catch(Exception $e){
             return redirect()->route('all-calendar')->with('error', 'Please try again... '.$e);
+        }
+    }
+
+    // Timetable 
+    public function timetable(){
+        $sessions = Registration::orderby('session', 'asc')->get();
+        $courses = Course::orderby('name', 'asc')->get();
+        return view('dashboard.timetable.index', compact('sessions', 'courses'));
+    }
+
+    public function createTimetable(Request $request){
+        $data = $request->validate([
+            'session' => ['required'],
+            'course' => ['required'],
+            'venue' => ['required'],
+            'day' => ['required'],
+            'start_date' => ['required'],
+            'end_date' => ['required'],
+        ]);
+
+        $start_date = strtotime($data['start_date']);
+        $end_date = strtotime($data['end_date']);
+        
+        if($start_date > $end_date){
+            return redirect()->route('all-timetable')->with('error', $data['start_date'].' is greater than '.$data['end_date']);
+        }
+
+        try{
+            $name = Timetable::create([
+                'session' => $data['session'],
+                'course' => $data['course'],
+                'venue' => $data['venue'],
+                'day' => $data['day'],
+                'start_date' => $data['start_date'],
+                'end_date' => $data['end_date'],
+                'posted_by' => Auth::user()->id,
+            ]);
+
+            return redirect()->route('all-timetable')->with('success', $data['course'].' timetable Added');
+
+        }catch(Exception $e){
+            return redirect()->route('all-timetable')->with('error', 'Please try again... '.$e);
+        }
+    }
+
+    public function allTimetable(){
+        $timetables = Timetable::select('session', 'course', 'posted_by')->orderby('start_date', 'asc')->distinct()->paginate(20);
+        return view('dashboard.timetable.timetable', compact('timetables'));
+    }
+
+    public function showTimetable($course){
+        $timetables = Timetable::where('course', $course)->paginate(20);
+        $course = Course::select('name')->where('id', $course)->pluck('name')->first();
+        return view('dashboard.timetable.show', compact('timetables', 'course'));
+    }
+
+    public function editTimetable($id){
+        $timetable = Timetable::findOrFail($id);
+        $sessions = Registration::orderby('session', 'asc')->get();
+        $courses = Course::orderby('name', 'asc')->get();
+        return view('dashboard.timetable.edit', compact('timetable', 'sessions', 'courses'));
+    }
+
+    public function updateTimetable(Request $request, $id){
+        $data = $request->validate([
+            'session' => ['required'],
+            'course' => ['required'],
+            'venue' => ['required'],
+            'day' => ['required'],
+            'start_date' => ['required'],
+            'end_date' => ['required'],
+        ]);
+
+        $start_date = strtotime($data['start_date']);
+        $end_date = strtotime($data['end_date']);
+        
+        if($start_date > $end_date){
+            return redirect()->route('all-timetable')->with('error', $data['start_date'].' is greater than '.$data['end_date']);
+        }
+
+        try{
+            $timetable = Timetable::where('id', $id)->update([
+                'session' => $data['session'],
+                'course' => $data['course'],
+                'venue' => $data['venue'],
+                'day' => $data['day'],
+                'start_date' => $data['start_date'],
+                'end_date' => $data['end_date'],
+            ]);
+            return redirect()->route('all-timetable')->with('success', 'Timetable Updated');
+        }catch(Exception $e){
+            return back()->with('error', 'Please try again... '.$e);
+        }
+    }
+
+    public function deleteTimetable($id){
+        $timetable = Timetable::findOrFail($id);
+        try{
+            $timetable->delete();
+            return redirect()->route('all-timetable')->with('success', 'Timetable Deleted');
+        }catch(Exception $e){
+            return redirect()->route('all-timetable')->with('error', 'Please try again... '.$e);
         }
     }
     

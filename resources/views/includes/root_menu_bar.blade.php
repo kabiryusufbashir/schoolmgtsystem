@@ -84,15 +84,17 @@
         </div>
     </a>
     <!-- Timetable  -->
-    <div class="nav-link-div">
-        <span>
-            @include('icons.timetable')
-        </span>
-        &nbsp;&nbsp;
-        <span class="text-sm">
-            Timetable
-        </span>
-    </div>
+    <a href="{{ route('root-timetable') }}">
+        <div class="nav-link-div">
+            <span>
+                @include('icons.timetable')
+            </span>
+            &nbsp;&nbsp;
+            <span class="text-sm">
+                Timetable
+            </span>
+        </div>
+    </a>
     <!-- Exams  -->
     <div class="nav-link-div">
         <span>
