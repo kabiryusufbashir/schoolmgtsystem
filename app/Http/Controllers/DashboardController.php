@@ -219,7 +219,7 @@ class DashboardController extends Controller
     }
 
     public function allCourse(){
-        $courses = Course::orderby('name', 'asc')->paginate(20);
+        $courses = Course::orderby('department', 'asc')->paginate(20);
         return view('dashboard.course.course', compact('courses'));
     }
 
@@ -1109,6 +1109,8 @@ class DashboardController extends Controller
 
         $start_date = strtotime($data['start_date']);
         $end_date = strtotime($data['end_date']);
+        $course = $data['course'];
+        $department = Course::select('department')->where('id', $course)->pluck('department')->first();
         
         if($start_date > $end_date){
             return redirect()->route('all-timetable')->with('error', $data['start_date'].' is greater than '.$data['end_date']);
@@ -1118,6 +1120,7 @@ class DashboardController extends Controller
             $name = Timetable::create([
                 'session' => $data['session'],
                 'course' => $data['course'],
+                'department' => $department,
                 'venue' => $data['venue'],
                 'day' => $data['day'],
                 'start_date' => $data['start_date'],
@@ -1125,7 +1128,7 @@ class DashboardController extends Controller
                 'posted_by' => Auth::user()->id,
             ]);
 
-            return redirect()->route('all-timetable')->with('success', $data['course'].' timetable Added');
+            return redirect()->route('all-timetable')->with('success', 'Timetable Added');
 
         }catch(Exception $e){
             return redirect()->route('all-timetable')->with('error', 'Please try again... '.$e);
@@ -1133,14 +1136,24 @@ class DashboardController extends Controller
     }
 
     public function allTimetable(){
-        $timetables = Timetable::select('session', 'course', 'posted_by')->orderby('start_date', 'asc')->distinct()->paginate(20);
+        $timetables = Timetable::select('session', 'department', 'posted_by')->orderby('start_date', 'asc')->distinct()->paginate(20);
         return view('dashboard.timetable.timetable', compact('timetables'));
     }
 
-    public function showTimetable($course){
-        $timetables = Timetable::where('course', $course)->paginate(20);
-        $course = Course::select('name')->where('id', $course)->pluck('name')->first();
-        return view('dashboard.timetable.show', compact('timetables', 'course'));
+    public function showTimetable($department){
+        $timetables = Timetable::where('department', $department)->get();
+        
+        $monday = Timetable::where('day','Monday')->where('department', $department)->orderby('start_date', 'asc')->get();
+        $tuesday = Timetable::where('day','Tuesday')->where('department', $department)->orderby('start_date', 'asc')->get();
+        $wednesday = Timetable::where('day','Wednesday')->where('department', $department)->orderby('start_date', 'asc')->get();
+        $thursday = Timetable::where('day','Thursday')->where('department', $department)->orderby('start_date', 'asc')->get();
+        $friday = Timetable::where('day','Friday')->where('department', $department)->orderby('start_date', 'asc')->get();
+        $saturday = Timetable::where('day','Saturday')->where('department', $department)->orderby('start_date', 'asc')->get();
+
+        $department = Department::select('name')->where('id', $department)->pluck('name')->first();
+        
+        return view('dashboard.timetable.show', compact('timetables', 'department', 'monday','tuesday','wednesday','thursday','friday','saturday'));
+    
     }
 
     public function editTimetable($id){
@@ -1162,6 +1175,8 @@ class DashboardController extends Controller
 
         $start_date = strtotime($data['start_date']);
         $end_date = strtotime($data['end_date']);
+        $course = $data['course'];
+        $department = Course::select('department')->where('id', $course)->pluck('department')->first();
         
         if($start_date > $end_date){
             return redirect()->route('all-timetable')->with('error', $data['start_date'].' is greater than '.$data['end_date']);
@@ -1171,6 +1186,7 @@ class DashboardController extends Controller
             $timetable = Timetable::where('id', $id)->update([
                 'session' => $data['session'],
                 'course' => $data['course'],
+                'department' => $department,
                 'venue' => $data['venue'],
                 'day' => $data['day'],
                 'start_date' => $data['start_date'],

@@ -12,6 +12,7 @@ class Timetable extends Model
     protected $fillable = [
         'session',
         'course',
+        'department',
         'venue',
         'day',
         'start_date',
@@ -24,6 +25,16 @@ class Timetable extends Model
             $session = Registration::where('id', $id)->first();
             $session_year = $session->session;
             return $session_year;
+        }else{
+            return '';
+        }
+    }
+
+    public function department($id){
+        if($id){
+            $department = Department::where('id', $id)->first();
+            $department_name = $department->name;
+            return $department_name;
         }else{
             return '';
         }

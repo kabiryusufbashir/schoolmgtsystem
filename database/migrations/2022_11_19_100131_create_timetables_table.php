@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('session');
             $table->string('course');
+            $table->string('department');
             $table->string('venue');
             $table->string('day');
             $table->string('start_date');

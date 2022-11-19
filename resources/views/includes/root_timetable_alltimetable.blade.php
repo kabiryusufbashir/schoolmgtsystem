@@ -12,7 +12,7 @@
                                     SESSION
                                 </th>
                                 <th scope="col" class="px-6 py-2  text-gray-500">
-                                    COURSE
+                                    DEPARTMENT
                                 </th>
                                 <th scope="col" class="px-6 py-2  text-gray-500">
                                     POSTED BY
@@ -27,15 +27,15 @@
                                     <td class="px-6 py-4 text-sm text-gray-500">
                                         {{ $timetable->session($timetable->session) }}
                                     </td>
-                                    <td class="px-6 py-4 text-sm text-gray-500">
-                                        {{ $timetable->course($timetable->course) }}
+                                    <td class="px-6 py-4 text-sm text-gray-500 hover:text-green-600 hover:underline">
+                                        <a href="{{ route('timetable-show', $timetable->department) }}">{{ $timetable->department($timetable->department) }}</a>
                                     </td>
                                     <td class="px-6 py-4 text-sm text-gray-500">
                                         {{ $timetable->postedBy($timetable->posted_by) }}
                                     </td>
                                     <td class="px-6 py-4 text-sm text-gray-500">
                                         <span class="flex">
-                                            <form action="{{ route('timetable-show', $timetable->course) }}" method="GET">
+                                            <form action="{{ route('timetable-show', $timetable->department) }}" method="GET">
                                                 @csrf 
                                                 <input type="submit" value="VIEW TIMETABLE" class="edit-btn">
                                             </form>
