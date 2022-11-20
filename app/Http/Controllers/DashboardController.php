@@ -16,9 +16,11 @@ use App\Models\Staff;
 use App\Models\Qualification;
 use App\Models\Student;
 use App\Models\Registration;
+use App\Models\Studentregistration;
 use App\Models\Calendar;
 use App\Models\Timetable;
 use App\Models\Exam;
+use App\Models\Result;
 
 class DashboardController extends Controller
 {
@@ -942,7 +944,10 @@ class DashboardController extends Controller
 
     // Registration 
     public function registration(){
-        return view('dashboard.registration.index');
+        $sessions = Registration::orderby('session', 'asc')->get();
+        $courses = Course::orderby('name', 'asc')->get();
+        $students = Student::select('user_id','matric_no')->orderby('matric_no', 'asc')->get();
+        return view('dashboard.registration.index', compact('sessions','courses','students'));
     }
 
     public function createRegistration(Request $request){
@@ -960,6 +965,43 @@ class DashboardController extends Controller
             ]);
 
             return redirect()->route('all-registration')->with('success', $data['title'].' Registration Added');
+
+        }catch(Exception $e){
+            return redirect()->route('all-registration')->with('error', 'Please try again... '.$e);
+        }
+    }
+
+    public function createRegistrationStudent(Request $request){
+        $data = $request->validate([
+            'session' => ['required'],
+            'semester' => ['required'],
+            'course_id' => ['required'],
+            'student_id' => ['required'],
+        ]);
+        
+
+        $session = $data['session'];
+        $semester = $data['semester'];
+        $course_id = $data['course_id'];
+        $student_id = $data['student_id'];
+
+        try{
+            $check_record = Studentregistration::where('session', $session)->where('semester', $semester)->where('course_id', $course_id)->where('student_id', $student_id)->count();
+            
+            if($check_record == 0){
+
+                $name = Studentregistration::create([
+                    'session' => $data['session'],
+                    'semester' => $data['semester'],
+                    'course_id' => $data['course_id'],
+                    'student_id' => $data['student_id'],
+                    'registered_by' => Auth::user()->id,
+                ]);
+    
+                return redirect()->route('root-registration')->with('success', 'Student Registerted');
+            }else{
+                return redirect()->route('root-registration')->with('error', 'Student Alreday Registered');
+            }
 
         }catch(Exception $e){
             return redirect()->route('all-registration')->with('error', 'Please try again... '.$e);
@@ -1298,4 +1340,157 @@ class DashboardController extends Controller
             return redirect()->route('all-exam')->with('error', 'Please try again... '.$e);
         }
     }
+
+    // Result 
+    public function result(){
+        $sessions = Registration::orderby('session', 'asc')->get();
+        $courses = Course::orderby('name', 'asc')->get();
+        return view('dashboard.result.index', compact('sessions', 'courses'));
+    }
+
+    public function createResult(Request $request){
+        $data = $request->validate([
+            'session' => ['required'],
+            'semester' => ['required'],
+            'course_id' => ['required'],
+        ]);
+
+        $session = $request->session;
+        $semester = $request->semester;
+        $course_id = $request->course_id;
+
+        try{
+            $students = Studentregistration::where('semester', $semester)->where('session', $session)->where('course_id', $course_id)->get();
+            if(count($students) > 0){
+                return redirect()->route('insert-result', compact('students', 'session', 'semester', 'course_id'));
+            }else{
+                return redirect()->route('root-result')->with('error', 'No Student Found');
+            }
+        
+        }catch(Exception $e){
+            return redirect()->route('root-result')->with('error', 'Please try again... '.$e);
+        }
+    }
+
+    public function insertResult(Request $request){
+        
+        $session = $request->session;
+        $semester = $request->semester;
+        $course_id = $request->course_id;
+
+        $students = Studentregistration::where('semester', $semester)->where('session', $session)->where('course_id', $course_id)->get();
+        
+        if(count($students) > 0){
+            $course = Course::select('name')->where('id', $course_id)->first();
+            $course_name = $course->name;
+            
+            $session = Registration::select('session')->where('id', $session)->first();
+            $session_year = $session->session;
+
+            return view('dashboard.result.insert', compact('students', 'session_year', 'semester', 'course_name'));
+        }else{
+            return redirect()->route('root-result')->with('error', 'No Student Found');
+        }
+    }
+
+    public function submitResult(Request $request){
+        
+        $session = $request->session;
+        $semester = $request->semester;
+        $course = $request->course;
+        $posted_by = Auth::user()->id;
+
+        $session = Registration::where('session', $session)->first();
+        $session_id = $session->id;
+
+        $course = Course::where('name', $course)->first();
+        $course_id = $course->id;
+
+        $data = Array(
+            'student_id' => $request->student_id,
+            'ca' => $request->ca,
+            'exams' => $request->exams,
+        );
+
+        try{
+            if($students = $data['student_id']){
+                for($x=0; $x<count($students); $x++){
+                    $result_add = new Result;
+                    $result_add['session'] = $session_id;
+                    $result_add['course'] = $course_id;
+                    $result_add['semester'] = $semester;
+                    $result_add['student_id'] = $data['student_id'][$x];
+                    $result_add['ca'] = $data['ca'][$x];
+                    $result_add['exams'] = $data['exams'][$x];
+                    $result_add['posted_by'] = $posted_by;
+                    $result_add->save();
+                }
+                return redirect()->route('all-result')->with('success', 'Result Stored');
+            }
+
+        }catch(Exception $e){
+            return redirect()->route('all-result')->with('error', 'Please try again... '.$e);
+        }
+    }
+
+    public function allResult(){
+        $results = Result::select('session', 'semester', 'course', 'posted_by')->orderby('created_at', 'desc')->distinct()->paginate(20);
+        return view('dashboard.result.result', compact('results'));
+    }
+
+    public function showResult(Request $request){
+        $semester = $request->semester;
+        $course = $request->course;
+        $session = $request->session;
+
+        $results = Result::where('semester', $semester)->where('course', $course)->where('session', $session)->get();
+        
+        $course = Course::select('name')->where('id', $course)->first();
+        $course_name = $course->name;
+        
+        $session = Registration::select('session')->where('id', $session)->first();
+        $session_year = $session->session;        
+
+        return view('dashboard.result.show', compact('results', 'course_name', 'semester', 'session_year'));
+    
+    }
+
+    public function editResult($id){
+        $result = Result::findOrFail($id);
+        $student = Student::where('user_id', $result->student_id)->first();
+        $course = Course::where('id', $result->course)->first();
+        $session = Registration::where('id', $result->session)->first();
+        $student_name = $student->title.' '.$student->first_name.' '.$student->last_name.' '.$student->other_name;
+        $course_name = $course->name;
+        $session_year = $session->session;
+        return view('dashboard.result.edit', compact('result', 'student_name', 'course_name', 'session_year'));
+    }
+
+    public function updateResult(Request $request, $id){
+        $data = $request->validate([
+            'ca' => ['required'],
+            'exams' => ['required'],
+        ]);
+
+        try{
+            $result = Result::where('id', $id)->update([
+                'ca' => $data['ca'],
+                'exams' => $data['exams'],
+            ]);
+            return redirect()->route('all-result')->with('success', 'Result Updated');
+        }catch(Exception $e){
+            return back()->with('error', 'Please try again... '.$e);
+        }
+    }
+
+    public function deleteResult($id){
+        $result = Result::findOrFail($id);
+        try{
+            $result->delete();
+            return redirect()->route('all-result')->with('success', 'Result Deleted');
+        }catch(Exception $e){
+            return redirect()->route('all-result')->with('error', 'Please try again... '.$e);
+        }
+    }
+
 }

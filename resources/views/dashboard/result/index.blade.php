@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('page-title')
-    Registration - AKCILS
+    Result - AKCILS
 @endsection
 
 @section('contents')
@@ -18,11 +18,9 @@
             @include('includes.root_user_info')
             <div class="text-center text-xl text-gray-600 mt-2 ml-4 mr-7 rounded py-3">@include('includes.messages')</div>
             <!-- Settings Menu  -->
-            @include('includes.root_registration_index')
+            @include('includes.root_result_index')
         </div>
-        <!-- Add Registration  -->
-        @include('dashboard.registration.create')
-        <!-- Add Student Registration  -->
-        @include('dashboard.registration.create_student')
+        <!-- Add result  -->
+        @include('dashboard.result.create')
     </div>
 @endsection

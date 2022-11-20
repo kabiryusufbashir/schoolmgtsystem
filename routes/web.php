@@ -81,6 +81,7 @@ Route::middleware([GlobalData::class])->group(function(){
     // Registration
     Route::get('/registration', [DashboardController::class, 'registration'])->name('root-registration')->middleware('auth:web');
     Route::post('/registration-create', [DashboardController::class, 'createRegistration'])->name('registration-create')->middleware('auth:web');
+    Route::post('/student-registration-create', [DashboardController::class, 'createRegistrationStudent'])->name('student-registration-create')->middleware('auth:web');
     Route::get('/allregistration', [DashboardController::class, 'allRegistration'])->name('all-registration')->middleware('auth:web');
     Route::get('/registration/{registration}/edit', [DashboardController::class, 'editRegistration'])->name('registration-edit')->middleware('auth:web');
     Route::patch('/registration/{registration}/update', [DashboardController::class, 'updateRegistration'])->name('registration-update')->middleware('auth:web');
@@ -110,6 +111,17 @@ Route::middleware([GlobalData::class])->group(function(){
     Route::get('/exam/{exam}/edit', [DashboardController::class, 'editExam'])->name('exam-edit')->middleware('auth:web');
     Route::patch('/exam/{exam}/update', [DashboardController::class, 'updateExam'])->name('exam-update')->middleware('auth:web');
     Route::delete('/exam/{exam}', [DashboardController::class, 'deleteExam'])->name('exam-delete')->middleware('auth:web');
+    
+    // RESULT
+    Route::get('/result', [DashboardController::class, 'result'])->name('root-result')->middleware('auth:web');
+    Route::post('/result-create', [DashboardController::class, 'createResult'])->name('result-create')->middleware('auth:web');
+    Route::get('/insert-result', [DashboardController::class, 'insertResult'])->name('insert-result')->middleware('auth:web');
+    Route::post('/submit-result', [DashboardController::class, 'submitResult'])->name('submit-result')->middleware('auth:web');
+    Route::get('/allresult', [DashboardController::class, 'allResult'])->name('all-result')->middleware('auth:web');
+    Route::get('/result/{semester}/show', [DashboardController::class, 'showResult'])->name('result-show')->middleware('auth:web');
+    Route::get('/result/{result}/edit', [DashboardController::class, 'editResult'])->name('result-edit')->middleware('auth:web');
+    Route::patch('/result/{result}/update', [DashboardController::class, 'updateResult'])->name('result-update')->middleware('auth:web');
+    Route::delete('/result/{result}', [DashboardController::class, 'deleteResult'])->name('result-delete')->middleware('auth:web');
 
     // Settings
     Route::get('/settings', [DashboardController::class, 'settings'])->name('root-settings')->middleware('auth:web');

@@ -109,15 +109,17 @@
         </div>
     </a>
     <!-- Results  -->
-    <div class="nav-link-div">
-        <span>
-            @include('icons.results')
-        </span>
-        &nbsp;&nbsp;
-        <span class="text-sm">
-            Results
-        </span>
-    </div>
+    <a href="{{ route('root-result') }}">
+        <div class="nav-link-div">
+            <span>
+                @include('icons.results')
+            </span>
+            &nbsp;&nbsp;
+            <span class="text-sm">
+                Results
+            </span>
+        </div>
+    </a>
     <!-- Settings  -->
     <a href="{{ route('root-settings') }}">
         <div class="nav-link-div">

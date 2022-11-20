@@ -30,6 +30,19 @@ class Course extends Model
         }
     }
 
+    public function courseName($id)
+    {
+        if($id){
+            $course = Course::where('id', $id)->first();
+            $course_name = $course->name;
+            $course_code = $course->course_code;
+            $full_course = $course_code.'-'.$course_name;
+            return $full_course;
+        }else{
+            return '';
+        }
+    }
+
     public function LecturerName($id)
     {
         if($id != ''){

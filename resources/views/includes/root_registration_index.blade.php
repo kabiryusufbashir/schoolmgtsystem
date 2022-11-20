@@ -8,7 +8,7 @@
             </span>
             &nbsp;&nbsp;
             <span>
-                <h1>Add registration</h1>
+                <h1>Add Registration</h1>
             </span>
         </div>
         <!-- All registration -->
@@ -19,9 +19,19 @@
                 </span>
                 &nbsp;&nbsp;
                 <span>
-                    <h1>All registration</h1>
+                    <h1>All Registration</h1>
                 </span>
             </div>
         </a>
+        <!-- Add Student Registration -->
+        <div id="addStudentRegistrationLink" class="settings-menu-div">
+            <span class="bg-green-300 p-2 rounded-full">
+                @include('icons.registration')
+            </span>
+            &nbsp;&nbsp;
+            <span>
+                <h1>Add Student Registration</h1>
+            </span>
+        </div>
     </div>
 </div>
