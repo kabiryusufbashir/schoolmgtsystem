@@ -95,16 +95,19 @@
             </span>
         </div>
     </a>
+
     <!-- Exams  -->
-    <div class="nav-link-div">
-        <span>
-            @include('icons.exams')
-        </span>
-        &nbsp;&nbsp;
-        <span class="text-sm">
-            Exams
-        </span>
-    </div>
+    <a href="{{ route('root-exam') }}">
+        <div class="nav-link-div">
+            <span>
+                @include('icons.exams')
+            </span>
+            &nbsp;&nbsp;
+            <span class="text-sm">
+                Exams
+            </span>
+        </div>
+    </a>
     <!-- Results  -->
     <div class="nav-link-div">
         <span>

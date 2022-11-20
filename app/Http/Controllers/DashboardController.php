@@ -18,6 +18,7 @@ use App\Models\Student;
 use App\Models\Registration;
 use App\Models\Calendar;
 use App\Models\Timetable;
+use App\Models\Exam;
 
 class DashboardController extends Controller
 {
@@ -1208,4 +1209,93 @@ class DashboardController extends Controller
         }
     }
     
+    // Exam 
+    public function exam(){
+        $sessions = Registration::orderby('session', 'asc')->get();
+        return view('dashboard.exam.index', compact('sessions'));
+    }
+
+    public function createExam(Request $request){
+        $data = $request->validate([
+            'session' => ['required'],
+            'exam_type' => ['required'],
+            'semester' => ['required'],
+            'start_date' => ['required'],
+            'end_date' => ['required'],
+        ]);
+
+        $start_date = strtotime($data['start_date']);
+        $end_date = strtotime($data['end_date']);
+        
+        if($start_date > $end_date){
+            return redirect()->route('all-exam')->with('error', $data['start_date'].' is greater than '.$data['end_date']);
+        }
+
+        try{
+            $name = Exam::create([
+                'session' => $data['session'],
+                'exam_type' => $data['exam_type'],
+                'semester' => $data['semester'],
+                'start_date' => $data['start_date'],
+                'end_date' => $data['end_date'],
+                'posted_by' => Auth::user()->id,
+            ]);
+
+            return redirect()->route('all-exam')->with('success', 'Exam Added');
+
+        }catch(Exception $e){
+            return redirect()->route('all-exam')->with('error', 'Please try again... '.$e);
+        }
+    }
+
+    public function allExam(){
+        $exams = Exam::orderby('start_date', 'asc')->paginate(20);
+        return view('dashboard.exam.exam', compact('exams'));
+    }
+
+    public function editExam($id){
+        $exam = Exam::findOrFail($id);
+        $sessions = Registration::orderby('session', 'asc')->get();
+        return view('dashboard.exam.edit', compact('exam', 'sessions'));
+    }
+
+    public function updateExam(Request $request, $id){
+        $data = $request->validate([
+            'session' => ['required'],
+            'exam_type' => ['required'],
+            'semester' => ['required'],
+            'start_date' => ['required'],
+            'end_date' => ['required'],
+        ]);
+
+        $start_date = strtotime($data['start_date']);
+        $end_date = strtotime($data['end_date']);
+        
+        if($start_date > $end_date){
+            return redirect()->route('all-exam')->with('error', $data['start_date'].' is greater than '.$data['end_date']);
+        }
+
+        try{
+            $exam = Exam::where('id', $id)->update([
+                'session' => $data['session'],
+                'exam_type' => $data['exam_type'],
+                'semester' => $data['semester'],
+                'start_date' => $data['start_date'],
+                'end_date' => $data['end_date'],
+            ]);
+            return redirect()->route('all-exam')->with('success', 'Exam Updated');
+        }catch(Exception $e){
+            return back()->with('error', 'Please try again... '.$e);
+        }
+    }
+
+    public function deleteExam($id){
+        $exam = Exam::findOrFail($id);
+        try{
+            $exam->delete();
+            return redirect()->route('all-exam')->with('success', 'Exam Deleted');
+        }catch(Exception $e){
+            return redirect()->route('all-exam')->with('error', 'Please try again... '.$e);
+        }
+    }
 }

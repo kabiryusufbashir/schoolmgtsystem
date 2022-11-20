@@ -103,6 +103,14 @@ Route::middleware([GlobalData::class])->group(function(){
     Route::patch('/timetable/{timetable}/update', [DashboardController::class, 'updateTimetable'])->name('timetable-update')->middleware('auth:web');
     Route::delete('/timetable/{timetable}', [DashboardController::class, 'deleteTimetable'])->name('timetable-delete')->middleware('auth:web');
 
+    // EXAM
+    Route::get('/exam', [DashboardController::class, 'exam'])->name('root-exam')->middleware('auth:web');
+    Route::post('/exam-create', [DashboardController::class, 'createExam'])->name('exam-create')->middleware('auth:web');
+    Route::get('/allexam', [DashboardController::class, 'allExam'])->name('all-exam')->middleware('auth:web');
+    Route::get('/exam/{exam}/edit', [DashboardController::class, 'editExam'])->name('exam-edit')->middleware('auth:web');
+    Route::patch('/exam/{exam}/update', [DashboardController::class, 'updateExam'])->name('exam-update')->middleware('auth:web');
+    Route::delete('/exam/{exam}', [DashboardController::class, 'deleteExam'])->name('exam-delete')->middleware('auth:web');
+
     // Settings
     Route::get('/settings', [DashboardController::class, 'settings'])->name('root-settings')->middleware('auth:web');
     Route::post('/settings-name', [DashboardController::class, 'settingsName'])->name('settings-name')->middleware('auth:web');
