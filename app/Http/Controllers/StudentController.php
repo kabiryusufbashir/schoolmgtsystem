@@ -12,8 +12,8 @@ use App\Models\Student;
 class StudentController extends Controller
 {
     public function dashboard(){
-        $student_user_id = Auth::user()->id;
-        $student = Student::where('user_id', $student_user_id)->first();
-        return view('student.index', compact('student'));
+        return view('student.index');
     }
+
+
 }

@@ -1,13 +1,13 @@
 <div class="bg-white py-3 px-6 ml-4 mr-8 rounded grid grid-cols-7 gap-2 items-center">
     <div class="flex py-2 items-center col-span-2">
         <span class="mr-4">
-            <img class="w-12 rounded-full" src="{{ $student->photo != null ? $student->photo : asset('/images/logo.png') }}" alt="{{ Auth::user()->name }} Photo">
+            <img class="w-12 rounded-full" src="{{ $student_profile->photo != null ? $student_profile->photo : asset('/images/logo.png') }}" alt="{{ Auth::user()->name }} Photo">
         </span>
         <span class="text-sm">
-            <div class="font-semibold mb-1">{{ $student->fullName($student->user_id) }}</div>
+            <div class="font-semibold mb-1">{{ $student_profile->fullName($student_profile->user_id) }}</div>
             <div>
                 <span class="font-semibold">Matric No:</span> 
-                {{ $student->matric_no }}
+                {{ $student_profile->matric_no }}
             </div>
         </span>
     </div>
@@ -23,7 +23,7 @@
         <span class="text-sm">
             <div class="font-semibold mb-1">Department:</div>
             <div>
-                {{ $student->department($student->department) }}
+                {{ $student_profile->department($student_profile->department) }}
             </div>
         </span>
     </div>
@@ -31,7 +31,7 @@
         <span class="text-sm">
             <div class="font-semibold mb-1">Level:</div>
             <div>
-                {{ $student->current_year }}00
+                {{ $student_profile->current_year }}00
             </div>
         </span>
     </div>
@@ -39,7 +39,7 @@
         <span class="text-sm">
             <div class="font-semibold mb-1">Combination:</div>
             <div>
-                {{ $student->department($student->department) }}
+                {{ $student_profile->department($student_profile->department) }}
             </div>
         </span>
     </div>
