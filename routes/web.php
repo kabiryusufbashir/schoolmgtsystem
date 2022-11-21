@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\GlobalData;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\StudentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,7 +25,7 @@ Route::get('/', [DashboardController::class, 'index'])->name('front');
 Route::post('/login', [LoginController::class, 'login'])->name('login');
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 
-// Dashboard 
+// DASHBOARD 
 Route::middleware([GlobalData::class])->group(function(){
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard')->middleware('auth:web');
     
@@ -130,5 +131,10 @@ Route::middleware([GlobalData::class])->group(function(){
     Route::post('/settings-photo', [DashboardController::class, 'settingsPhoto'])->name('settings-photo')->middleware('auth:web');
     Route::post('/settings-password', [DashboardController::class, 'settingsPassword'])->name('settings-password')->middleware('auth:web');
 
+});
+
+// STUDENTS 
+Route::middleware([GlobalData::class])->group(function(){
+    Route::get('/student/dashboard', [StudentController::class, 'dashboard'])->name('student-dashboard')->middleware('auth:web');
 });
 

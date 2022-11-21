@@ -23,11 +23,15 @@ class LoginController extends Controller
                         if($user_status->status == 1){
                             $user_category =  User::where('user_id', $request->user_id)->first();
                             
-                            if($user_status->status == 1){
+                            if($user_status->category == 1){
                                 $request->session()->regenerate();
                                 return redirect()->route('dashboard');    
+                            }else if($user_status->category == 2){
+                                dd('Staff');
+                            }else if($user_status->category == 3){
+                                $request->session()->regenerate();
+                                return redirect()->route('student-dashboard');
                             }
-                            
                         }else{
                             return back()->with('error', 'Account not Active');
                         }
