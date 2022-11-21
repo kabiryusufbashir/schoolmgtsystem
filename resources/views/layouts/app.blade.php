@@ -5,6 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>@yield('page-title')</title>
         <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/production.css') }}">
         <link rel="shortcut icon" href="{{ asset('images/favicon.ico') }}" type="image/x-icon">
         @vite('resources/css/app.css')
     </head>

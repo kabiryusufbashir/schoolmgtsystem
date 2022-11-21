@@ -17,10 +17,14 @@ class Registration extends Model
 
     public function status($id)
     {
-        if($id == 1){
-            return 'Active';
+        if($id){
+            if($id == 1){
+                return 'Active';
+            }else{
+                return 'Not Active';
+            }
         }else{
-            return 'Not Active';
+            return '';
         }
     }
     

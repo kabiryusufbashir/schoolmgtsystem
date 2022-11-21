@@ -1434,7 +1434,7 @@ class DashboardController extends Controller
     }
 
     public function allResult(){
-        $results = Result::select('session', 'semester', 'course', 'posted_by')->orderby('created_at', 'desc')->distinct()->paginate(20);
+        $results = Result::select('session', 'semester', 'course', 'posted_by')->distinct()->paginate(20);
         return view('dashboard.result.result', compact('results'));
     }
 
