@@ -1,58 +1,20 @@
-<div class="flex overflow-x-scroll hide-scroll-bar ml-4 mr-8 mb-4">
-    <div class="flex flex-nowrap">
-        <!-- Students  -->
-        <div class="inline w-96 max-w-xs bg-white py-7 px-6 mr-4 text-gray-600 my-5 rounded">
-            <a href="{{ route('root-student') }}">
-                <div class="flex py-2 items-center">
-                    <span class="mr-4">
-                        <div class="bg-blue-200 p-2 rounded-full text-white">
-                            @include('icons.student')
-                        </div>
-                    </span>
-                    <span class="text-sm">
-                        <div class="font-semibold mb-1">Student</div>
-                        <div>
-                            View overview of your <br>Student here
-                        </div>
-                    </span>
-                </div>
-            </a>
+<div class="grid grid-cols-3 gap-3 ml-4 mr-8 mb-4">
+    <div class="bg-white py-7 px-6 text-gray-600 my-5 rounded">
+        <div>
+            <div class="font-medium mb-1 text-xl">Current CGPA:</div>
+            <div class="font-semibold mb-1 text-2xl">4.2</div>
         </div>
-        <!-- Students  -->
-        <div class="inline w-96 max-w-xs bg-white py-7 px-6 mr-4 text-gray-600 my-5 rounded">
-            <a href="{{ route('root-student') }}">
-                <div class="flex py-2 items-center">
-                    <span class="mr-4">
-                        <div class="bg-blue-200 p-2 rounded-full text-white">
-                            @include('icons.student')
-                        </div>
-                    </span>
-                    <span class="text-sm">
-                        <div class="font-semibold mb-1">Student</div>
-                        <div>
-                            View overview of your <br>Student here
-                        </div>
-                    </span>
-                </div>
-            </a>
+    </div>
+    <div class="bg-white py-7 px-6 text-gray-600 my-5 rounded">
+        <div>
+            <div class="font-medium mb-1 text-xl">Total Outstanding:</div>
+            <div class="font-semibold mb-1 text-2xl">0 Units</div>
         </div>
-        <!-- Courses  -->
-        <div class="inline w-96 max-w-xs bg-white py-7 px-6 mr-4 text-gray-600 my-5 rounded">
-            <a href="{{ route('root-course') }}">
-                <div class="flex py-2 items-center">
-                    <span class="mr-4">
-                        <div class="bg-green-200 p-2 rounded-full text-white">
-                            @include('icons.course')
-                        </div>
-                    </span>
-                    <span class="text-sm">
-                        <div class="font-semibold mb-1">Courses</div>
-                        <div>
-                            View overview of your <br>Courses here
-                        </div>
-                    </span>
-                </div>
-            </a>
+    </div>
+    <div class="bg-white py-7 px-6 text-gray-600 my-5 rounded">
+        <div>
+            <div class="font-medium mb-1 text-xl">Outstanding Sessions:</div>
+            <div class="font-semibold mb-1 text-2xl">NIL</div>
         </div>
     </div>
 </div>
