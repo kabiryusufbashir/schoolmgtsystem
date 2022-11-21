@@ -15,11 +15,11 @@
         <!-- Statistics Content -->
         <div class="col-span-5 mt-2">
             <!-- User Info  -->
-            @include('includes.root_user_info')
+            @include('includes.student_user_info')
             <!-- System Statistics -->
-            @include('includes.root_system_stat')
+            @include('includes.student_system_stat')
             <!-- Calendar  -->
-            @include('includes.root_system_calendar')
+            @include('includes.student_system_calendar')
         </div>
     </div>
 @endsection

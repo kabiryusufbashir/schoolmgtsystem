@@ -41,4 +41,16 @@ class Student extends Model
             return '';
         }
     }
+
+    public function fullName($id)
+    {
+        $student = Student::where('user_id', $id)->first();
+        $title = $student->title;
+        $first_name = $student->first_name;
+        $last_name = $student->last_name;
+        $other_name = $student->other_name;
+        $full_name = $title.' '.$first_name.' '.$last_name.' '.$other_name;
+        
+        return $full_name;
+    }
 }
