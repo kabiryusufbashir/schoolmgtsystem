@@ -27,7 +27,7 @@ Route::post('/student/login', [LoginController::class, 'studentLogin'])->name('l
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 
 // DASHBOARD 
-Route::middleware([GlobalData::class])->group(function(){
+Route::group(['prefix' => 'admin'], function (){
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard')->middleware('auth:web');
     
     // Department 

@@ -6,6 +6,7 @@
 
 @section('contents')
     <div class="grid grid-cols-6">
+        @include('student.payment_check')
         <!-- Navigation  -->
         <div class="bg-white col-span-1">
             @include('includes.root_system_info')

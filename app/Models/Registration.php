@@ -12,6 +12,7 @@ class Registration extends Model
     protected $fillable = [
         'title',
         'session',
+        'semester',
         'active',
     ];
 

@@ -11,18 +11,6 @@
             </span>
         </div>
     </a>
-    <!-- Courses  -->
-    <a href="{{ route('root-course') }}">
-        <div class="nav-link-div">
-            <span>
-                @include('icons.course')
-            </span>
-            &nbsp;&nbsp;
-            <span class="text-sm">
-                Course Reg.
-            </span>
-        </div>
-    </a>
     <!-- Registration  -->
     <a href="{{ route('root-registration') }}">
         <div class="nav-link-div">
@@ -32,6 +20,18 @@
             &nbsp;&nbsp;
             <span class="text-sm">
                 Registration
+            </span>
+        </div>
+    </a>
+    <!-- Courses  -->
+    <a href="{{ route('root-course') }}">
+        <div class="nav-link-div">
+            <span>
+                @include('icons.course')
+            </span>
+            &nbsp;&nbsp;
+            <span class="text-sm">
+                Course Reg.
             </span>
         </div>
     </a>
