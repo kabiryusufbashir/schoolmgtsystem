@@ -15,6 +15,9 @@
                                     SESSION
                                 </th>
                                 <th scope="col" class="px-6 py-2  text-gray-500">
+                                    SEMESTER
+                                </th>
+                                <th scope="col" class="px-6 py-2  text-gray-500">
                                     ACTIVE
                                 </th>
                                 <th scope="col" class="px-6 py-2  text-gray-500">
@@ -29,6 +32,9 @@
                                     </td>
                                     <td class="px-6 py-4 text-sm text-gray-500">
                                         {{ $registration->session }}
+                                    </td>
+                                    <td class="px-6 py-4 text-sm text-gray-500">
+                                        {{ $registration->semester }}
                                     </td>
                                     <td class="px-6 py-4 text-sm text-gray-500">
                                         {{ $registration->status($registration->active) }}

@@ -40,6 +40,23 @@
                         @enderror
                     </div>
                     <div>
+                        <label for="semester" class="input-title">Registration Semester</label><br>
+                        <select name="semester" class="input-field">
+                            <option value="{{ $registration->semester }}">{{ $registration->semester }}</option>
+                            @if($registration->semester == 'First Semester')
+                                <option value="Second Semester">Second Semester</option>
+                            @elseif($registration->semester == 'First Semester')
+                                <option value="First Semester">First Semester</option>
+                            @else
+                                <option value="First Semester">First Semester</option>
+                                <option value="Second Semester">Second Semester</option>
+                            @endif
+                        </select>
+                        @error('active')
+                            {{$message}}
+                        @enderror
+                    </div>
+                    <div>
                         <label for="active" class="input-title">Registration Status</label><br>
                         <select name="active" class="input-field">
                             <option value="{{ $registration->active }}">{{ $registration->status($registration->active) }}</option>

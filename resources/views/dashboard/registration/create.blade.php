@@ -24,6 +24,17 @@
                         @enderror
                     </div>
                     <div class="my-4">
+                        <label for="semester" class="input-title">Registration Semester</label><br>
+                        <select name="semester" class="input-field">
+                            <option value=""></option>
+                            <option value="First Semester">First Semester</option>
+                            <option value="Second Semester">Second Semester</option>
+                        </select>
+                        @error('semester')
+                            {{$message}}
+                        @enderror
+                    </div>
+                    <div class="my-4">
                         <label for="active" class="input-title">Registration Status</label><br>
                         <select name="active" class="input-field">
                             <option value=""></option>

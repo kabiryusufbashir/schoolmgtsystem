@@ -995,21 +995,30 @@ class DashboardController extends Controller
         $data = $request->validate([
             'title' => ['required'],
             'session' => ['required'],
+            'semester' => ['required'],
             'active' => ['required'],
         ]);
         
-        try{
-            $name = Registration::create([
-                'title' => $data['title'],
-                'session' => $data['session'],
-                'active' => $data['active'],
-            ]);
+        $check_record = Registration::where('title', $data['title'])->count();
 
-            return redirect()->route('all-registration')->with('success', $data['title'].' Registration Added');
-
-        }catch(Exception $e){
-            return redirect()->route('all-registration')->with('error', 'Please try again... '.$e);
+        if($check_record == 0){
+            try{
+                $name = Registration::create([
+                    'title' => $data['title'],
+                    'session' => $data['session'],
+                    'semester' => $data['semester'],
+                    'active' => $data['active'],
+                ]);
+    
+                return redirect()->route('all-registration')->with('success', $data['title'].' Registration Added');
+    
+            }catch(Exception $e){
+                return redirect()->route('all-registration')->with('error', 'Please try again... '.$e);
+            }
+        }else{
+            return redirect()->route('all-registration')->with('error', $data['title'].' Already Exists');        
         }
+
     }
 
     public function createRegistrationStudent(Request $request){
@@ -1062,6 +1071,7 @@ class DashboardController extends Controller
     public function updateRegistration(Request $request, $id){
         $data = $request->validate([
             'title' => ['required'],
+            'semester' => ['required'],
             'session' => ['required'],
             'active' => ['required'],
         ]);
@@ -1069,6 +1079,7 @@ class DashboardController extends Controller
         try{
             $registration = Registration::where('id', $id)->update([
                 'title' => $data['title'],
+                'semester' => $data['semester'],
                 'session' => $data['session'],
                 'active' => $data['active'],
             ]);
