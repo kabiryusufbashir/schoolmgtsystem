@@ -137,12 +137,12 @@ Route::middleware([GlobalData::class])->group(function(){
 // STUDENTS 
 Route::group(['prefix' => 'student'], function () {
     Route::middleware([GlobalData::class])->group(function(){
-        Route::get('/dashboard', [StudentController::class, 'dashboard'])->name('student-dashboard')->middleware('auth:web');
+        Route::get('/dashboard', [StudentController::class, 'dashboard'])->name('student-dashboard')->middleware('auth:students');
     
         // Settings
-        Route::get('/settings', [DashboardController::class, 'settings'])->name('student-settings')->middleware('auth:web');
-        Route::post('/settings-photo', [DashboardController::class, 'settingsPhoto'])->name('student-settings-photo')->middleware('auth:web');
-        Route::post('/settings-password', [DashboardController::class, 'settingsPassword'])->name('student-settings-password')->middleware('auth:web');
+        Route::get('/settings', [StudentController::class, 'settings'])->name('student-settings')->middleware('auth:students');
+        Route::post('/settings-photo', [StudentController::class, 'settingsPhoto'])->name('student-settings-photo')->middleware('auth:students');
+        Route::post('/settings-password', [StudentController::class, 'settingsPassword'])->name('student-settings-password')->middleware('auth:students');
     });
 });
 

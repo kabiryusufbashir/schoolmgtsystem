@@ -24,6 +24,7 @@ use App\Models\Result;
 
 class DashboardController extends Controller
 {
+
     public function index(){
         return view('welcome');
     }
@@ -104,17 +105,18 @@ class DashboardController extends Controller
         ]);
 
         $system_id = Auth::user()->id;
-        $password = Hash::make($request->password);
+        $system_password = Auth::user()->password;
+        $password = Hash::make($request->new_password);
         
         try{
 
-            if(!Hash::check($request->old_password, auth()->user()->password)){
-                return redirect()->route('root-settings')->with('error', 'Old Password Doesn\'t Match!');
-            }else{
+            if(Hash::check($request->old_password, $student_password)){
                 $password = User::where('id', $system_id)->update([
                     'password'=> $password
                 ]);
                 return redirect()->route('root-settings')->with('success', 'Password Changed Successfully');
+            }else{
+                return redirect()->route('root-settings')->with('error', 'Old Password Doesn\'t Match!');
             }
         }catch(Exception $e){
             return redirect()->route('root-settings')->with('error', 'Please try again... '.$e);
@@ -371,6 +373,7 @@ class DashboardController extends Controller
                             'country' => $importData[12],
                             'username' => $username,
                             'password' => Hash::make('1234567890'),
+                            'status' => 1,
                         ]);         
                     DB::commit();
                 }catch(\Exception $e) {
@@ -443,6 +446,7 @@ class DashboardController extends Controller
                 'email' => $request->email,
                 'username' => $username,
                 'password' => $password,
+                'status' => 1,
             ]);
 
             return redirect()->route('staff-edit-step-2', $lastid);
@@ -719,6 +723,7 @@ class DashboardController extends Controller
                             'current_year' => $importData[15],
                             'username' => $username,
                             'password' => Hash::make('1234567890'),
+                            'status' => 1,
                         ]);         
                     DB::commit();
                 }catch(\Exception $e) {
@@ -748,42 +753,51 @@ class DashboardController extends Controller
         $user_id = $request->first_name.Date('my');
         $password = Hash::make('1234567890');
         $type = 3;
+        $matric_no = $request->matric_no;
 
-        try{
-            $name = User::create([
-                'name' => $name,
-                'email' => $data['email'],
-                'user_id' => $user_id,
-                'password' => $password,
-                'status' => 1,
-                'category' => $type,
-                'photo' => '',
-            ]);
+        $check_record = Student::where('matric_no', $matric_no)->count();
 
-            $user = User::latest('id')->first();
-            $lastid = $user->id;
-            $username = $user->user_id;
+        if($check_record == 0){
+            try{
+                $name = User::create([
+                    'name' => $name,
+                    'email' => $data['email'],
+                    'user_id' => $user_id,
+                    'password' => $password,
+                    'status' => 1,
+                    'category' => $type,
+                    'photo' => '',
+                ]);
 
-            $student = Student::create([
-                'user_id' => $lastid,
-                'title' => $request->title,
-                'matric_no' => $request->matric_no,
-                'first_name' => $request->first_name,
-                'last_name' => $request->last_name,
-                'other_name' => $request->other_name,
-                'gender' => $request->gender,
-                'dob' => $request->dob,
-                'marital_status' => $request->marital_status,
-                'email' => $request->email,
-                'username' => $username,
-                'password' => $password,
-            ]);
+                $user = User::latest('id')->first();
+                $lastid = $user->id;
+                $username = $user->user_id;
 
-            return redirect()->route('student-edit-step-2', $lastid);
+                $student = Student::create([
+                    'user_id' => $lastid,
+                    'title' => $request->title,
+                    'matric_no' => $request->matric_no,
+                    'first_name' => $request->first_name,
+                    'last_name' => $request->last_name,
+                    'other_name' => $request->other_name,
+                    'gender' => $request->gender,
+                    'dob' => $request->dob,
+                    'marital_status' => $request->marital_status,
+                    'email' => $request->email,
+                    'username' => $username,
+                    'password' => $password,
+                    'status' => 1,
+                ]);
 
-        }catch(Exception $e){
-            return redirect()->route('all-student')->with('error', 'Please try again... '.$e);
+                return redirect()->route('student-edit-step-2', $lastid);
+
+            }catch(Exception $e){
+                return redirect()->route('all-student')->with('error', 'Please try again... '.$e);
+            }
+        }else{
+            return redirect()->route('all-student')->with('error', 'Matric No Already exists');
         }
+
     }
 
     public function editStudentStep1($id){
@@ -793,25 +807,34 @@ class DashboardController extends Controller
     }
 
     public function updateStudentStep1(Request $request, $id){
+        
+        $matric_no = $request->matric_no;
+
+        $check_record = Student::where('matric_no', $matric_no)->count();
+
+        if($check_record == 0){
+            try{
+                $student = Student::where('user_id', $id)->update([
+                    'title' => $request->title,
+                    'matric_no' => $request->matric_no,
+                    'first_name' => $request->first_name,
+                    'last_name' => $request->last_name,
+                    'other_name' => $request->other_name,
+                    'gender' => $request->gender,
+                    'email' => $request->email,
+                    'dob' => $request->dob,
+                    'marital_status' => $request->marital_status,
+                ]);
             
-        try{
-            $student = Student::where('user_id', $id)->update([
-                'title' => $request->title,
-                'matric_no' => $request->matric_no,
-                'first_name' => $request->first_name,
-                'last_name' => $request->last_name,
-                'other_name' => $request->other_name,
-                'gender' => $request->gender,
-                'email' => $request->email,
-                'dob' => $request->dob,
-                'marital_status' => $request->marital_status,
-            ]);
-        
-            return redirect()->route('student-edit-step-2', $id);
-        
-        }catch(Exception $e){
-            return back()->with('error', 'Please try again... '.$e);
+                return redirect()->route('student-edit-step-2', $id);
+            
+            }catch(Exception $e){
+                return back()->with('error', 'Please try again... '.$e);
+            }
+        }else{
+            return back()->with('error', 'Matric No Already exists');
         }
+
     }
 
     public function editStudentStep2($id){

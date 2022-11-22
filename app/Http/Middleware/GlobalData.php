@@ -21,7 +21,7 @@ class GlobalData
      */
     public function handle(Request $request, Closure $next)
     {
-        $student_user_id = Auth::user()->id;
+        $student_user_id = Auth::guard('students')->user()->user_id;
         $student_profile = Student::where('user_id', $student_user_id)->first();
 
 

@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 use App\Models\User;
+use App\Models\Student;
 
 class LoginController extends Controller
 {
@@ -54,21 +55,12 @@ class LoginController extends Controller
         ]);
 
         try{
-            if(Auth::guard('students')->attempt(['user_id' => $request->user_id, 'password' => $request->password])){
+            if(Auth::guard('students')->attempt(['username' => $request->user_id, 'password' => $request->password])){
                 try{
-                    $user_status =  User::where('user_id', $request->user_id)->first();
+                    $user_status =  Student::where('username', $request->user_id)->first();
                         if($user_status->status == 1){
-                            $user_category =  User::where('user_id', $request->user_id)->first();
-                            
-                            if($user_status->category == 1){
-                                $request->session()->regenerate();
-                                return redirect()->route('dashboard');    
-                            }else if($user_status->category == 2){
-                                dd('Staff');
-                            }else if($user_status->category == 3){
-                                $request->session()->regenerate();
-                                return redirect()->route('student-dashboard');
-                            }
+                            $request->session()->regenerate();
+                            return redirect()->route('student-dashboard');
                         }else{
                             return back()->with('error', 'Account not Active');
                         }
@@ -87,6 +79,7 @@ class LoginController extends Controller
     public function logout(Request $request)
     {   
         Auth::guard('web')->logout();
+        Auth::guard('students')->logout();
         return redirect()->route('front');
     }
 }

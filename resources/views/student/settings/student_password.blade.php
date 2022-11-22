@@ -2,12 +2,12 @@
     <div id="modal">
         <div id="modal-content" class="rounded">
             <div id="modal-header" class="modal-header">
-                <span>School Password</span>
+                <span>Change Password</span>
                 <span id="closeModalSystemPassword" class="cursor-pointer">X</span>
             </div>
             <div class="p-4">
                 <!-- System Password -->
-                <form action="{{ route('settings-password') }}" method="POST" class="px-6 lg:px-8 py-8">
+                <form action="{{ route('student-settings-password') }}" method="POST" class="px-6 lg:px-8 py-8">
                     @csrf
                     <div>
                         <label for="password" class="font-medium">Old Password</label><br>

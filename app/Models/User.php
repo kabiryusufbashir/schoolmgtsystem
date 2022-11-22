@@ -95,10 +95,19 @@ class User extends Authenticatable
 
     public function studentDepartment($student_id)
     {
-        $student = Student::where('user_id', $student_id)->first();
-        $student_department = Department::where('id', $student->department)->first();
-        if($student->department != 0){
-            return $student_department->name;
+        if($student_id){
+            $student = Student::where('user_id', $student_id)->first();
+            $student_dept = $student->department;
+                if($student_dept){
+                    $student_department = Department::where('id', $student_dept)->first();
+                    if($student->department != 0){
+                        return $student_department->name;
+                    }else{
+                        return '';
+                    }
+                }else{
+                    return '';
+                }
         }else{
             return '';
         }

@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::table('students', function (Blueprint $table) {
             $table->string('username');
             $table->string('password');
+            $table->string('status');
         });
     }
 
