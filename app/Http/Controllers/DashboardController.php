@@ -134,11 +134,17 @@ class DashboardController extends Controller
         $dept_name = $request->name;
 
         try{
-            $name = Department::create([
-                'name' => $data['name'],
-            ]);
+            $check_record = Department::where('name', $dept_name)->count();
 
-            return redirect()->route('all-department')->with('success', $dept_name.' Department Added');
+            if($check_record == 0){
+                $name = Department::create([
+                    'name' => $data['name'],
+                ]);
+                return redirect()->route('all-department')->with('success', $dept_name.' Department Added');
+            }else{
+                return redirect()->route('all-department')->with('success', $dept_name.' Department Already Exists');
+            }
+
 
         }catch(Exception $e){
             return redirect()->route('all-department')->with('error', 'Please try again... '.$e);
@@ -346,6 +352,7 @@ class DashboardController extends Controller
                         ]);
                         $user = User::latest('id')->first();
                         $user_id = $user->id;
+                        $username = $user->user_id;
                         
                         Staff::create([
                             'user_id' => $user_id,
@@ -362,6 +369,8 @@ class DashboardController extends Controller
                             'city' => $importData[10],
                             'state' => $importData[11],
                             'country' => $importData[12],
+                            'username' => $username,
+                            'password' => Hash::make('1234567890'),
                         ]);         
                     DB::commit();
                 }catch(\Exception $e) {
@@ -420,6 +429,7 @@ class DashboardController extends Controller
 
             $user = User::latest('id')->first();
             $lastid = $user->id;
+            $username = $user->user_id;
 
             $staff = Staff::create([
                 'user_id' => $lastid,
@@ -431,6 +441,8 @@ class DashboardController extends Controller
                 'dob' => $request->dob,
                 'marital_status' => $request->marital_status,
                 'email' => $request->email,
+                'username' => $username,
+                'password' => $password,
             ]);
 
             return redirect()->route('staff-edit-step-2', $lastid);
@@ -685,6 +697,7 @@ class DashboardController extends Controller
                         ]);
                         $user = User::latest('id')->first();
                         $user_id = $user->id;
+                        $username = $user->user_id;
                         
                         Student::create([
                             'user_id' => $user_id,
@@ -704,6 +717,8 @@ class DashboardController extends Controller
                             'matric_no' => $importData[13],
                             'year_admitted' => $importData[14],
                             'current_year' => $importData[15],
+                            'username' => $username,
+                            'password' => Hash::make('1234567890'),
                         ]);         
                     DB::commit();
                 }catch(\Exception $e) {
@@ -747,6 +762,7 @@ class DashboardController extends Controller
 
             $user = User::latest('id')->first();
             $lastid = $user->id;
+            $username = $user->user_id;
 
             $student = Student::create([
                 'user_id' => $lastid,
@@ -759,6 +775,8 @@ class DashboardController extends Controller
                 'dob' => $request->dob,
                 'marital_status' => $request->marital_status,
                 'email' => $request->email,
+                'username' => $username,
+                'password' => $password,
             ]);
 
             return redirect()->route('student-edit-step-2', $lastid);
@@ -1179,7 +1197,7 @@ class DashboardController extends Controller
     }
 
     public function allTimetable(){
-        $timetables = Timetable::select('session', 'department', 'posted_by')->orderby('start_date', 'asc')->distinct()->paginate(20);
+        $timetables = Timetable::select('session', 'department', 'posted_by')->distinct()->paginate(20);
         return view('dashboard.timetable.timetable', compact('timetables'));
     }
 

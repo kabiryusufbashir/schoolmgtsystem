@@ -31,6 +31,8 @@ class Staff extends Model
         'phone',
         'department',
         'photo',
+        'username',
+        'password',
     ];
 
     public function department($id)

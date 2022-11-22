@@ -60,7 +60,7 @@
         </div>
     </a>
     <!-- Settings  -->
-    <a href="{{ route('root-settings') }}">
+    <a href="{{ route('student-settings') }}">
         <div class="nav-link-div">
             <span>
                 @include('icons.settings')

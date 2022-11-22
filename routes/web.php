@@ -23,6 +23,7 @@ Route::get('/', [DashboardController::class, 'index'])->name('front');
 
 // Login 
 Route::post('/login', [LoginController::class, 'login'])->name('login');
+Route::post('/student/login', [LoginController::class, 'studentLogin'])->name('login-student');
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 
 // DASHBOARD 
@@ -134,7 +135,15 @@ Route::middleware([GlobalData::class])->group(function(){
 });
 
 // STUDENTS 
-Route::middleware([GlobalData::class])->group(function(){
-    Route::get('/student/dashboard', [StudentController::class, 'dashboard'])->name('student-dashboard')->middleware('auth:web');
+Route::group(['prefix' => 'student'], function () {
+    Route::middleware([GlobalData::class])->group(function(){
+        Route::get('/dashboard', [StudentController::class, 'dashboard'])->name('student-dashboard')->middleware('auth:web');
+    
+        // Settings
+        Route::get('/settings', [DashboardController::class, 'settings'])->name('student-settings')->middleware('auth:web');
+        Route::post('/settings-photo', [DashboardController::class, 'settingsPhoto'])->name('student-settings-photo')->middleware('auth:web');
+        Route::post('/settings-password', [DashboardController::class, 'settingsPassword'])->name('student-settings-password')->middleware('auth:web');
+    });
 });
+
 

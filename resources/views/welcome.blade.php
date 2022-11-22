@@ -48,7 +48,7 @@
                 <!-- Student Login Section  -->
                 <div id="studentLoginSection" class="login-div hidden">
                     <h1 class="text-xl text-center font-medium">Student Login</h1>
-                    <form action="{{ route('login') }}" method="POST">
+                    <form action="{{ route('login-student') }}" method="POST">
                         @csrf
                         <div class="my-3">
                             <label for="student_id" class="font-medium">Student ID</label><br>
