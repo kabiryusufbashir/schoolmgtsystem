@@ -161,7 +161,7 @@ Route::group(['prefix' => 'student'], function () {
         Route::get('/course', [StudentController::class, 'course'])->name('student-course-reg')->middleware('auth:students');
         Route::get('/course/registration', [StudentController::class, 'courseRegistration'])->name('student-course-registration')->middleware('auth:students');
         Route::post('/course/registration/submit', [StudentController::class, 'courseRegistrationSubmit'])->name('student-course-registration-submit')->middleware('auth:students');
-
+        Route::delete('/course/registration/{course}', [StudentController::class, 'courseRegistrationDelete'])->name('student-course-registration-delete')->middleware('auth:students');
 
     });
 });

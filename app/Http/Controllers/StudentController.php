@@ -186,6 +186,16 @@ class StudentController extends Controller
         }
     }
 
+    public function courseRegistrationDelete($id){
+        $course = Studentregistration::findOrFail($id);
+        try{
+            $course->delete();
+            return redirect()->route('student-course-registration')->with('success', 'Course Removed');
+        }catch(Exception $e){
+            return redirect()->route('student-course-registration')->with('error', 'Please try again... '.$e);
+        }
+    }
+
     // Settings 
     public function settings(){
         return view('student.settings.index');

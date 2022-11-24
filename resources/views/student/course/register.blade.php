@@ -65,6 +65,8 @@
                                                     <th scope="col" class="px-6 py-2  text-gray-500">
                                                         UNIT
                                                     </th>
+                                                    <th scope="col" class="px-6 py-2  text-gray-500">
+                                                    </th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -81,6 +83,15 @@
                                                         </td>
                                                         <td class="px-6 py-4 text-sm text-gray-500">
                                                             {{ $course->courseUnit($course->course_id) }}
+                                                        </td>
+                                                        <td class="px-6 py-4 text-sm text-gray-500">
+                                                            <span class="flex">
+                                                                <form action="{{ route('student-course-registration-delete', $course->id) }}" method="POST">
+                                                                    @csrf 
+                                                                    @method('DELETE')
+                                                                    <input type="submit" value="REMOVE" class="del-btn">
+                                                                </form>
+                                                            </span>
                                                         </td>
                                                     </tr>
                                                 @endforeach     
@@ -116,6 +127,8 @@
                                                     <th scope="col" class="px-6 py-2  text-gray-500">
                                                         UNIT
                                                     </th>
+                                                    <th scope="col" class="px-6 py-2  text-gray-500">
+                                                    </th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -132,6 +145,15 @@
                                                         </td>
                                                         <td class="px-6 py-4 text-sm text-gray-500">
                                                             {{ $course->courseUnit($course->course_id) }}
+                                                        </td>
+                                                        <td class="px-6 py-4 text-sm text-gray-500">
+                                                            <span class="flex">
+                                                                <form action="{{ route('student-course-registration-delete', $course->id) }}" method="POST">
+                                                                    @csrf 
+                                                                    @method('DELETE')
+                                                                    <input type="submit" value="REMOVE" class="del-btn">
+                                                                </form>
+                                                            </span>
                                                         </td>
                                                     </tr>
                                                 @endforeach
