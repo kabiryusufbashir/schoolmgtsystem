@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -38,6 +39,88 @@ class Student extends Authenticatable
         'password',
         'status',
     ];
+
+    public function checkPayment()
+    {
+        $student_id = Auth::guard('students')->user()->user_id;
+        $registration_check = Registration::orderby('id', 'desc')->limit(1)->first();
+        $session_id =  $registration_check->id;
+        $session_semester =  $registration_check->semester;
+
+        if($session_semester == 'First Semester'){
+            $check_payment_session = Studentregistrationsession::where('session', $session_id)->where('student_id', $student_id)->count();
+            return $check_payment_session;
+        }else if($session_semester == 'Second Semester'){
+            $check_payment_semester = Studentregistrationsemester::where('session', $session_id)->where('student_id', $student_id)->count();
+            return $check_payment_semester;
+        }
+
+    }
+
+    public function checkSessionPayment()
+    {
+        $student_id = Auth::guard('students')->user()->user_id;
+        $registration_check = Registration::orderby('id', 'desc')->limit(1)->first();
+        $session_id =  $registration_check->id;
+        $session_semester =  $registration_check->semester;
+
+        if($session_semester == 'First Semester'){
+            $check_payment_session = Studentregistrationsession::where('session', $session_id)->where('student_id', $student_id)->count();
+            $session_return = $session_semester.'-'.$check_payment_session;
+            return $session_return;
+        }else if($session_semester == 'Second Semester'){
+            $check_payment_semester = Studentregistrationsemester::where('session', $session_id)->where('student_id', $student_id)->count();
+            $semester_return = $session_semester.'-'.$check_payment_semester;
+            return $semester_return;
+        }
+
+    }
+
+    public function paymentSessionStatus()
+    {
+        $student_id = Auth::guard('students')->user()->user_id;
+        $registration_check = Registration::orderby('id', 'desc')->limit(1)->first();
+        $session_id =  $registration_check->id;
+        $session_semester =  $registration_check->semester;
+
+        if($session_semester == 'First Semester'){
+            $check_payment_session = Studentregistrationsession::where('session', $session_id)->where('student_id', $student_id)->count();
+            if($check_payment_session > 0){
+                $check_payment_session = Studentregistrationsession::where('session', $session_id)->where('student_id', $student_id)->first();
+                $status = $check_payment_session->status;
+                    if($status == 1){
+                        return 'Pending';
+                    }else if($status == 2){
+                        return 'Paid';
+                    }
+            }else{
+                return 'Not Paid';
+            }
+        }
+
+    }
+
+    public function paymentSemesterStatus()
+    {
+        $student_id = Auth::guard('students')->user()->user_id;
+        $registration_check = Registration::orderby('id', 'desc')->limit(1)->first();
+        $session_id =  $registration_check->id;
+        $session_semester =  $registration_check->semester;
+
+        $check_payment_session = Studentregistrationsemester::where('session', $session_id)->where('student_id', $student_id)->count();
+        if($check_payment_session > 0){
+            $check_payment_session = Studentregistrationsemester::where('session', $session_id)->where('student_id', $student_id)->first();
+            $status = $check_payment_session->status;
+                if($status == 1){
+                    return 'Pending';
+                }else if($status == 2){
+                    return 'Paid';
+                }
+        }else{
+            return 'Not Paid';
+        }
+
+    }
 
     public function department($id)
     {

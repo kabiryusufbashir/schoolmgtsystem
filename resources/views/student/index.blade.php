@@ -6,7 +6,9 @@
 
 @section('contents')
     <div class="grid grid-cols-6">
-        @include('student.payment_check')
+        {{--@if(Auth::guard('students')->user()->checkPayment() == 0)
+            @include('student.payment_check')
+        @endif--}}
         <!-- Navigation  -->
         <div class="bg-white col-span-1">
             @include('includes.root_system_info')

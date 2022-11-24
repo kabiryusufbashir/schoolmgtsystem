@@ -21,10 +21,12 @@ class GlobalData
      */
     public function handle(Request $request, Closure $next)
     {
+        $student_online = Auth::guard('students')->user();
         $student_user_id = Auth::guard('students')->user()->user_id;
         $student_profile = Student::where('user_id', $student_user_id)->first();
 
 
+        View::share('student_online', $student_online);
         View::share('student_profile', $student_profile);
         return $next($request);
     }

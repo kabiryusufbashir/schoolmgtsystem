@@ -1,7 +1,7 @@
 <div class="my-4 overflow-auto yus-container-scrollbar py-3">
     <!-- Dashboard  -->
-    <a href="{{ route('dashboard') }}">
-        <div class="bg-green-600 text-white rounded flex items-center px-4 py-2 mx-7 mb-4 cursor-pointer">
+    <a href="{{ route('student-dashboard') }}">
+        <div class="{{ ($page_title == 'dashboard') ? 'active-nav-link-div' : 'nav-link-div' }}">
             <span>
                 @include('icons.dashboard')
             </span>
@@ -11,21 +11,21 @@
             </span>
         </div>
     </a>
-    <!-- Registration  -->
-    <a href="{{ route('root-registration') }}">
-        <div class="nav-link-div">
+    <!-- Make Payment  -->
+    <a href="{{ route('student-payment') }}">
+        <div class="{{ ($page_title == 'payment') ? 'active-nav-link-div' : 'nav-link-div' }}">
             <span>
-                @include('icons.registration')
+                @include('icons.course')
             </span>
             &nbsp;&nbsp;
             <span class="text-sm">
-                Registration
+                Make Payment
             </span>
         </div>
     </a>
     <!-- Courses  -->
-    <a href="{{ route('root-course') }}">
-        <div class="nav-link-div">
+    <a href="{{ route('student-course-reg') }}">
+        <div class="{{ ($page_title == 'course') ? 'active-nav-link-div' : 'nav-link-div' }}">
             <span>
                 @include('icons.course')
             </span>

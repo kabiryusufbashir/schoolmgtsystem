@@ -17,6 +17,8 @@ use App\Models\Qualification;
 use App\Models\Student;
 use App\Models\Registration;
 use App\Models\Studentregistration;
+use App\Models\Studentregistrationsession;
+use App\Models\Studentregistrationsemester;
 use App\Models\Calendar;
 use App\Models\Timetable;
 use App\Models\Exam;
@@ -1084,6 +1086,31 @@ class DashboardController extends Controller
                 'active' => $data['active'],
             ]);
             return redirect()->route('all-registration')->with('success', 'Registration Updated');
+        }catch(Exception $e){
+            return back()->with('error', 'Please try again... '.$e);
+        }
+    }
+
+    public function checkPaymentSession(){
+        $check_payments = Studentregistrationsession::orderby('created_at', 'asc')->where('status', 1)->paginate(20);
+        return view('dashboard.registration.check_session_payment', compact('check_payments'));
+    }
+
+    public function checkPaymentSessionEdit($id){
+        $check_payment = Studentregistrationsession::findOrFail($id);
+        return view('dashboard.registration.check_session_payment_edit', compact('check_payment'));
+    }
+
+    public function checkPaymentSessionUpdate(Request $request, $id){
+        
+        $registered_by = Auth::user()->id;
+
+        try{
+            $registration = Studentregistrationsession::where('id', $id)->update([
+                'status' => 2,
+                'registered_by' => $registered_by,
+            ]);
+            return redirect()->route('check-payment-session')->with('success', 'Payment Confirmed');
         }catch(Exception $e){
             return back()->with('error', 'Please try again... '.$e);
         }

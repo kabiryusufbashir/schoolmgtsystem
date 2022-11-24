@@ -85,6 +85,9 @@ Route::group(['prefix' => 'admin'], function (){
     Route::post('/registration-create', [DashboardController::class, 'createRegistration'])->name('registration-create')->middleware('auth:web');
     Route::post('/student-registration-create', [DashboardController::class, 'createRegistrationStudent'])->name('student-registration-create')->middleware('auth:web');
     Route::get('/allregistration', [DashboardController::class, 'allRegistration'])->name('all-registration')->middleware('auth:web');
+    Route::get('/check-payment-session', [DashboardController::class, 'checkPaymentSession'])->name('check-payment-session')->middleware('auth:web');
+    Route::get('/check-payment-session/{check_payment}/edit', [DashboardController::class, 'checkPaymentSessionEdit'])->name('check-payment-session-edit')->middleware('auth:web');
+    Route::patch('/check-payment-session/{check_payment}/update', [DashboardController::class, 'checkPaymentSessionUpdate'])->name('check-payment-session-update')->middleware('auth:web');
     Route::get('/registration/{registration}/edit', [DashboardController::class, 'editRegistration'])->name('registration-edit')->middleware('auth:web');
     Route::patch('/registration/{registration}/update', [DashboardController::class, 'updateRegistration'])->name('registration-update')->middleware('auth:web');
     Route::delete('/registration/{registration}', [DashboardController::class, 'deleteRegistration'])->name('registration-delete')->middleware('auth:web');
@@ -139,10 +142,22 @@ Route::group(['prefix' => 'student'], function () {
     Route::middleware([GlobalData::class])->group(function(){
         Route::get('/dashboard', [StudentController::class, 'dashboard'])->name('student-dashboard')->middleware('auth:students');
     
-        // Settings
+        // SETTINGS
         Route::get('/settings', [StudentController::class, 'settings'])->name('student-settings')->middleware('auth:students');
         Route::post('/settings-photo', [StudentController::class, 'settingsPhoto'])->name('student-settings-photo')->middleware('auth:students');
         Route::post('/settings-password', [StudentController::class, 'settingsPassword'])->name('student-settings-password')->middleware('auth:students');
+        
+        // REGISTRATION
+        // Route::post('/payment', [StudentController::class, 'submitPayment'])->name('submit-payment')->middleware('auth:students');
+        
+        // PAYMENT
+        Route::get('/payment', [StudentController::class, 'payment'])->name('student-payment')->middleware('auth:students');
+        Route::post('/payment/submit', [StudentController::class, 'paymentSemester'])->name('student-payment-semester')->middleware('auth:students');
+        
+        // COURSE
+        Route::get('/course', [StudentController::class, 'course'])->name('student-course-reg')->middleware('auth:students');
+        Route::get('/course/registration', [StudentController::class, 'course'])->name('student-course-registration')->middleware('auth:students');
+
     });
 });
 

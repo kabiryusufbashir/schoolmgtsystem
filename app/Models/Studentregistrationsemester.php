@@ -11,6 +11,7 @@ class Studentregistrationsemester extends Model
     
     protected $fillable = [
         'session',
+        'semester',
         'student_id',
         'proof_of_payment',
         'status',
