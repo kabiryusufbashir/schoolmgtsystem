@@ -37,7 +37,11 @@
                                         {{ $registration->semester }}
                                     </td>
                                     <td class="px-6 py-4 text-sm text-gray-500">
-                                        {{ $registration->status($registration->active) }}
+                                        @if($registration->active == 1)
+                                            Active
+                                        @else
+                                            Not Active
+                                        @endif
                                     </td>
                                     <td class="px-6 py-4 text-sm text-gray-500">
                                         <span class="flex">

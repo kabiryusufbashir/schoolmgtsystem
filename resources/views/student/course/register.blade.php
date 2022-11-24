@@ -39,7 +39,7 @@
                     </div>
                     &nbsp;
                     <div class="text-red-700 text-sm">
-                        Instruction: Click on the appropirate check boxes to remove course
+                        Instruction: Click on the delete button to remove a course
                     </div>
                 </div>
                 <!-- First Semester  -->

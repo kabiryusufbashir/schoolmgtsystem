@@ -33,8 +33,10 @@
                 <h1>Department Payment Receipt</h1>
             </span>
     </div>
+    @elseif($student_online->checkSessionPayment() == 'First Semester-1')
+        <h1 class="text-lg font-semibold py-4">Payment Comfirmed!</h1>
     @else
-    <h1 class="text-lg font-semibold py-4">Payment not comfirmed yet!</h1>
+        <h1 class="text-lg font-semibold py-4">Payment not comfirmed yet!</h1>
     @endif
 </div>
 

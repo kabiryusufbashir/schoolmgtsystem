@@ -59,7 +59,13 @@
                     <div>
                         <label for="active" class="input-title">Registration Status</label><br>
                         <select name="active" class="input-field">
-                            <option value="{{ $registration->active }}">{{ $registration->status($registration->active) }}</option>
+                            <option value="{{ $registration->active }}">
+                                @if($registration->active == 0)
+                                    Not Active
+                                @else
+                                    Active
+                                @endif
+                            </option>
                             @if($registration->active == 1)
                                 <option value="0">Not Active</option>
                             @else

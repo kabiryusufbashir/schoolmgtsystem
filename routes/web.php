@@ -145,14 +145,6 @@ Route::group(['prefix' => 'student'], function () {
     Route::middleware([GlobalData::class])->group(function(){
         Route::get('/dashboard', [StudentController::class, 'dashboard'])->name('student-dashboard')->middleware('auth:students');
     
-        // SETTINGS
-        Route::get('/settings', [StudentController::class, 'settings'])->name('student-settings')->middleware('auth:students');
-        Route::post('/settings-photo', [StudentController::class, 'settingsPhoto'])->name('student-settings-photo')->middleware('auth:students');
-        Route::post('/settings-password', [StudentController::class, 'settingsPassword'])->name('student-settings-password')->middleware('auth:students');
-        
-        // REGISTRATION
-        // Route::post('/payment', [StudentController::class, 'submitPayment'])->name('submit-payment')->middleware('auth:students');
-        
         // PAYMENT
         Route::get('/payment', [StudentController::class, 'payment'])->name('student-payment')->middleware('auth:students');
         Route::post('/payment/submit', [StudentController::class, 'paymentSemester'])->name('student-payment-semester')->middleware('auth:students');
@@ -163,6 +155,11 @@ Route::group(['prefix' => 'student'], function () {
         Route::post('/course/registration/submit', [StudentController::class, 'courseRegistrationSubmit'])->name('student-course-registration-submit')->middleware('auth:students');
         Route::delete('/course/registration/{course}', [StudentController::class, 'courseRegistrationDelete'])->name('student-course-registration-delete')->middleware('auth:students');
 
+        // SETTINGS
+        Route::get('/settings', [StudentController::class, 'settings'])->name('student-settings')->middleware('auth:students');
+        Route::post('/settings-photo', [StudentController::class, 'settingsPhoto'])->name('student-settings-photo')->middleware('auth:students');
+        Route::post('/settings-password', [StudentController::class, 'settingsPassword'])->name('student-settings-password')->middleware('auth:students');
+        
     });
 });
 

@@ -100,6 +100,11 @@ class StudentController extends Controller
         $registration_check = Registration::orderby('id', 'desc')->limit(1)->first();
         $session_id =  $registration_check->id;
         $session_semester =  $registration_check->semester;
+        $status =  $registration_check->active;
+
+        if($status == 0){
+            return redirect()->route('student-dashboard')->with('error', 'Registration Closed!');
+        }
 
         if($session_semester == 'First Semester'){
             $check_payment_session = Studentregistrationsession::where('session', $session_id)->where('student_id', $student_id)->count();
@@ -138,8 +143,13 @@ class StudentController extends Controller
         $page_title = 'course';
 
         $registration_check = Registration::orderby('id', 'desc')->limit(1)->first();
+        $status = $registration_check->active;
         $session = $registration_check->session;
         $session_id = $registration_check->id;
+
+        if($status == 0){
+            return redirect()->route('student-dashboard')->with('error', 'Registration Closed!');
+        }
 
         $student_dept = Auth::guard('students')->user()->department;
         $student_id = Auth::guard('students')->user()->user_id;
