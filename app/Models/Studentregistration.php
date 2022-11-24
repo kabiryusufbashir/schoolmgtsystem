@@ -26,4 +26,54 @@ class Studentregistration extends Model
             return '';
         }
     }
+
+    public function courseName($id)
+    {
+        if($id){
+            $course = Course::where('id', $id)->first();
+            $course_name = $course->name;
+            $course_code = $course->course_code;
+            $full_course = $course_code.'-'.$course_name;
+            return $full_course;
+        }else{
+            return '';
+        }
+    }
+
+    public function courseCode($id)
+    {
+        if($id){
+            $course = Course::where('id', $id)->first();
+            $course_code = $course->course_code;
+            
+            return $course_code;
+        }else{
+            return '';
+        }
+    }
+
+    public function courseUnit($id)
+    {
+        if($id){
+            $course = Course::where('id', $id)->first();
+            $course_unit = $course->course_unit;
+            
+            return $course_unit;
+        }else{
+            return '';
+        }
+    }
+
+    public function courseType($id)
+    {
+        if($id){
+            $course = Course::where('id', $id)->first();
+            $course_type = $course->course_type;
+            
+            return $course_type;
+        }else{
+            return '';
+        }
+    }
+    
 }

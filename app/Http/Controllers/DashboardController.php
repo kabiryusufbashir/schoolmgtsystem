@@ -1116,6 +1116,31 @@ class DashboardController extends Controller
         }
     }
 
+    public function checkPaymentSemester(){
+        $check_payments = Studentregistrationsemester::orderby('created_at', 'asc')->where('status', 1)->paginate(20);
+        return view('dashboard.registration.check_semester_payment', compact('check_payments'));
+    }
+
+    public function checkPaymentSemesterEdit($id){
+        $check_payment = Studentregistrationsemester::findOrFail($id);
+        return view('dashboard.registration.check_semester_payment_edit', compact('check_payment'));
+    }
+
+    public function checkPaymentSemesterUpdate(Request $request, $id){
+        
+        $registered_by = Auth::user()->id;
+
+        try{
+            $registration = Studentregistrationsemester::where('id', $id)->update([
+                'status' => 2,
+                'registered_by' => $registered_by,
+            ]);
+            return redirect()->route('check-payment-semester')->with('success', 'Payment Confirmed');
+        }catch(Exception $e){
+            return back()->with('error', 'Please try again... '.$e);
+        }
+    }
+
     public function deleteRegistration($id){
         $registration = Registration::findOrFail($id);
         try{

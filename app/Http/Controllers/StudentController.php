@@ -10,8 +10,10 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Student;
 use App\Models\User;
 use App\Models\Registration;
+use App\Models\Studentregistration;
 use App\Models\Studentregistrationsession;
 use App\Models\Studentregistrationsemester;
+use App\Models\Course;
 
 class StudentController extends Controller
 {
@@ -130,6 +132,58 @@ class StudentController extends Controller
 
         return view('student.course.index', compact('page_title'));
     
+    }
+
+    public function courseRegistration(){
+        $page_title = 'course';
+
+        $registration_check = Registration::orderby('id', 'desc')->limit(1)->first();
+        $session = $registration_check->session;
+        $session_id = $registration_check->id;
+
+        $student_dept = Auth::guard('students')->user()->department;
+        $student_id = Auth::guard('students')->user()->user_id;
+        
+        $courses = Course::orderby('course_code', 'asc')->get();
+        
+        $first_semester_courses = Studentregistration::where('student_id', $student_id)->where('session', $session_id)->where('semester', 'First Semester')->get();
+        $second_semester_courses = Studentregistration::where('student_id', $student_id)->where('session', $session_id)->where('semester', 'Second Semester')->get();
+
+        return view('student.course.register', compact('page_title', 'session', 'session_id', 'first_semester_courses', 'second_semester_courses', 'courses'));
+        
+    }
+
+    public function courseRegistrationSubmit(Request $request){
+        $data = $request->validate([
+            'session' => 'required',
+            'semester' => 'required',
+        ]);
+
+        $session_year = $request->session;
+        $semester = $request->semester;
+        $course = $request->course;
+        $student_id = Auth::guard('students')->user()->user_id;
+
+        $check_record = Studentregistration::where('course_id', $course)->where('student_id', $student_id)->count();
+
+        if($check_record == 0){
+            try{
+                $addrecord = Studentregistration::create([
+                    'session'=> $session_year,
+                    'semester'=> $semester,
+                    'student_id'=> $student_id,
+                    'course_id'=> $course,
+                    'registered_by'=> $student_id,
+                ]);
+
+                return redirect()->route('student-course-registration')->with('success', 'Course Added!');
+            
+            }catch(Exception $e){
+                return redirect()->route('student-course-registration')->with('error', 'Please try again... '.$e);
+            }
+        }else{
+            return redirect()->route('student-course-registration')->with('success', 'Course Already Registered!');
+        }
     }
 
     // Settings 

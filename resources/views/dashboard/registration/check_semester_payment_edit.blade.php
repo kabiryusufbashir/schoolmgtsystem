@@ -22,11 +22,11 @@
                 <h1 class="text-lg font-semibold py-4 w-full">Confirm {{ $check_payment->studentName($check_payment->student_id) }} Payment</h1>
                 <div class="p-4">
                 <!-- check_payment Edit  -->
-                <form action="{{ route('check-payment-session-update', $check_payment->id) }}" method="POST" class="px-6 lg:px-8 py-8">
+                <form action="{{ route('check-payment-semester-update', $check_payment->id) }}" method="POST" class="px-6 lg:px-8 py-8">
                     @csrf
                     @method('PATCH')
                     <div>
-                        <label for="name" class="text-lg font-medium border-b-4 border-green-700">{{ $check_payment->session($check_payment->session) }} Session's Receipt</label><br>
+                        <label for="name" class="text-lg font-medium border-b-4 border-green-700">{{ $check_payment->session($check_payment->session) }} Session <br> {{ $check_payment->semester }}'s Receipt</label><br>
                         <div class="grid grid-cols-2 gap-2 items-center mt-3">
                             <div class="mr-4">
                                 <img class="w-full" src="{{ $check_payment->proof_of_payment }}" alt="{{ $check_payment->studentName($check_payment->student_id) }} Receipt">

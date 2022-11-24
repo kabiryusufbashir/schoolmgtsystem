@@ -88,6 +88,9 @@ Route::group(['prefix' => 'admin'], function (){
     Route::get('/check-payment-session', [DashboardController::class, 'checkPaymentSession'])->name('check-payment-session')->middleware('auth:web');
     Route::get('/check-payment-session/{check_payment}/edit', [DashboardController::class, 'checkPaymentSessionEdit'])->name('check-payment-session-edit')->middleware('auth:web');
     Route::patch('/check-payment-session/{check_payment}/update', [DashboardController::class, 'checkPaymentSessionUpdate'])->name('check-payment-session-update')->middleware('auth:web');
+    Route::get('/check-payment-semester', [DashboardController::class, 'checkPaymentSemester'])->name('check-payment-semester')->middleware('auth:web');
+    Route::get('/check-payment-semester/{check_payment}/edit', [DashboardController::class, 'checkPaymentSemesterEdit'])->name('check-payment-semester-edit')->middleware('auth:web');
+    Route::patch('/check-payment-semester/{check_payment}/update', [DashboardController::class, 'checkPaymentSemesterUpdate'])->name('check-payment-semester-update')->middleware('auth:web');
     Route::get('/registration/{registration}/edit', [DashboardController::class, 'editRegistration'])->name('registration-edit')->middleware('auth:web');
     Route::patch('/registration/{registration}/update', [DashboardController::class, 'updateRegistration'])->name('registration-update')->middleware('auth:web');
     Route::delete('/registration/{registration}', [DashboardController::class, 'deleteRegistration'])->name('registration-delete')->middleware('auth:web');
@@ -156,7 +159,9 @@ Route::group(['prefix' => 'student'], function () {
         
         // COURSE
         Route::get('/course', [StudentController::class, 'course'])->name('student-course-reg')->middleware('auth:students');
-        Route::get('/course/registration', [StudentController::class, 'course'])->name('student-course-registration')->middleware('auth:students');
+        Route::get('/course/registration', [StudentController::class, 'courseRegistration'])->name('student-course-registration')->middleware('auth:students');
+        Route::post('/course/registration/submit', [StudentController::class, 'courseRegistrationSubmit'])->name('student-course-registration-submit')->middleware('auth:students');
+
 
     });
 });

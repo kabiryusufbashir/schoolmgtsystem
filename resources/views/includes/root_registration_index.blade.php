@@ -36,7 +36,7 @@
             </div>
         </a>
         <!-- All registration -->
-        <a href="{{ route('all-registration') }}">
+        <a href="{{ route('check-payment-semester') }}">
             <div class="settings-menu-div">
                 <span class="bg-green-300 p-2 rounded-full">
                     @include('icons.registration')

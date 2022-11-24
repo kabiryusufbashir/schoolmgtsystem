@@ -1,5 +1,5 @@
 <div class="bg-white py-3 px-6 ml-4 mr-8 text-gray-600 my-5 rounded">
-    <h1 class="text-lg font-semibold py-4 w-full">Check Session Payment</h1>
+    <h1 class="text-lg font-semibold py-4 w-full">Check Semester Payment</h1>
     @if(count($check_payments) > 0)
     <div class="flex flex-col">
         <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -16,6 +16,9 @@
                                 </th>
                                 <th scope="col" class="px-6 py-2  text-gray-500">
                                     SESSION
+                                </th>
+                                <th scope="col" class="px-6 py-2  text-gray-500">
+                                    SEMESTER
                                 </th>
                                 <th scope="col" class="px-6 py-2  text-gray-500">
                                     TIME SUBMITTED
@@ -37,11 +40,14 @@
                                         {{ $check_payment->session($check_payment->session) }}
                                     </td>
                                     <td class="px-6 py-4 text-sm text-gray-500">
+                                        {{ $check_payment->semester }}
+                                    </td>
+                                    <td class="px-6 py-4 text-sm text-gray-500">
                                         {{ $check_payment->dateFormat($check_payment->created_at) }}
                                     </td>
                                     <td class="px-6 py-4 text-sm text-gray-500">
                                         <span class="flex">
-                                            <form action="{{ route('check-payment-session-edit', $check_payment->id) }}" method="GET">
+                                            <form action="{{ route('check-payment-semester-edit', $check_payment->id) }}" method="GET">
                                                 @csrf 
                                                 <input type="submit" value="VIEW PAYMENT" class="edit-btn">
                                             </form>
