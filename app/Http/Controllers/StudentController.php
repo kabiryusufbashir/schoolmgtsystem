@@ -225,6 +225,43 @@ class StudentController extends Controller
         }
     }
 
+    public function courseRegistrationCheck(Request $request){
+        $data = $request->validate([
+            'session' => 'required',
+            'semester' => 'required',
+        ]);
+
+        $session_id = $request->session;
+        $semester = $request->semester;
+        $student_id = Auth::guard('students')->user()->user_id;
+
+        $courses_registered = Studentregistration::where('student_id', $student_id)->where('session', $session_id)->where('semester', $semester)->get();
+
+        $page_title = 'course';
+
+        return view('student.course.check', compact('page_title', 'courses_registered', 'session_id', 'semester'));
+    }
+
+    public function courseRegistrationPrint(Request $request){
+        $data = $request->validate([
+            'session' => 'required',
+            'semester' => 'required',
+        ]);
+
+        $session_id = $request->session;
+        $semester = $request->semester;
+        $student_id = Auth::guard('students')->user()->user_id;
+
+        $school = User::where('category', 1)->first();
+        $student = Student::where('user_id', $student_id)->first();
+        $courses_registered = Studentregistration::where('student_id', $student_id)->where('session', $session_id)->where('semester', $semester)->get();
+        $level = Studentregistrationsession::where('student_id', $student_id)->where('session', '<=', $session_id)->count();
+
+        $page_title = 'course';
+
+        return view('student.course.print', compact('page_title', 'courses_registered', 'session_id', 'semester', 'student', 'school', 'level'));
+    }
+
     public function courseRegistrationDelete($id){
         $course = Studentregistration::findOrFail($id);
         try{

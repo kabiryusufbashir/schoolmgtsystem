@@ -154,6 +154,8 @@ Route::group(['prefix' => 'student'], function () {
         Route::get('/course/registration', [StudentController::class, 'courseRegistration'])->name('student-course-registration')->middleware('auth:students');
         Route::post('/course/registration/submit', [StudentController::class, 'courseRegistrationSubmit'])->name('student-course-registration-submit')->middleware('auth:students');
         Route::post('/course/registration/submit/completed', [StudentController::class, 'courseRegistrationCompleted'])->name('student-course-registration-completed')->middleware('auth:students');
+        Route::post('/course/registration/submit/check', [StudentController::class, 'courseRegistrationCheck'])->name('student-course-registration-check')->middleware('auth:students');
+        Route::post('/course/registration/submit/print', [StudentController::class, 'courseRegistrationPrint'])->name('student-course-registration-print')->middleware('auth:students');
         Route::delete('/course/registration/{course}', [StudentController::class, 'courseRegistrationDelete'])->name('student-course-registration-delete')->middleware('auth:students');
 
         // SETTINGS

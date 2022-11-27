@@ -122,6 +122,42 @@ class Student extends Authenticatable
 
     }
 
+    public function checkCourseRegistered()
+    {
+        $student_id = Auth::guard('students')->user()->user_id;
+        
+        $registered = Studentregistrationsession::where('student_id', $student_id)->where('status', 2)->where('registered', 1)->count();
+        
+        if($registered > 0){
+            return '1';
+        }else{
+            return '';
+        }
+    }
+
+    public function sessionRegistered()
+    {
+        $student_id = Auth::guard('students')->user()->user_id;
+        
+        $registered = Studentregistrationsession::where('student_id', $student_id)->where('status', 2)->where('registered', 1)->distinct()->get();
+        
+        if(count($registered) > 0){
+            return $registered;
+        }else{
+            return '';
+        }
+    }
+
+    public function sessionYear($id)
+    {
+        if($id != 0){
+            $session_year = Registration::where('id', $id)->first(); 
+            return $session_year->session;
+        }else{
+            return '';
+        }
+    }
+
     public function department($id)
     {
         if($id != 0){
