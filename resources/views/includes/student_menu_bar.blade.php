@@ -36,7 +36,7 @@
         </div>
     </a>
     <!-- Timetable  -->
-    <a href="{{ route('root-timetable') }}">
+    <a href="{{ route('student-timetable') }}">
         <div class="nav-link-div">
             <span>
                 @include('icons.timetable')

@@ -158,6 +158,10 @@ Route::group(['prefix' => 'student'], function () {
         Route::post('/course/registration/submit/print', [StudentController::class, 'courseRegistrationPrint'])->name('student-course-registration-print')->middleware('auth:students');
         Route::delete('/course/registration/{course}', [StudentController::class, 'courseRegistrationDelete'])->name('student-course-registration-delete')->middleware('auth:students');
 
+        // TIMETABLE
+        Route::get('/timetable', [StudentController::class, 'timetable'])->name('student-timetable')->middleware('auth:students');
+        
+
         // SETTINGS
         Route::get('/settings', [StudentController::class, 'settings'])->name('student-settings')->middleware('auth:students');
         Route::post('/settings-photo', [StudentController::class, 'settingsPhoto'])->name('student-settings-photo')->middleware('auth:students');
