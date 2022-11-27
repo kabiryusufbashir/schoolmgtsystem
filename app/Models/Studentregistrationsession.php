@@ -15,6 +15,7 @@ class Studentregistrationsession extends Model
         'status',
         'proof_of_payment',
         'registered_by',
+        'registered',
     ];
 
     public function studentName($id)

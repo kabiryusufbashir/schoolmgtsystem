@@ -24,9 +24,17 @@
                         <div class="font-semibold">Session</div> &nbsp;&nbsp; 
                         <div class="border p-2 rounded cursor-pointer">{{ $session }}</div>
                     </div>
-                    <div id="addCourseBtn">
-                        <div class="bg-green-700 text-white py-2 px-4 rounded cursor-pointer border">
-                            Add Course
+                    <div class="flex">
+                        <div id="addCourseBtn">
+                            <div class="bg-green-700 text-white py-2 px-4 rounded cursor-pointer border">
+                                Add Course
+                            </div>
+                        </div>
+                        &nbsp;
+                        <div id="submitBtn">
+                            <div class="bg-blue-700 text-white py-2 px-4 rounded cursor-pointer border">
+                                Submit Registration
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -211,6 +219,36 @@
             </div>
         </div>
     </div>
+    <div id="submitRegistration" class="hidden">
+        <div id="modal">
+            <div id="modal-content" class="rounded">
+                <div id="modal-header" class="modal-header">
+                    <span>Submit Course Registration</span>
+                    <span class="closeModalSubmitRegistration cursor-pointer">X</span>
+                </div>
+                <div class="p-4 flex px-6 lg:px-8 mx-auto items-center justify-between">
+                    <!-- Add Submit  -->
+                    <div>
+                        Are you sure you want to submit?
+                    </div>
+                    <div class="flex">
+                        <div>
+                            <form action="{{ route('student-course-registration-completed') }}" method="POST" enctype="multipart/form-data">
+                                @csrf
+                                <div class="text-center my-4">
+                                    <button class="bg-green-700 text-white py-2 px-4 rounded cursor-pointer border">YES</button>
+                                </div>
+                            </form>
+                        </div>
+                        &nbsp;&nbsp;
+                        <div class="text-center my-4">
+                            <button class="closeModalSubmitRegistration bg-red-700 text-white py-2 px-4 rounded cursor-pointer border">NO</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script>
         // Add Course 
@@ -231,6 +269,27 @@
                 AddCourse.classList.remove('hidden');
             }else{
                 AddCourse.classList.add('hidden');
+            }
+        })
+
+        // Submit Registration 
+        let submitBtn = document.querySelector('#submitBtn')
+        let submitRegistration = document.querySelector('#submitRegistration')
+        let closeModalSubmitRegistration = document.querySelector('.closeModalSubmitRegistration')
+
+        submitBtn.addEventListener('click', ()=>{
+            if(submitRegistration.classList.contains('hidden')){
+                submitRegistration.classList.remove('hidden');
+            }else{
+                submitRegistration.classList.add('hidden');
+            }
+        })
+
+        closeModalSubmitRegistration.addEventListener('click', ()=>{
+            if(submitRegistration.classList.contains('hidden')){
+                submitRegistration.classList.remove('hidden');
+            }else{
+                submitRegistration.classList.add('hidden');
             }
         })
     </script>

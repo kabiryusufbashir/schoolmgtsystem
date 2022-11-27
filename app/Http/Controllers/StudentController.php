@@ -153,7 +153,14 @@ class StudentController extends Controller
 
         $student_dept = Auth::guard('students')->user()->department;
         $student_id = Auth::guard('students')->user()->user_id;
+
         
+        $registered = Studentregistrationsession::where('student_id', $student_id)->where('session', $session_id)->where('status', 2)->where('registered', 1)->count();
+        
+        if($registered == 1){
+            return redirect()->route('student-dashboard')->with('error', 'Course Registration already submitted!');
+        }
+
         $courses = Course::orderby('course_code', 'asc')->get();
         
         $first_semester_courses = Studentregistration::where('student_id', $student_id)->where('session', $session_id)->where('semester', 'First Semester')->get();
@@ -193,6 +200,28 @@ class StudentController extends Controller
             }
         }else{
             return redirect()->route('student-course-registration')->with('success', 'Course Already Registered!');
+        }
+    }
+
+    public function courseRegistrationCompleted(Request $request){
+        $registration_check = Registration::orderby('id', 'desc')->limit(1)->first();
+        $status = $registration_check->active;
+        $session = $registration_check->session;
+        $session_id = $registration_check->id;
+
+        if($status == 0){
+            return redirect()->route('student-dashboard')->with('error', 'Registration Closed!');
+        }
+
+        $student_id = Auth::guard('students')->user()->user_id;    
+
+        try{
+            $registered = Studentregistrationsession::where('student_id', $student_id)->where('session', $session_id)->where('status', 2)->update([
+                'registered' => 1,
+            ]);
+            return redirect()->route('student-dashboard')->with('success', 'Registration Submitted successfully');
+        }catch(Exception $e){
+            return back()->with('error', 'Please try again... '.$e);
         }
     }
 
