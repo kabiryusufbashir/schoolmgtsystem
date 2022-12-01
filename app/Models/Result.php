@@ -60,4 +60,113 @@ class Result extends Model
             return '';
         }
     }
+
+    public function courseName($id)
+    {
+        if($id){
+            $course = Course::where('id', $id)->first();
+            $course_name = $course->name;
+            $course_code = $course->course_code;
+            $full_course = $course_code.'-'.$course_name;
+            return $full_course;
+        }else{
+            return '';
+        }
+    }
+
+    public function courseCode($id)
+    {
+        if($id){
+            $course = Course::where('id', $id)->first();
+            $course_code = $course->course_code;
+            
+            return $course_code;
+        }else{
+            return '';
+        }
+    }
+
+    public function courseUnit($id)
+    {
+        if($id){
+            $course = Course::where('id', $id)->first();
+            $course_unit = $course->course_unit;
+            
+            return $course_unit;
+        }else{
+            return '';
+        }
+    }
+
+    public function courseType($id)
+    {
+        if($id){
+            $course = Course::where('id', $id)->first();
+            $course_type = $course->course_type;
+            
+            return $course_type;
+        }else{
+            return '';
+        }
+    }
+
+    public function resultPercentageScore($id){
+        if($id){
+            $results = Result::where('id', $id)->first();
+            $ca = $results->ca;
+            $exams = $results->exams;
+            $percentage_score = $exams + $ca;
+            return $percentage_score;
+        }else{
+            return '';
+        }
+    }
+
+    public function resultGrade($id){
+        if($id){
+            $results = Result::where('id', $id)->first();
+            $ca = $results->ca;
+            $exams = $results->exams;
+            $percentage_score = $exams + $ca;
+                if($percentage_score >= 70){
+                    return 'A';
+                }else if($percentage_score >= 60 && $percentage_score <= 69){
+                    return 'B';
+                }else if($percentage_score >= 50 && $percentage_score <= 59){
+                    return 'C';
+                }else if($percentage_score >= 45 && $percentage_score <= 49){
+                    return 'D';
+                }else if($percentage_score >= 44 && $percentage_score <= 40){
+                    return 'E';
+                }else{
+                    return 'F';
+                }
+        }else{
+            return '';
+        }
+    }
+
+    public function resultGradePoint($id){
+        if($id){
+            $results = Result::where('id', $id)->first();
+            $ca = $results->ca;
+            $exams = $results->exams;
+            $percentage_score = $exams + $ca;
+                if($percentage_score >= 70){
+                    return '5';
+                }else if($percentage_score >= 60 && $percentage_score <= 69){
+                    return '4';
+                }else if($percentage_score >= 50 && $percentage_score <= 59){
+                    return '3';
+                }else if($percentage_score >= 45 && $percentage_score <= 49){
+                    return '2';
+                }else if($percentage_score >= 44 && $percentage_score <= 40){
+                    return '1';
+                }else{
+                    return '0';
+                }
+        }else{
+            return '';
+        }
+    }
 }

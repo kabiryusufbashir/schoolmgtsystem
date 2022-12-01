@@ -15,6 +15,7 @@ use App\Models\Studentregistrationsession;
 use App\Models\Studentregistrationsemester;
 use App\Models\Course;
 use App\Models\Timetable;
+use App\Models\Result;
 
 class StudentController extends Controller
 {
@@ -283,26 +284,51 @@ class StudentController extends Controller
 
         $courses_registered = Studentregistration::select('course_id')->where('student_id', $student_id)->where('session', $session_id)->where('semester', $semester)->get();
 
-        // dd($courses_registered);
-
-        $timetables = Timetable::get();
-
-        $monday = Timetable::where('day','Monday')->orderby('start_date', 'asc')->get();
-        $tuesday = Timetable::where('day','Tuesday')->orderby('start_date', 'asc')->get();
-        $wednesday = Timetable::where('day','Wednesday')->orderby('start_date', 'asc')->get();
-        $thursday = Timetable::where('day','Thursday')->orderby('start_date', 'asc')->get();
-        $friday = Timetable::where('day','Friday')->orderby('start_date', 'asc')->get();
-        $saturday = Timetable::where('day','Saturday')->orderby('start_date', 'asc')->get();
-
         $page_title = 'timetable';
 
-        return view('student.timetable.index', compact('page_title', 'courses_registered', 'timetables', 'monday','tuesday','wednesday','thursday','friday','saturday'));
+        return view('student.timetable.index', compact('page_title', 'courses_registered'));
     
+    }
+
+    // Result 
+    public function result(){
+
+        $session_term = Result::select('session')->orderby('session', 'asc')->distinct()->get();
+        $semester_result = Result::select('semester')->orderby('semester', 'asc')->distinct()->get();
+        
+        $page_title = 'result';
+
+        return view('student.result.index', compact('page_title', 'session_term', 'semester_result'));
+    
+    }
+
+    public function resultCheck(Request $request){
+        $data = $request->validate([
+            'session' => 'required',
+            'semester' => 'required',
+        ]);
+
+        $session_id = $request->session;
+        $semester = $request->semester;
+        $student_id = Auth::guard('students')->user()->user_id;
+
+        $results = Result::where('student_id', $student_id)->where('session', $session_id)->where('semester', $semester)->get();
+
+        if(count($results) == 0){
+            return redirect()->route('student-dashboard')->with('error', 'Result not found!');
+        }
+
+        $page_title = 'result';
+
+        // dd($results);
+
+        return view('student.result.check', compact('page_title', 'results', 'session_id', 'semester'));
     }
 
     // Settings 
     public function settings(){
-        return view('student.settings.index');
+        $page_title = 'settings';
+        return view('student.settings.index', compact('page_title'));
     }
 
     public function settingsPhoto(Request $request){

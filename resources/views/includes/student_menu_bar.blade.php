@@ -48,8 +48,8 @@
         </div>
     </a>
     <!-- Results  -->
-    <a href="{{ route('root-result') }}">
-        <div class="nav-link-div">
+    <a href="{{ route('student-result') }}">
+        <div class="{{ ($page_title == 'result') ? 'active-nav-link-div' : 'nav-link-div' }}">
             <span>
                 @include('icons.results')
             </span>
@@ -61,7 +61,7 @@
     </a>
     <!-- Settings  -->
     <a href="{{ route('student-settings') }}">
-        <div class="nav-link-div">
+        <div class="{{ ($page_title == 'settings') ? 'active-nav-link-div' : 'nav-link-div' }}">
             <span>
                 @include('icons.settings')
             </span>

@@ -157,9 +157,13 @@ Route::group(['prefix' => 'student'], function () {
         Route::post('/course/registration/submit/check', [StudentController::class, 'courseRegistrationCheck'])->name('student-course-registration-check')->middleware('auth:students');
         Route::post('/course/registration/submit/print', [StudentController::class, 'courseRegistrationPrint'])->name('student-course-registration-print')->middleware('auth:students');
         Route::delete('/course/registration/{course}', [StudentController::class, 'courseRegistrationDelete'])->name('student-course-registration-delete')->middleware('auth:students');
-
+        
         // TIMETABLE
         Route::get('/timetable', [StudentController::class, 'timetable'])->name('student-timetable')->middleware('auth:students');
+        
+        // RESULT
+        Route::get('/result', [StudentController::class, 'result'])->name('student-result')->middleware('auth:students');
+        Route::post('/result/check', [StudentController::class, 'resultCheck'])->name('student-result-check')->middleware('auth:students');
         
 
         // SETTINGS
