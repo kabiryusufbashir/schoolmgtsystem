@@ -75,5 +75,19 @@ class Studentregistration extends Model
             return '';
         }
     }
+
+    
+    public function studentTimeTable($course){
+        if(!empty($course)){
+            $timetable = Timetable::where('course', $course)->get();
+            if($timetable != ''){
+                return $timetable;
+            }else{
+                return '';
+            }    
+        }else{
+            return '';
+        }
+    }
     
 }

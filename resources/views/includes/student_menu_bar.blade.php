@@ -37,7 +37,7 @@
     </a>
     <!-- Timetable  -->
     <a href="{{ route('student-timetable') }}">
-        <div class="nav-link-div">
+        <div class="{{ ($page_title == 'timetable') ? 'active-nav-link-div' : 'nav-link-div' }}">
             <span>
                 @include('icons.timetable')
             </span>

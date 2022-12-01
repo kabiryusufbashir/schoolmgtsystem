@@ -14,6 +14,7 @@ use App\Models\Studentregistration;
 use App\Models\Studentregistrationsession;
 use App\Models\Studentregistrationsemester;
 use App\Models\Course;
+use App\Models\Timetable;
 
 class StudentController extends Controller
 {
@@ -270,6 +271,33 @@ class StudentController extends Controller
         }catch(Exception $e){
             return redirect()->route('student-course-registration')->with('error', 'Please try again... '.$e);
         }
+    }
+
+    // Timetable 
+    public function timetable(){
+        $student_id = Auth::guard('students')->user()->user_id;
+        $registration_check = Registration::orderby('id', 'desc')->limit(1)->first();
+        $session_id =  $registration_check->id;
+        $semester =  $registration_check->semester;
+        $status =  $registration_check->active;
+
+        $courses_registered = Studentregistration::select('course_id')->where('student_id', $student_id)->where('session', $session_id)->where('semester', $semester)->get();
+
+        // dd($courses_registered);
+
+        $timetables = Timetable::get();
+
+        $monday = Timetable::where('day','Monday')->orderby('start_date', 'asc')->get();
+        $tuesday = Timetable::where('day','Tuesday')->orderby('start_date', 'asc')->get();
+        $wednesday = Timetable::where('day','Wednesday')->orderby('start_date', 'asc')->get();
+        $thursday = Timetable::where('day','Thursday')->orderby('start_date', 'asc')->get();
+        $friday = Timetable::where('day','Friday')->orderby('start_date', 'asc')->get();
+        $saturday = Timetable::where('day','Saturday')->orderby('start_date', 'asc')->get();
+
+        $page_title = 'timetable';
+
+        return view('student.timetable.index', compact('page_title', 'courses_registered', 'timetables', 'monday','tuesday','wednesday','thursday','friday','saturday'));
+    
     }
 
     // Settings 

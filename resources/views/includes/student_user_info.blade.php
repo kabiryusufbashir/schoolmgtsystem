@@ -31,7 +31,7 @@
         <span class="text-sm">
             <div class="font-semibold mb-1">Level:</div>
             <div>
-                {{ $student_profile->current_year }}00
+                {{ $student_profile->current_year }}00 {{ $semester }} 
             </div>
         </span>
     </div>
