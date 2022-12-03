@@ -28,7 +28,7 @@
     <div class="bg-white py-7 px-3 text-gray-600 my-5 rounded">
         <div>
             <div class="font-medium mb-1 text-lg">Current CGPA:</div>
-            <div class="font-semibold mb-1 text-2xl">0.0</div>
+            <div class="font-semibold mb-1 text-2xl">{{ round($student_online->totalCumulativeWeight($student_online->user_id) / $student_online->totalCreditUnit($student_online->user_id), 2) }}</div>
         </div>
     </div>
 </div>

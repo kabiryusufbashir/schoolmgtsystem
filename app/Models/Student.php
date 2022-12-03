@@ -289,4 +289,51 @@ class Student extends Authenticatable
             
         return $unit;
     }
+
+    public function totalCumulativeWeight($student){
+        $results = Result::where('student_id', $student)->get();
+            
+            $weight = 0;
+
+            foreach($results as $result){
+                $ca = $result->ca;
+                $course_id = $result->course;
+                $exams = $result->exams;
+                $percentage_score = $exams + $ca;
+                
+                $course = Course::where('id', $course_id)->first();
+                $course_unit = $course->course_unit;
+
+                    if($percentage_score >= 70){
+                        $weight += $course_unit * 5;
+                    }else if($percentage_score >= 60 && $percentage_score <= 69){
+                        $weight += $course_unit * 4;
+                    }else if($percentage_score >= 50 && $percentage_score <= 59){
+                        $weight += $course_unit * 3;
+                    }else if($percentage_score >= 45 && $percentage_score <= 49){
+                        $weight += $course_unit * 2;
+                    }else if($percentage_score >= 44 && $percentage_score <= 40){
+                        $weight += $course_unit * 1;
+                    }else{
+                        $weight += $course_unit * 0;
+                    }
+            }
+            
+        return $weight;
+    }
+
+    public function totalCreditUnit($student){
+        $results = Result::where('student_id', $student)->get();
+            
+            $unit = 0;
+
+            foreach($results as $result){
+                $course_id = $result->course;
+                $course = Course::where('id', $course_id)->first();
+                $unit += $course->course_unit;
+
+            }
+            
+        return $unit;
+    }
 }

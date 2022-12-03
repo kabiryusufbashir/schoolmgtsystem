@@ -176,7 +176,7 @@
                             </div>
                         <h2 class="font-semibold p-2 border">GPA = Total Weight Points / Total Credit Units</h2>
                         <h2 class="font-semibold p-2 border">GPA = {{ $student_online->cumulativeWeight($student_online->user_id, $session_id, $semester) }} / {{ $student_online->creditUnit($student_online->user_id, $session_id, $semester) }}</h2>
-                        <h2 class="font-semibold p-2 border">GPA = {{ $student_online->cumulativeWeight($student_online->user_id, $session_id, $semester) / $student_online->creditUnit($student_online->user_id, $session_id, $semester) }}</h2>
+                        <h2 class="font-semibold p-2 border">GPA = {{ round($student_online->cumulativeWeight($student_online->user_id, $session_id, $semester) / $student_online->creditUnit($student_online->user_id, $session_id, $semester), 2) }}</h2>
                     </div>
                 @else
                     <h1 class="text-lg font-semibold py-4 w-full">No Result Found</h1>
