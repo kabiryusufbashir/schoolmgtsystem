@@ -38,6 +38,7 @@ class Student extends Authenticatable
         'username',
         'password',
         'status',
+        'programme',
     ];
 
     public function checkPayment()
