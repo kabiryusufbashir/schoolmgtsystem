@@ -23,6 +23,18 @@
             </span>
         </div>
     </a>
+    <!-- Programme  -->
+    <a href="{{ route('root-programme') }}">
+        <div class="nav-link-div">
+            <span>
+                @include('icons.department')
+            </span>
+            &nbsp;&nbsp;
+            <span class="text-sm">
+                Programme
+            </span>
+        </div>
+    </a>
     <!-- Courses  -->
     <a href="{{ route('root-course') }}">
         <div class="nav-link-div">
@@ -95,7 +107,6 @@
             </span>
         </div>
     </a>
-
     <!-- Exams  -->
     <a href="{{ route('root-exam') }}">
         <div class="nav-link-div">

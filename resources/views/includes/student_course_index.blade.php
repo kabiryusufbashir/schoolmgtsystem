@@ -26,6 +26,7 @@
     @endif
 </div>
 
+@if($student_online->checkCourseRegistered() == 1)
 <div id="checkCourse" class="hidden">
     <div id="modal">
         <div id="modal-content" class="rounded">
@@ -68,6 +69,7 @@
         </div>
     </div>
 </div>
+@endif
 
 <script>
     // Check Course 

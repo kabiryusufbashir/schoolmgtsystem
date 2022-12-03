@@ -11,6 +11,7 @@ use Illuminate\Http\Response;
 
 use App\Models\User;
 use App\Models\Department;
+use App\Models\Programme;
 use App\Models\Course;
 use App\Models\Staff;
 use App\Models\Qualification;
@@ -191,6 +192,71 @@ class DashboardController extends Controller
             return redirect()->route('all-department')->with('success', 'Department Deleted');
         }catch(Exception $e){
             return redirect()->route('all-department')->with('error', 'Please try again... '.$e);
+        }
+    }
+
+    // Programme 
+    public function programme(){
+        return view('dashboard.programme.index');
+    }
+
+    public function createProgramme(Request $request){
+        $data = $request->validate([
+            'name' => ['required'],
+        ]);
+        
+        $programme_name = $request->name;
+
+        try{
+            $check_record = Programme::where('name', $programme_name)->count();
+
+            if($check_record == 0){
+                $name = Programme::create([
+                    'name' => $data['name'],
+                ]);
+                return redirect()->route('all-programme')->with('success', $programme_name.' Programme Added');
+            }else{
+                return redirect()->route('all-programme')->with('success', $programme_name.' Programme Already Exists');
+            }
+
+
+        }catch(Exception $e){
+            return redirect()->route('all-programme')->with('error', 'Please try again... '.$e);
+        }
+    }
+
+    public function allProgramme(){
+        $programmes = Programme::orderby('name', 'asc')->paginate(20);
+        return view('dashboard.programme.programme', compact('programmes'));
+    }
+
+    public function editProgramme($id){
+        $programme = Programme::findOrFail($id);
+        return view('dashboard.programme.edit', compact('programme'));
+    }
+
+    public function updateProgramme(Request $request, $id){
+        $data = $request->validate([
+            'name' => ['required']
+        ]);
+
+        try{
+            $programme = Programme::where('id', $id)->update([
+                'name' => $data['name'],
+            ]);
+            return redirect()->route('all-programme')->with('success', 'Programme Updated');
+        }catch(Exception $e){
+            return back()->with('error', 'Please try again... '.$e);
+        }
+    }
+
+    public function deleteprogramme($id){
+        $programme = Programme::findOrFail($id);
+        try{
+            $programme->delete();
+            return redirect()->route('all-programme')->with('success', 'Programme Deleted');
+        }catch(Exception $e){
+            return redirect()->route('all-programme')->with('error', 'Please try again... '.$e);
         }
     }
 

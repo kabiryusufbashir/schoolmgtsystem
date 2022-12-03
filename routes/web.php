@@ -37,6 +37,14 @@ Route::group(['prefix' => 'admin'], function (){
     Route::get('/department/{dept}/edit', [DashboardController::class, 'editDepartment'])->name('dept-edit')->middleware('auth:web');
     Route::patch('/department/{department}/update', [DashboardController::class, 'updateDepartment'])->name('dept-update')->middleware('auth:web');
     Route::delete('/department/{department}', [DashboardController::class, 'deleteDepartment'])->name('dept-delete')->middleware('auth:web');
+    
+    // Programme 
+    Route::get('/programme', [DashboardController::class, 'programme'])->name('root-programme')->middleware('auth:web');
+    Route::post('/programme-create', [DashboardController::class, 'createProgramme'])->name('programme-create')->middleware('auth:web');
+    Route::get('/allprogramme', [DashboardController::class, 'allProgramme'])->name('all-programme')->middleware('auth:web');
+    Route::get('/programme/{programme}/edit', [DashboardController::class, 'editProgramme'])->name('programme-edit')->middleware('auth:web');
+    Route::patch('/programme/{programme}/update', [DashboardController::class, 'updateProgramme'])->name('programme-update')->middleware('auth:web');
+    Route::delete('/programme/{programme}', [DashboardController::class, 'deleteProgramme'])->name('programme-delete')->middleware('auth:web');
 
     // Course
     Route::get('/course', [DashboardController::class, 'course'])->name('root-course')->middleware('auth:web');
