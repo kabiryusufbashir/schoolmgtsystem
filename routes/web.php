@@ -172,6 +172,7 @@ Route::group(['prefix' => 'student'], function () {
         // RESULT
         Route::get('/result', [StudentController::class, 'result'])->name('student-result')->middleware('auth:students');
         Route::post('/result/check', [StudentController::class, 'resultCheck'])->name('student-result-check')->middleware('auth:students');
+        Route::post('/result/submit/print', [StudentController::class, 'resultPrint'])->name('student-result-print')->middleware('auth:students');
         
 
         // SETTINGS

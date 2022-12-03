@@ -26,7 +26,7 @@
                     </div>
                     <div class="flex">
                         <div>
-                            <form action="{{ route('student-course-registration-print') }}" method="POST">
+                            <form action="{{ route('student-result-print') }}" method="POST">
                                 @csrf
                                 <input type="text" value="{{ $session_id }}" style="display:none;" name="session">
                                 <input type="text" value="{{ $semester }}" style="display:none;" name="semester">

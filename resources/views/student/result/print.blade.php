@@ -2,7 +2,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Print Course Registration</title>
+        <title>Print Result</title>
         <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}">
         <link rel="stylesheet" href="{{ asset('css/production.css') }}">
         <link rel="shortcut icon" href="{{ asset('images/favicon.ico') }}" type="image/x-icon">
@@ -10,7 +10,7 @@
         <style type="text/css">
             @page { size: auto;  margin: 0mm; }
             @page {
-            size: A4;
+            size: A2;
             margin: 0;
             }
             
@@ -39,7 +39,7 @@
                 </div>
                 <div class="col-span-2">
                     <div class="font-semibold text-xl text-center">{{ $school->name }}</div>
-                    <div class="font-semibold text-xl text-center">{{ $student_online->sessionYear($session_id) }} Student's Course Registration Form</div>
+                    <div class="font-semibold text-xl text-center">{{ $student_online->sessionYear($session_id) }} Student's Result</div>
                 </div>
                 <div class="col-span-1">
                     <img style="width:80px; height:80px;" class="rounded-full" src="{{ $student->photo }}" alt="">
@@ -82,24 +82,16 @@
                                         </tr>
                                         <tr class="text-left whitespace-nowrap">
                                             <th scope="col" class="px-6 py-2  text-gray-500 border">
-                                                LEVEL
+                                                PROGRAMME
                                             </th>
                                             <td scope="col" class="px-6 py-2  text-gray-500 border">
-                                                {{ $level }}00
+                                                {{ $student_online->programme($student_online->programme) }}
                                             </td>
                                             <th scope="col" class="px-6 py-2  text-gray-500 border">
                                                 DATE
                                             </th>
                                             <td scope="col" class="px-6 py-2  text-gray-500 border">
                                                 {{ date('h:ia', time() + 3600) }} {{ date('d M Y') }}
-                                            </td>
-                                        </tr>
-                                        <tr class="text-left whitespace-nowrap">
-                                            <th scope="col" class="px-6 py-2  text-gray-500 border">
-                                                PROGRAMME
-                                            </th>
-                                            <td scope="col" class="px-6 py-2  text-gray-500 border">
-                                                {{ $student_online->programme($student_online->programme) }}
                                             </td>
                                         </tr>
                                     </thead>
@@ -111,7 +103,7 @@
             </div>
             <div class="bg-white py-3 px-6 ml-4 mr-8 text-gray-600 my-5">
                 <!-- Semester  -->
-                @if(count($courses_registered) > 0)
+                @if(count($results) > 0)
                     <div class="my-3">
                         <h2 class="font-semibold">{{ $semester }}</h2>
                             <div class="flex flex-col">
@@ -121,34 +113,58 @@
                                             <table class="w-full"">
                                                 <thead class="border-b">
                                                     <tr class="text-left whitespace-nowrap">
-                                                        <th scope="col" class="px-6 py-2  text-gray-500">
-                                                            TYPE
-                                                        </th>
-                                                        <th scope="col" class="px-6 py-2  text-gray-500">
-                                                            COURSE CODE
-                                                        </th>
-                                                        <th scope="col" class="px-6 py-2  text-gray-500">
+                                                    <th scope="col" class="px-6 py-2 text-gray-500 border">
                                                             TITLE
                                                         </th>
-                                                        <th scope="col" class="px-6 py-2  text-gray-500">
+                                                        <th scope="col" class="px-6 py-2 text-gray-500 border">
                                                             UNIT
+                                                        </th>
+                                                        <th scope="col" class="px-6 py-2 text-gray-500 border">
+                                                            CA
+                                                        </th>
+                                                        <th scope="col" class="px-6 py-2 text-gray-500 border">
+                                                            EXAMS
+                                                        </th>
+                                                        <th scope="col" class="px-6 py-2 text-gray-500 border">
+                                                            PERCENTAGE SCORE
+                                                        </th>
+                                                        <th scope="col" class="px-6 py-2 text-gray-500 border">
+                                                            GRADE
+                                                        </th>
+                                                        <th scope="col" class="px-6 py-2 text-gray-500 border">
+                                                            GRADE POINT
+                                                        </th>
+                                                        <th scope="col" class="px-6 py-2 text-gray-500 border">
+                                                            CUMULATIVE WEIGHT
                                                         </th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    @foreach($courses_registered as $course)
+                                                    @foreach($results as $course)
                                                         <tr class="divide-y divide-gray-300 border-b-2">
                                                             <td class="px-6 py-4 text-sm text-gray-500 border">
-                                                                {{ $course->courseType($course->course_id) }}
+                                                                {{ $course->courseName($course->course) }}
                                                             </td>
                                                             <td class="px-6 py-4 text-sm text-gray-500 border">
-                                                                {{ $course->courseCode($course->course_id) }}
+                                                                {{ $course->courseUnit($course->course) }}
                                                             </td>
                                                             <td class="px-6 py-4 text-sm text-gray-500 border">
-                                                                {{ $course->courseName($course->course_id) }}
+                                                                {{ $course->ca }}
                                                             </td>
                                                             <td class="px-6 py-4 text-sm text-gray-500 border">
-                                                                {{ $course->courseUnit($course->course_id) }}
+                                                                {{ $course->exams }}
+                                                            </td>
+                                                            <td class="px-6 py-4 text-sm text-gray-500 border">
+                                                                {{ $course->resultPercentageScore($course->id) }}
+                                                            </td>
+                                                            <td class="px-6 py-4 text-sm text-gray-500 border">
+                                                                {{ $course->resultGrade($course->id) }}
+                                                            </td>
+                                                            <td class="px-6 py-4 text-sm text-gray-500 border">
+                                                                {{ $course->resultGradePoint($course->id) }}
+                                                            </td>
+                                                            <td class="px-6 py-4 text-sm text-gray-500 border">
+                                                                {{ $course->cumulativeWeight($course->id) }}
                                                             </td>
                                                         </tr>
                                                     @endforeach     
@@ -158,9 +174,12 @@
                                     </div>
                                 </div>
                             </div>
+                        <h2 class="font-semibold p-2 border">GPA = Total Weight Points / Total Credit Units</h2>
+                        <h2 class="font-semibold p-2 border">GPA = {{ $student_online->cumulativeWeight($student_online->user_id, $session_id, $semester) }} / {{ $student_online->creditUnit($student_online->user_id, $session_id, $semester) }}</h2>
+                        <h2 class="font-semibold p-2 border">GPA = {{ $student_online->cumulativeWeight($student_online->user_id, $session_id, $semester) / $student_online->creditUnit($student_online->user_id, $session_id, $semester) }}</h2>
                     </div>
                 @else
-                    <h1 class="text-lg font-semibold py-4 w-full">No Course Found</h1>
+                    <h1 class="text-lg font-semibold py-4 w-full">No Result Found</h1>
                 @endif
             </div>
         </div>
@@ -171,8 +190,8 @@
             window.print()
             setTimeout(function () {
                 window.close();
-                window.location = '../../../dashboard';
-           }, 500);
+                window.location = '../../../student/dashboard';
+            }, 500);
         </script>
     </body>
 </html>

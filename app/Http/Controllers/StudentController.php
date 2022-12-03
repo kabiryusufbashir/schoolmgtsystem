@@ -320,9 +320,30 @@ class StudentController extends Controller
 
         $page_title = 'result';
 
-        // dd($results);
-
         return view('student.result.check', compact('page_title', 'results', 'session_id', 'semester'));
+    }
+
+    public function resultPrint(Request $request){
+        $data = $request->validate([
+            'session' => 'required',
+            'semester' => 'required',
+        ]);
+
+        $session_id = $request->session;
+        $semester = $request->semester;
+        $student_id = Auth::guard('students')->user()->user_id;
+
+        $school = User::where('category', 1)->first();
+        $student = Student::where('user_id', $student_id)->first();
+        $results = Result::where('student_id', $student_id)->where('session', $session_id)->where('semester', $semester)->get();
+
+        if(count($results) == 0){
+            return redirect()->route('student-dashboard')->with('error', 'Result not found!');
+        }
+
+        $page_title = 'result';
+
+        return view('student.result.print', compact('page_title', 'results', 'session_id', 'semester', 'school', 'student'));
     }
 
     // Settings 
