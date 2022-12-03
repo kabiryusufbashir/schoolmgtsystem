@@ -991,8 +991,9 @@ class DashboardController extends Controller
     public function editStudentStep4($id){
         $student = Student::where('user_id', $id)->first();
         $departments = Department::orderby('name', 'asc')->get();
+        $programmes = Programme::orderby('name', 'asc')->get();
         $step = 4;
-        return view('dashboard.student.edit.index', compact('step', 'student', 'departments'));
+        return view('dashboard.student.edit.index', compact('step', 'student', 'departments', 'programmes'));
     }
 
     public function updateStudentStep4(Request $request, $id){
@@ -1001,6 +1002,7 @@ class DashboardController extends Controller
             $data = $request->validate([
                 'photo' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
                 'department' => 'required',
+                'programme' => 'required',
             ]);
             
             $imageName = '/images/student/'.time().'.'.$request->photo->extension();
@@ -1009,6 +1011,7 @@ class DashboardController extends Controller
 
         $user_photo = $request->photo;
         $user_department = $request->department;
+        $user_programme = $request->programme;
 
         try{
             if(!empty($request->photo)){
@@ -1020,15 +1023,17 @@ class DashboardController extends Controller
             if(!empty($request->photo)){
                 $department = Student::where('user_id', $id)->update([
                     'department'=> $user_department,
+                    'programme'=> $user_programme,
                     'photo'=> $imageName
                 ]);
             }else{
                 $department = Student::where('user_id', $id)->update([
                     'department'=> $user_department,
+                    'programme'=> $user_programme,
                 ]);
             }
 
-            return redirect()->route('all-student')->with('success', 'Student Added');
+            return redirect()->route('all-student')->with('success', 'Student Updated');
         
         }catch(Exception $e){
             return back()->with('error', 'Please try again... '.$e);

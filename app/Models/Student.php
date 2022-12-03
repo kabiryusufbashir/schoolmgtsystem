@@ -169,6 +169,16 @@ class Student extends Authenticatable
         }
     }
 
+    public function programme($id)
+    {
+        if($id != 0){
+            $programme = Programme::where('id', $id)->first(); 
+            return $programme->name;
+        }else{
+            return '';
+        }
+    }
+
     public function fullName($id)
     {
         if($id){

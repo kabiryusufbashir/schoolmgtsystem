@@ -32,6 +32,21 @@
                 @enderror
             </div>
         </div>
+        <!-- Programme  -->
+        <div class="my-4">
+            <label for="programme" class="input-title">Programme</label><br>
+            <div>
+                <select name="programme" class="input-field">
+                    <option value="{{ $student->programme }}">{{ $student->programme($student->programme) }}</option>
+                    @foreach($programmes as $programme)
+                        <option value="{{ $programme->id }}">{{ $programme->name }}</option>
+                    @endforeach
+                </select>
+                @error('programme')
+                    {{$message}}
+                @enderror
+            </div>
+        </div>
         <!-- Photo  -->
         <div class="my-4">
             <label for="name" class="text-lg font-medium border-b-4 border-green-700">Student Photo</label><br>
