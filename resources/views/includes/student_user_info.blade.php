@@ -39,7 +39,7 @@
         <span class="text-sm">
             <div class="font-semibold mb-1">Combination:</div>
             <div>
-                {{ $student_profile->department($student_profile->department) }}
+                {{ $student_profile->programme($student_profile->programme) }}
             </div>
         </span>
     </div>

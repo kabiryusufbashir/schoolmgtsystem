@@ -169,4 +169,40 @@ class Result extends Model
             return '';
         }
     }
+
+    public function cumulativeWeight($id){
+        if($id){
+            $results = Result::where('id', $id)->first();
+            
+            $ca = $results->ca;
+            $course_id = $results->course;
+            $exams = $results->exams;
+            $percentage_score = $exams + $ca;
+            
+            $course = Course::where('id', $course_id)->first();
+            $course_unit = $course->course_unit;
+
+                if($percentage_score >= 70){
+                    $weight = $course_unit * 5;
+                    return $weight;
+                }else if($percentage_score >= 60 && $percentage_score <= 69){
+                    $weight = $course_unit * 4;
+                    return $weight;
+                }else if($percentage_score >= 50 && $percentage_score <= 59){
+                    $weight = $course_unit * 3;
+                    return $weight;
+                }else if($percentage_score >= 45 && $percentage_score <= 49){
+                    $weight = $course_unit * 2;
+                    return $weight;
+                }else if($percentage_score >= 44 && $percentage_score <= 40){
+                    $weight = $course_unit * 1;
+                    return $weight;
+                }else{
+                    $weight = $course_unit * 0;
+                    return $weight;
+                }
+        }else{
+            return '';
+        }
+    }
 }
